@@ -11,6 +11,16 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', 'AppController@index');
+
+Route::middleware('auth')->group(function() {
+    Route::get('/home', 'AppController@getHome')->name('home');
+    Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 });
+
+Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('/login', 'Auth\LoginController@login');
+
+Route::post('/passwords/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+Route::get('passwords/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+Route::post('passwords/reset', 'Auth\ResetPasswordController@reset')->name('password.reset.post');
