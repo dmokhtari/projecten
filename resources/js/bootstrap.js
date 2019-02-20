@@ -1,8 +1,19 @@
 
 import Vue from 'vue';
 import Vuetify from 'vuetify';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
 import 'vuetify/dist/vuetify.min.css';
-Vue.use(Vuetify);
+
+
+Vue.component('font-awesome-icon', FontAwesomeIcon);
+library.add(fas);
+library.add(far);
+Vue.use(Vuetify, {
+    iconfont: 'faSvg'
+});
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
