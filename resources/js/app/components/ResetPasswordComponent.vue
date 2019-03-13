@@ -49,7 +49,7 @@
     </v-app>
 </template>
 <script>
-    import { Form } from "../helpers/Form";
+    import { Form } from "../../helpers/Form";
     import MessageBox from './MessageBox';
     export default {
         name: 'ResetPasswordComponent',

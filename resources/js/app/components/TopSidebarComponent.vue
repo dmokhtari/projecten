@@ -2,7 +2,6 @@
     <div>
         <v-toolbar
             app
-            color="transparent"
             clipped-left
             scroll-off-screen
         >
@@ -17,7 +16,7 @@
             <v-spacer></v-spacer>
             <v-menu offset-y>
                 <v-btn icon large slot="activator">
-                    <v-avatar color="grey darken-3" size="42">
+                    <v-avatar color="grey lighten-1" size="42" class="elevation-1">
                         <font-awesome-icon :icon="['fas', 'user']"></font-awesome-icon>
                     </v-avatar>
                 </v-btn>
@@ -30,6 +29,25 @@
                             <v-list-tile-title>{{ item.text }}</v-list-tile-title>
                         </v-list-tile-content>
                     </v-list-tile>
+
+                    <v-list-tile v-if="userRole === 1" @click="goToDashboard">
+                        <v-list-tile-action>
+                            <font-awesome-icon :icon="['fas', 'user-cog']"></font-awesome-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-content>
+                            <v-list-tile-title>Dashboard</v-list-tile-title>
+                        </v-list-tile-content>
+                    </v-list-tile>
+
+                    <v-list-tile>
+                        <v-list-tile-action>
+                            <v-switch v-model="theme" value="dark"></v-switch>
+                        </v-list-tile-action>
+                        <v-list-tile-content>
+                            <v-list-tile-title>Donker theme</v-list-tile-title>
+                        </v-list-tile-content>
+                    </v-list-tile>
+
                     <v-list-tile v-for="(item, i) in logoutMenu" :key="i+1" @click="requestLogOut(item.slug)">
                         <v-list-tile-action>
                             <font-awesome-icon :icon="['fas', item.icon]"></font-awesome-icon>
@@ -38,6 +56,7 @@
                             <v-list-tile-title>{{ item.text }}</v-list-tile-title>
                         </v-list-tile-content>
                     </v-list-tile>
+
                 </v-list>
             </v-menu>
         </v-toolbar>
@@ -80,12 +99,7 @@
             return {
                 sidebar: true,
                 navigationMenu: [
-                    { slug: '/dashboard', icon: 'home', text: 'Home' },
-                    { slug: '/intro', icon: 'image', text: 'Intro' },
-                    { slug: '/about', icon: 'info', text: 'Over mij' },
-                    { slug: '/mix', icon: 'music', text: 'Mixes' },
-                    { slug: '/gallery', icon: 'images', text: 'Galerij' },
-                    { slug: '/contact', icon: 'address-card', text: 'Contact' },
+                    { slug: '/home', icon: 'home', text: 'Home' },
                 ],
                 userMenu: [
                     { slug: '/auth/user', icon: 'user-circle', text: 'Profiel' },
@@ -97,16 +111,40 @@
                     snackbar: false,
                     color: 'success',
                     text: ''
+                },
+                userRole: 0,
+            }
+        },
+        computed: {
+            theme: {
+                get() {
+                    if(localStorage.getItem('theme')){
+                        return localStorage.getItem('theme')
+                    }
+                    return 'light'
+                },
+                set(value) {
+                    eventHub.$emit('theme-changed', value)
+                    localStorage.setItem('theme', value)
                 }
             }
+        },
+        created() {
+            this.getUserRole()
         },
         methods: {
             requestLogOut(page) {
                 axios.post(page)
                     .then(() => location.reload())
-                    .catch(response => {
-                        console.log(response)
-                    })
+                    .catch(response => console.log(response))
+            },
+            getUserRole() {
+                axios.get('/api/auth/user/role')
+                    .then(response => this.userRole = response.data.data.role)
+                    .catch(response => console.log(response))
+            },
+            goToDashboard() {
+                window.location.href = '/admin/dashboard'
             }
         }
     }
