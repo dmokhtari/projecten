@@ -47,4 +47,16 @@ class User extends Authenticatable
         $this->notify(new ResetPasswordNotification($token));
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function isAdmin()
+    {
+        return $this->roles->first()->title === 'admin';
+    }
 }
