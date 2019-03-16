@@ -26,12 +26,13 @@
     <!-- <link rel="apple-touch-icon" sizes="152x152" href="assets/img/touch/ipad-r.png"> -->
 
     <!-- css -->
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="{{ mix('/assets/css/app.css') }}">
 </head>
 <body>
 
 <div id="admin">
-    <router-view></router-view>
+    <admin></admin>
 </div>
 
 <!-- scripts -->

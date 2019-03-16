@@ -124,7 +124,7 @@
                     return 'light'
                 },
                 set(value) {
-                    eventHub.$emit('theme-changed', value)
+                    this.$emit('theme-changed', value)
                     localStorage.setItem('theme', value)
                 }
             }

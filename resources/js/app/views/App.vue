@@ -1,30 +1,34 @@
 <template>
-    <v-container grid-list-lg>
-        <v-layout row wrap>
-            <v-flex v-for="(mod, index) in modules" :key="index" xs6 md3>
-                <v-card @click="goToModule(mod.id)" class="clickable text-xs-center pa-5 ma-3" hover>
-                    <v-card-title>
-                        <h3>{{ mod.title }}</h3>
-                    </v-card-title>
-                </v-card>
-            </v-flex>
-        </v-layout>
-    </v-container>
+    <v-app :dark="darkTheme">
+        <top-sidebar @theme-changed="getTheme"></top-sidebar>
+        <v-content>
+            <router-view></router-view>
+        </v-content>
+    </v-app>
 </template>
 <script>
+    import TopSidebar from '../components/TopSidebarComponent';
     export default {
-        name: 'Home',
+        name: 'App',
         components: {
+            TopSidebar
         },
         data() {
             return {
+                darkTheme: false,
                 modules: null,
             }
         },
         created() {
             this.getModules()
+            this.getTheme()
         },
         methods: {
+            getTheme(event) {
+                setTimeout(() => {
+                    this.darkTheme = localStorage.getItem('theme') === 'dark'
+                }, 200)
+            },
             getModules() {
                 axios.get('/api/modules')
                     .then(response => this.modules = response.data.data)

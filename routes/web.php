@@ -17,6 +17,8 @@ Route::middleware('auth')->group(function() {
     Route::get('/home', 'AppController@getHome')->name('home');
     Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
+    Route::get('/modules/{module}', 'AppController@getHome');
+
 });
 
 Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -27,5 +29,9 @@ Route::get('passwords/reset/{token}', 'Auth\ResetPasswordController@showResetFor
 Route::post('passwords/reset', 'Auth\ResetPasswordController@reset')->name('password.reset.post');
 
 Route::middleware('auth', 'admin')->group(function() {
-    Route::get('/admin/dashboard', 'AppController@getDashboard');
+    Route::prefix('admin')->group(function() {
+        Route::get('/dashboard', 'AppController@getDashboard');
+        Route::get('/modules', 'AppController@getDashboard');
+        Route::get('/modules/{module}', 'AppController@getDashboard');
+    });
 });

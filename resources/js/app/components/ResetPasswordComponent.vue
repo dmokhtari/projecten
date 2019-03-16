@@ -49,8 +49,8 @@
     </v-app>
 </template>
 <script>
-    import { Form } from "../../helpers/Form";
-    import MessageBox from './MessageBox';
+    import { Form } from "../../shared/helpers/Form";
+    import MessageBox from '../../shared/components/MessageBox';
     export default {
         name: 'ResetPasswordComponent',
         props: ['strToken', 'strEmail'],

@@ -12,7 +12,12 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 library.add(fas);
 library.add(far);
 Vue.use(Vuetify, {
-    iconfont: 'faSvg'
+    iconfont: 'faSvg',
+    theme: {
+        primary: '#D70096',
+        secondary: '#24126e',
+        accent: '#7a7fa3'
+    }
 });
 
 // remove production tip
@@ -25,7 +30,6 @@ Vue.config.productionTip = false;
  */
 
 try {
-    window.$ = window.jQuery = require('jquery');
 
 } catch (e) {}
 

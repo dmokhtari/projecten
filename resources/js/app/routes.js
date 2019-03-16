@@ -9,6 +9,11 @@ export const router = new VueRouter({
             path: '/home',
             name: 'home',
             component: require('./views/Home').default
+        },
+        {
+            path: '/modules/:id',
+            name: 'module',
+            component: require('./views/Module').default
         }
     ]
 });

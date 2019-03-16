@@ -27,6 +27,7 @@
         methods: {
             show(color, text) {
                 console.warn('i heard inside show')
+                console.log(color, text)
                 this.snackbar = true
                 this.color = color
                 this.text = text

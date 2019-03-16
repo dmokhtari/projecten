@@ -55,7 +55,7 @@
             clipped
             v-model="sidebar"
             app
-            width="250"
+            width="220px"
         >
             <v-list dense>
                 <v-list-tile v-for="(item, index) in navigationMenu"
@@ -64,12 +64,12 @@
                              active-class="active-page"
                              :class="activePage === item.slug ? 'active-page' : ''"
                 >
-                    <v-tooltip right>
-                        <v-list-tile-action slot="activator">
-                            <font-awesome-icon class="title" :icon="['fas', item.icon]"></font-awesome-icon>
-                        </v-list-tile-action>
-                        <span>{{ item.text }}</span>
-                    </v-tooltip>
+                    <v-list-tile-action>
+                        <font-awesome-icon class="title" :icon="['fas', item.icon]"></font-awesome-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                        <v-list-tile-title>{{ item.text }}</v-list-tile-title>
+                    </v-list-tile-content>
                 </v-list-tile>
             </v-list>
 
