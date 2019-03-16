@@ -1,0 +1,16 @@
+.theme--light .active-page {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.theme--dark .active-page {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.active-page svg {
+  color: #D70096;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
