@@ -41,6 +41,7 @@ class Kernel extends HttpKernel
         'api' => [
             'throttle:60,1',
             'bindings',
+            'handlePutFormData',
         ],
     ];
 
@@ -63,6 +64,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'cors' => \Barryvdh\Cors\HandleCors::class,
         'admin' => \App\Http\Middleware\Admin::class,
+        'handlePutFormData' => \App\Http\Middleware\HandlePutFormData::class,
     ];
 
     /**
