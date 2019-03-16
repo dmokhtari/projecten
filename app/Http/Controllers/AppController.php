@@ -19,4 +19,22 @@ class AppController extends Controller
     {
         return view('home');
     }
+
+    public function getDashboard()
+    {
+        return view('dashboard');
+    }
+
+    public function getUserRole(Request $request)
+    {
+        $user = auth()->guard('api')->user();
+        $role = $user->isAdmin() ? 1 : 2;
+        $roleArray = ['role' => $role];
+        return response()->json(['status' => 'success', 'data' => $roleArray], 200);
+    }
+
+    public function getTest()
+    {
+        return response()->json(['status' => 'success', 'data' => 'hi test'], 200);
+    }
 }

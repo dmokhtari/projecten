@@ -47,7 +47,7 @@ class SendPasswordResetNotification extends Notification
         return (new MailMessage)
             ->subject('Wachtwoord herstellen')
             ->greeting('Hallo,')
-            ->line('Jij krijgt deze mail omdat je onlangs heeft verzocht om het wachtwoord van jouw account op vazhe.nl te wijzigen!')
+            ->line('Jij krijgt deze mail omdat je onlangs heeft verzocht om het wachtwoord van jouw account op Laravel te wijzigen!')
             ->action('Mijn wachtwoord wijzigen', url('/passwords/reset', $this->token))
             ->line('Als jij dit verzoek niet heeft gemaakt, mag je deze mail als niet verzonden beschouwen!');
     }
