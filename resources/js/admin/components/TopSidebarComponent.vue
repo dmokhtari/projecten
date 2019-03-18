@@ -91,6 +91,7 @@
                     { slug: '/admin/dashboard', icon: 'home', text: 'Dashboard' },
                     { slug: '/admin/modules', icon: 'book', text: 'Modules' },
                     { slug: '/admin/elements', icon: 'puzzle-piece', text: 'Elementen' },
+                    { slug: '/admin/users', icon: 'users', text: 'Gebruikers' },
                 ],
                 userMenu: [
                     { slug: '/auth/user', icon: 'user-circle', text: 'Profiel' },

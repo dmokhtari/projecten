@@ -14,11 +14,11 @@ class RolesTableSeeder extends Seeder
     {
         Role::create([
             'title' => 'student',
-            'display_name' => 'student'
+            'display_title' => 'student'
         ]);
         Role::create([
             'title' => 'admin',
-            'display_name' => 'administrator'
+            'display_title' => 'administrator'
         ]);
     }
 }

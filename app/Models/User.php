@@ -18,7 +18,12 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'forename', 'surname', 'email', 'password',
+        'forename',
+        'surname',
+        'email',
+        'password',
+        'end_date_study',
+        'class'
     ];
 
     /**
@@ -40,6 +45,13 @@ class User extends Authenticatable
     ];
 
     /**
+     * @var array
+     */
+    protected $dates = [
+        'end_date_study'
+    ];
+
+    /**
      * @param string $token
      */
     public function sendPasswordResetNotification($token)
@@ -52,9 +64,12 @@ class User extends Authenticatable
      */
     public function roles()
     {
-        return $this->belongsToMany(Role::class);
+        return $this->belongsToMany(Role::class)->withTimestamps();
     }
 
+    /**
+     * @return bool
+     */
     public function isAdmin()
     {
         return $this->roles->first()->title === 'admin';

@@ -13,7 +13,7 @@
                         ></v-divider>
                         <v-text-field
                             v-model="table.search"
-                            label="zoeken"
+                            label="Zoeken"
                             append-icon="search"
                             single-line
                             hide-details
@@ -130,8 +130,8 @@
                     title: '',
                     subtitle: '',
                     background_image: '',
-                    background_image_name: null,
-                    background_color: null,
+                    background_image_name: '',
+                    background_color: '',
                 })
             }
         },

@@ -19,6 +19,11 @@ export const router = new VueRouter({
             path: '/admin/modules/:id',
             name: 'module',
             component: require('./views/Module').default
+        },
+        {
+            path: '/admin/users',
+            name: 'users',
+            component: require('./views/Users').default
         }
     ]
 });

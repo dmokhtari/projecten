@@ -24,3 +24,7 @@ Route::get('/auth/user/role', 'AppController@getUserRole');
 //});
 
 Route::apiResource('modules', 'API\ModuleController');
+Route::apiResource('users', 'API\UserController');
+Route::post('/users/import', 'API\UserController@import');
+
+Route::apiResource('roles', 'API\RoleController');

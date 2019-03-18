@@ -33,5 +33,6 @@ Route::middleware('auth', 'admin')->group(function() {
         Route::get('/dashboard', 'AppController@getDashboard');
         Route::get('/modules', 'AppController@getDashboard');
         Route::get('/modules/{module}', 'AppController@getDashboard');
+        Route::get('/users', 'AppController@getDashboard');
     });
 });

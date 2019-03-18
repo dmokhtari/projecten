@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
     {
         if(env('APP_ENV') === 'local') {
             foreach($this->toTruncate as $table) {
-                DB::truncate($table);
+                DB::table($table)->truncate();
             }
         }
         $this->call(RolesTableSeeder::class);
