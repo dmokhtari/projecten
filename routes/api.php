@@ -23,6 +23,7 @@ Route::get('/auth/user/role', 'AppController@getUserRole');
 //    Route::get('/testing', 'AppController@getTest');
 //});
 
+Route::apiResource('files', 'API\FileController');
 Route::apiResource('modules', 'API\ModuleController');
 Route::apiResource('users', 'API\UserController');
 Route::post('/users/import', 'API\UserController@import');

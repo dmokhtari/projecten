@@ -31,6 +31,8 @@ Route::post('passwords/reset', 'Auth\ResetPasswordController@reset')->name('pass
 Route::middleware('auth', 'admin')->group(function() {
     Route::prefix('admin')->group(function() {
         Route::get('/dashboard', 'AppController@getDashboard');
+        Route::get('/files', 'AppController@getDashboard');
+        Route::get('/files/{file}', 'AppController@getDashboard');
         Route::get('/modules', 'AppController@getDashboard');
         Route::get('/modules/{module}', 'AppController@getDashboard');
         Route::get('/users', 'AppController@getDashboard');

@@ -12,14 +12,24 @@ export const router = new VueRouter({
             component: require('./views/Dashboard').default
         },
         {
+            path: '/admin/files',
+            name: 'files',
+            component: require('./views/files/Files').default
+        },
+        {
+            path: '/admin/files/:id',
+            name: 'file',
+            component: require('./views/files/File').default
+        },
+        {
             path: '/admin/modules',
             name: 'modules',
-            component: require('./views/Modules').default
+            component: require('./views/modules/Modules').default
         },
         {
             path: '/admin/modules/:id',
             name: 'module',
-            component: require('./views/Module').default
+            component: require('./views/modules/Module').default
         },
         {
             path: '/admin/users',

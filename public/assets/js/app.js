@@ -12866,6 +12866,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'MessageBox',
   data: function data() {
@@ -14852,7 +14859,23 @@ var render = function() {
         expression: "snackbar"
       }
     },
-    [_vm._v("\n    " + _vm._s(_vm.text) + "\n")]
+    [
+      _vm._v("\n    " + _vm._s(_vm.text) + "\n    "),
+      _c(
+        "v-btn",
+        {
+          attrs: { icon: "", flat: "" },
+          on: {
+            click: function($event) {
+              _vm.snackbar = false
+            }
+          }
+        },
+        [_c("font-awesome-icon", { attrs: { icon: ["fas", "times"] } })],
+        1
+      )
+    ],
+    1
   )
 }
 var staticRenderFns = []

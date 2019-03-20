@@ -89,8 +89,9 @@
                 sidebar: true,
                 navigationMenu: [
                     { slug: '/admin/dashboard', icon: 'home', text: 'Dashboard' },
+                    { slug: '/admin/files', icon: 'book', text: 'Files' },
                     { slug: '/admin/modules', icon: 'book', text: 'Modules' },
-                    { slug: '/admin/elements', icon: 'puzzle-piece', text: 'Elementen' },
+                    { slug: '/admin/elements', icon: 'puzzle-piece', text: 'Elements' },
                     { slug: '/admin/users', icon: 'users', text: 'Gebruikers' },
                 ],
                 userMenu: [
