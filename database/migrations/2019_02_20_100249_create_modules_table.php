@@ -18,9 +18,10 @@ class CreateModulesTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->string('title');
             $table->string('subtitle')->nullable();
-            $table->string('image_path')->nullable();
-            $table->string('image_name')->nullable();
+            $table->string('background_path')->nullable();
+            $table->string('background_name')->nullable();
             $table->string('background_color')->nullable();
+            $table->text('text')->nullable();
             $table->timestamps();
         });
 

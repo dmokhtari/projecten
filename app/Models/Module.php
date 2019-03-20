@@ -18,8 +18,9 @@ class Module extends Model
         'user_id',
         'title',
         'subtitle',
-        'image_path',
-        'image_name',
-        'background_color'
+        'background_path',
+        'background_name',
+        'background_color',
+        'text'
     ];
 }

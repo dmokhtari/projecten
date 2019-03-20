@@ -20,7 +20,7 @@
                         >
                         </v-text-field>
                         <v-spacer></v-spacer>
-                        <v-btn color="secondary" fab @click="addEditDialog = true">
+                        <v-btn color="secondary" fab @click="onAddEditModule()">
                             <font-awesome-icon :icon="['fas', 'plus']"></font-awesome-icon>
                         </v-btn>
                     </v-card-title>
@@ -54,59 +54,18 @@
                 </v-card>
             </v-flex>
         </v-layout>
-
-        <v-dialog
-            v-model="addEditDialog"
-            width="400"
-            persistent
-        >
-            <v-card>
-                <v-card-title class="headline accent justify-center" v-text="form.id ? 'Module wijzigen' : 'Module toevoegen'"></v-card-title>
-                <form @submit.prevent="form.id ? put(form.id) : post()" class="px-4 py-4" @keydown="form.errors.clear($event.target.name)">
-                    <v-text-field
-                        outline
-                        type="text"
-                        label="Title"
-                        :rules="[form.errors.get('title')]"
-                        :errors="form.errors.has('title')"
-                        v-model="form.title"
-                        autofocus
-                    ></v-text-field>
-                    <v-text-field
-                        outline
-                        type="text"
-                        label="Subtitle"
-                        :rules="[form.errors.get('subtitle')]"
-                        :errors="form.errors.has('subtitle')"
-                        v-model="form.subtitle"
-                    ></v-text-field>
-
-                    <v-text-field
-                        outline
-                        type="text"
-                        label="Upload een photo"
-                        :rules="[form.errors.get('background_image')]"
-                        :errors="form.errors.has('background_image')"
-                        v-model="form.background_image_name"
-                        @click="onClickImageInput"
-                    ></v-text-field>
-                    <input type="file" ref="image" style="display:none" @change="onImageChange">
-                    <v-card-actions>
-                        <v-btn color="grey" @click="onCancel" flat>Annuleer</v-btn>
-                        <v-spacer></v-spacer>
-                        <v-btn color="primary" type="submit">Opslaan</v-btn>
-                    </v-card-actions>
-                </form>
-            </v-card>
-        </v-dialog>
+        <add-edit-module-dialog @posted="get" @update="get"></add-edit-module-dialog>
     </v-container>
 </template>
 <script>
-    import { Form } from "../../shared/helpers/Form";
+    import AddEditModuleDialog from './AddEditModuleDialog';
     import vuetifyColors from 'vuetify/es5/util/colors';
     export default {
         name: 'adminModules',
         title: 'Modules - admin',
+        components: {
+            AddEditModuleDialog
+        },
         data() {
             return {
                 table: {
@@ -123,16 +82,8 @@
                         { title: 'Verwijderen', value: 'delete' },
                     ]
                 },
-                addEditDialog: false,
                 colors: [],
-                form: new Form({
-                    id: null,
-                    title: '',
-                    subtitle: '',
-                    background_image: '',
-                    background_image_name: '',
-                    background_color: '',
-                })
+
             }
         },
         created() {
@@ -142,27 +93,13 @@
         methods: {
             editOrDelete(action, obj) {
                 if(action === 'edit') {
-                    for(let key in obj) {
-                        if(obj[key] !== null) {
-                            this.form[key] = obj[key]
-                        }
-                    }
-                    this.addEditDialog = true
+                    this.onAddEditModule(obj)
                 } else {
                     this.delete(obj.id)
                 }
             },
-            onClickImageInput() {
-                this.$refs.imageInput.click()
-            },
-            onImageChange(e) {
-                let image = e.target.files[0]
-                this.form.background_image = image
-                this.form.background_image_name = image.name
-            },
-            onCancel() {
-                this.addEditDialog = false
-                this.form = new Form({})
+            onAddEditModule(obj = null) {
+                eventHub.$emit('add-edit-module-dialog', obj)
             },
             getColors() {
                 let col = Object.entries(vuetifyColors)
@@ -177,24 +114,6 @@
                     .then(response => this.table.items = response.data.data)
                     .catch(response => console.error(response))
                     .finally(() => this.table.loading = false)
-            },
-            post() {
-                this.form.post('/api/modules')
-                    .then(response => {
-                        this.addEditDialog = false
-                        this.get()
-                        eventHub.$emit('show-message', response.status,  response.data)
-                    })
-                    .catch(response => eventHub.$emit('show-message', response.data.status,  response.data.data))
-            },
-            put(id) {
-                this.form.put('/api/modules/' + id)
-                    .then(response => {
-                        this.addEditDialog = false
-                        this.get()
-                        eventHub.$emit('show-message', response.status,  response.data)
-                    })
-                    .catch(response => eventHub.$emit('show-message', response.data.status,  response.data.data))
             },
             delete(id) {
                 axios.delete('/api/modules/' + id)
