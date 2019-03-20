@@ -6,6 +6,13 @@
         top
     >
         {{ text }}
+        <v-btn
+            icon
+            flat
+            @click="snackbar = false"
+        >
+            <font-awesome-icon :icon="['fas', 'times']"></font-awesome-icon>
+        </v-btn>
     </v-snackbar>
 </template>
 <script>
