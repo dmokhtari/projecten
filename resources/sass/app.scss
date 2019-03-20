@@ -5,3 +5,14 @@
 
 @import 'global';
 
+@import '~nprogress/nprogress.css';
+
+#nprogress {
+    .bar {
+        background-color: $primary;
+        height: 4px;
+    }
+    .spinner {
+        display: none;
+    }
+}
