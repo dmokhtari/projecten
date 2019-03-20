@@ -53,8 +53,8 @@ class ModuleController extends Controller
             'user_id' => Auth::guard('api')->user()->id,
             'title' => $request->title,
             'subtitle' => $request->subtitle,
-            'image_name' => $image_path,
-            'image_path' => $image_name,
+            'background_name' => $image_path,
+            'background_path' => $image_name,
             'background_color' => $request->background_color
         ]);
 
@@ -70,7 +70,6 @@ class ModuleController extends Controller
     public function show($id)
     {
         $module = Module::findOrFail($id);
-
         return response()->json(['status' => 'success', 'data' => $module], 200);
     }
 
@@ -83,18 +82,18 @@ class ModuleController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'title' => 'required|string|max:200',
-            'subtitle' => 'nullable|string|max:200',
+            'title' => 'required|string|max:255',
+            'subtitle' => 'nullable|string|max:255',
             'background_image' => 'nullable|image',
-            'background_color' => 'nullable|string|max:200'
+            'background_color' => 'nullable|string|max:255'
         ]);
 
         $module = Module::findOrFail($id);
         $module->fill($request->only(['title', 'subtitle', 'background_color']));
 
         if($request->hasFile('background_image')) {
-            $module->image_name = $request->file('background_image')->getClientOriginalName();
-            $module->image_path = $request->file('background_image')->store('img/modules');
+            $module->background_name = $request->file('background_image')->getClientOriginalName();
+            $module->background_path = $request->file('background_image')->store('img/modules');
         }
         $module->save();
 
@@ -110,7 +109,7 @@ class ModuleController extends Controller
     public function destroy($id)
     {
         $module = Module::findOrFail($id);
-        if($module->image_path) Storage::delete($module->image_path);
+        if($module->background_path) Storage::delete($module->background_path);
         $module->delete();
         return response()->json(['status' => 'success', 'data' => "{$module->title} is verwijderd!"], 200);
     }

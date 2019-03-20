@@ -5,7 +5,12 @@
         persistent
     >
         <v-card>
-            <v-card-title class="headline accent justify-center" v-text="form.id ? 'Gebruiker wijzigen' : 'Gebruiker toevoegen'"></v-card-title>
+            <v-card-title class="headline accent justify-center">
+                {{ form.id ? 'Gebruiker wijzigen' : 'Gebruiker toevoegen' }}
+                <v-btn flat icon absolute right @click="onCancel">
+                    <font-awesome-icon class="title" :icon="['far', 'times-circle']"></font-awesome-icon>
+                </v-btn>
+            </v-card-title>
             <form @submit.prevent="form.id ? put(form.id) : post()" class="px-4 py-4" @keydown="form.errors.clear($event.target.name)">
                 <v-text-field
                     outline
