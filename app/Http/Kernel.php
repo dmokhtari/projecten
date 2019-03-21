@@ -42,6 +42,7 @@ class Kernel extends HttpKernel
             'throttle:60,1',
             'bindings',
             'handlePutFormData',
+            'lastUserActivity',
         ],
     ];
 
@@ -65,6 +66,7 @@ class Kernel extends HttpKernel
         'cors' => \Barryvdh\Cors\HandleCors::class,
         'admin' => \App\Http\Middleware\Admin::class,
         'handlePutFormData' => \App\Http\Middleware\HandlePutFormData::class,
+        'lastUserActivity' => \App\Http\Middleware\LastUserActivity::class,
     ];
 
     /**

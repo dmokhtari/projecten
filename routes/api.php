@@ -19,9 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/auth/user/role', 'AppController@getUserRole');
 
-//Route::middleware('admin:api')->group(function() {
-//    Route::get('/testing', 'AppController@getTest');
-//});
+Route::get('/dashboard/users', 'API\DashboardController@getUsers');
 
 Route::apiResource('files', 'API\FileController');
 Route::apiResource('modules', 'API\ModuleController');

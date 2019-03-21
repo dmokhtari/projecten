@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Cache;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -73,5 +74,13 @@ class User extends Authenticatable
     public function isAdmin()
     {
         return $this->roles->first()->title === 'admin';
+    }
+
+    /**
+     * @return bool
+     */
+    public function isOnline()
+    {
+        return Cache::has('user-online-' . $this->id);
     }
 }
