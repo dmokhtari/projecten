@@ -61,12 +61,12 @@
             </v-menu>
         </v-toolbar>
 
+
         <v-navigation-drawer
-            fixed
             clipped
             v-model="sidebar"
             app
-            mini-variant
+            width="200"
         >
             <v-list dense>
                 <v-list-tile v-for="(item, index) in navigationMenu"
@@ -85,6 +85,7 @@
             </v-list>
 
         </v-navigation-drawer>
+
     </div>
 </template>
 <script>
@@ -107,11 +108,7 @@
                 logoutMenu: [
                     { slug: '/logout', icon: 'sign-out-alt', text: 'Uitloggen' }
                 ],
-                snackbar: {
-                    snackbar: false,
-                    color: 'success',
-                    text: ''
-                },
+                breadcrumbList: [],
                 userRole: 0,
             }
         },
@@ -145,7 +142,7 @@
             },
             goToDashboard() {
                 window.location.href = '/admin/dashboard'
-            }
+            },
         }
     }
 </script>

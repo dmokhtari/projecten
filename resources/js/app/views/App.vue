@@ -2,6 +2,26 @@
     <v-app :dark="darkTheme">
         <top-sidebar @theme-changed="getTheme"></top-sidebar>
         <v-content>
+            <v-container class="pb-0">
+                <v-layout>
+                    <v-flex xs12>
+                        <v-chip>
+                            <v-breadcrumbs>
+                                <v-breadcrumbs-item v-for="(breadcrumb, index) in breadcrumbList"
+                                                    :key="index"
+                                                    :disabled="breadcrumb.disabled"
+                                                    :to="breadcrumb.to"
+                                                    :exact="true">
+                                    <span v-if="breadcrumb.text !== 'Home'">{{ breadcrumb.text }}</span>
+                                    <span v-else>
+                                        <font-awesome-icon :icon="['fas', 'home']"></font-awesome-icon>
+                                    </span>
+                                </v-breadcrumbs-item>
+                            </v-breadcrumbs>
+                        </v-chip>
+                    </v-flex>
+                </v-layout>
+            </v-container>
             <router-view></router-view>
         </v-content>
     </v-app>
@@ -16,12 +36,17 @@
         data() {
             return {
                 darkTheme: false,
-                modules: null,
+                breadcrumbList: []
+            }
+        },
+        watch: {
+            '$route'() {
+                this.updateBreadcrumb()
             }
         },
         created() {
-            this.getModules()
             this.getTheme()
+            this.updateBreadcrumb()
         },
         methods: {
             getTheme(event) {
@@ -29,13 +54,8 @@
                     this.darkTheme = localStorage.getItem('theme') === 'dark'
                 }, 200)
             },
-            getModules() {
-                axios.get('/api/modules')
-                    .then(response => this.modules = response.data.data)
-                    .catch(response => console.error(response))
-            },
-            goToModule(id) {
-                this.$router.push({ name: 'module', params: {id: id} })
+            updateBreadcrumb() {
+                this.breadcrumbList = this.$route.meta.breadcrumb
             }
         }
     }
