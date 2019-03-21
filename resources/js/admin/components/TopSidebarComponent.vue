@@ -13,6 +13,18 @@
                     Logo
                 </a>
             </v-toolbar-title>
+            <v-breadcrumbs class="ml-5">
+                <v-breadcrumbs-item v-for="(breadcrumb, index) in breadcrumbList"
+                                    :key="index"
+                                    :disabled="breadcrumb.disabled"
+                                    :to="breadcrumb.to"
+                                    :exact="true">
+                    <span v-if="breadcrumb.text !== 'Home'">{{ breadcrumb.text }}</span>
+                    <span v-else>
+                        <font-awesome-icon :icon="['fas', 'home']"></font-awesome-icon>
+                    </span>
+                </v-breadcrumbs-item>
+            </v-breadcrumbs>
             <v-spacer></v-spacer>
             <v-menu offset-y>
                 <v-btn icon large slot="activator">
@@ -100,11 +112,7 @@
                 logoutMenu: [
                     { slug: '/logout', icon: 'sign-out-alt', text: 'Uitloggen' }
                 ],
-                snackbar: {
-                    snackbar: false,
-                    color: 'success',
-                    text: ''
-                },
+                breadcrumbList: [],
                 userRole: 0,
             }
         },
@@ -116,7 +124,13 @@
                 return 'light'
             }
         },
+        watch: {
+            '$route'() {
+                this.updateBreadcrumb()
+            }
+        },
         created() {
+            this.updateBreadcrumb()
         },
         methods: {
             requestLogOut(page) {
@@ -127,6 +141,9 @@
             goToHome() {
                 window.location.href = '/home'
             },
+            updateBreadcrumb() {
+                this.breadcrumbList = this.$route.meta.breadcrumb
+            }
 
         }
     }
