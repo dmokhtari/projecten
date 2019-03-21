@@ -1,5 +1,6 @@
 <template>
     <v-dialog
+        v-if="form"
         v-model="dialog"
         width="400"
         persistent
@@ -56,14 +57,7 @@
         data() {
             return {
                 dialog: false,
-                form: new Form({
-                    id: null,
-                    title: '',
-                    subtitle: '',
-                    background_image: '',
-                    background_image_name: '',
-                    background_color: '',
-                })
+                form: null,
             }
         },
         created() {
@@ -74,12 +68,25 @@
         },
         methods: {
             onShow(obj) {
+                this.initForm()
                 this.dialog = true
-                for(let key in obj) {
-                    if(obj[key] !== null) {
-                        this.form[key] = obj[key]
+                if(obj) {
+                    for(let key in obj) {
+                        if(obj[key] !== null) {
+                            this.form[key] = obj[key]
+                        }
                     }
                 }
+            },
+            initForm() {
+                this.form = new Form({
+                    id: null,
+                    title: '',
+                    subtitle: '',
+                    background_image: '',
+                    background_image_name: '',
+                    background_color: '',
+                })
             },
             onCancel() {
                 this.dialog = false

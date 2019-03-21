@@ -17,8 +17,7 @@
                             append-icon="search"
                             single-line
                             hide-details
-                        >
-                        </v-text-field>
+                        ></v-text-field>
                         <v-spacer></v-spacer>
                         <v-btn color="secondary" fab @click="onAddEditFile()">
                             <font-awesome-icon :icon="['fas', 'plus']"></font-awesome-icon>

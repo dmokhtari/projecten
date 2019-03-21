@@ -11,8 +11,7 @@
     import TopSidebar from './../components/TopSidebarComponent';
     import MessageBox from './../../shared/components/MessageBox';
     export default {
-        name: 'Dashboard',
-        title: 'Admin Page',
+        name: 'Admin',
         components: {
             TopSidebar,
             MessageBox

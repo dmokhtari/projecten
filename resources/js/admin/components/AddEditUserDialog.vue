@@ -1,5 +1,6 @@
 <template>
     <v-dialog
+        v-if="form"
         v-model="dialog"
         width="500"
         persistent
@@ -109,15 +110,7 @@
         data() {
             return {
                 dialog: false,
-                form: new Form({
-                    id: null,
-                    email: '',
-                    forename: '',
-                    surname: '',
-                    class: '',
-                    role: '',
-                    end_date_study: new Date().toISOString().substr(0, 10),
-                }),
+                form: null,
                 dateMenu: false,
                 roles: [],
             }
@@ -130,14 +123,28 @@
         },
         methods: {
             onShow(obj) {
+                this.initForm()
                 this.dialog = true
                 this.getRoles()
-                for(let key in obj) {
-                    if(obj[key] !== null) {
-                        this.form[key] = obj[key]
+                if(obj) {
+                    for(let key in obj) {
+                        if(obj[key] !== null) {
+                            this.form[key] = obj[key]
+                        }
                     }
+                    this.form.role = obj.roles[0].pivot.role_id
                 }
-                this.form.role = obj.roles[0].pivot.role_id
+            },
+            initForm() {
+                this.form = new Form({
+                    id: null,
+                    email: '',
+                    forename: '',
+                    surname: '',
+                    class: '',
+                    role: '',
+                    end_date_study: new Date().toISOString().substr(0, 10),
+                })
             },
             onCancel() {
                 this.dialog = false
