@@ -1,14 +1,12 @@
 <template>
     <v-container>
-        <h1>module</h1>
+        <h1>file</h1>
     </v-container>
 </template>
 <script>
     export default {
-        name: 'Module',
-        title: 'Module',
-        components: {
-        },
+        name: 'File',
+        title: 'File',
         data() {
             return {
             }
@@ -18,7 +16,7 @@
         },
         methods: {
             get() {
-                axios.get(`/api/modules/${this.$route.params.id}`)
+                axios.get(`/api/files/${this.$route.params.id}`)
                     .then(response => console.log(response))
                     .catch(response => console.errors(response))
             }

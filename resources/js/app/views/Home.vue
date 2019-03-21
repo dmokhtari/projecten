@@ -1,10 +1,10 @@
 <template>
     <v-container grid-list-lg>
         <v-layout row wrap>
-            <v-flex v-for="(mod, index) in modules" :key="index" xs6 md3>
-                <v-card @click="goToModule(mod.id)" class="clickable text-xs-center pa-5 ma-3" hover>
+            <v-flex v-for="(file, index) in files" :key="index" xs6 md3>
+                <v-card @click="goToFile(file.id)" class="text-xs-center pa-5 ma-3" hover>
                     <v-card-title>
-                        <h3>{{ mod.title }}</h3>
+                        <h3>{{ file.title }}</h3>
                     </v-card-title>
                 </v-card>
             </v-flex>
@@ -14,24 +14,22 @@
 <script>
     export default {
         name: 'Home',
-        components: {
-        },
         data() {
             return {
-                modules: null,
+                files: null,
             }
         },
         created() {
-            this.getModules()
+            this.getFiles()
         },
         methods: {
-            getModules() {
-                axios.get('/api/modules')
-                    .then(response => this.modules = response.data.data)
+            getFiles() {
+                axios.get('/api/files')
+                    .then(response => this.files = response.data.data)
                     .catch(response => console.error(response))
             },
-            goToModule(id) {
-                this.$router.push({ name: 'module', params: {id: id} })
+            goToFile(id) {
+                this.$router.push({ name: 'file', params: {id: id} })
             }
         }
     }
