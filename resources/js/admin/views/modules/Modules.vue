@@ -42,7 +42,7 @@
                                     <v-list>
                                         <v-list-tile v-for="(action, i) in table.actions"
                                                      :key="i"
-                                                     @click="editOrDelete(action.value, props.item)"
+                                                     @click="onAction(action.value, props.item)"
                                         >
                                             <v-list-tile-title>{{ action.title }}</v-list-tile-title>
                                         </v-list-tile>
@@ -91,11 +91,16 @@
             this.getColors()
         },
         methods: {
-            editOrDelete(action, obj) {
-                if(action === 'edit') {
-                    this.onAddEditModule(obj)
-                } else {
-                    this.delete(obj.id)
+            onAction(action, obj) {
+                switch (action) {
+                    case 'show':
+                        this.goToModule(obj.id)
+                        break;
+                    case 'edit':
+                        this.onAddEditModule(obj)
+                        break;
+                    case 'delete':
+                        this.delete(obj.id)
                 }
             },
             onAddEditModule(obj = null) {

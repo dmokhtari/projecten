@@ -41,7 +41,7 @@
                                     <v-list>
                                         <v-list-tile v-for="(action, i) in table.actions"
                                                      :key="i"
-                                                     @click="editOrDelete(action.value, props.item)"
+                                                     @click="onAction(action.value, props.item)"
                                         >
                                             <v-list-tile-title>{{ action.title }}</v-list-tile-title>
                                         </v-list-tile>
@@ -77,6 +77,7 @@
                     ],
                     items: [],
                     actions: [
+                        { title: 'Tonen', value: 'show' },
                         { title: 'Wijzigen', value: 'edit' },
                         { title: 'Verwijderen', value: 'delete' },
                     ]
@@ -88,11 +89,16 @@
             this.get()
         },
         methods: {
-            editOrDelete(action, obj) {
-                if(action === 'edit') {
-                    this.onAddEditFile(obj)
-                } else {
-                    this.delete(obj.id)
+            onAction(action, obj) {
+                switch (action) {
+                    case 'show':
+                        this.goToFile(obj.id)
+                        break;
+                    case 'edit':
+                        this.onAddEditFile(obj)
+                        break;
+                    case 'delete':
+                        this.delete(obj.id)
                 }
             },
             onAddEditFile(obj = null) {
