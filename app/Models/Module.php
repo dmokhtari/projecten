@@ -23,4 +23,12 @@ class Module extends Model
         'background_color',
         'text'
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function files()
+    {
+        return $this->belongsToMany(File::class)->withTimestamps();
+    }
 }
