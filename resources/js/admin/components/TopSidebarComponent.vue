@@ -13,18 +13,20 @@
                     Logo
                 </a>
             </v-toolbar-title>
-            <v-breadcrumbs class="ml-5">
-                <v-breadcrumbs-item v-for="(breadcrumb, index) in breadcrumbList"
-                                    :key="index"
-                                    :disabled="breadcrumb.disabled"
-                                    :to="breadcrumb.to"
-                                    :exact="true">
-                    <span v-if="breadcrumb.text !== 'Home'">{{ breadcrumb.text }}</span>
-                    <span v-else>
+            <v-chip class="ml-5 hidden-xs-only">
+                <v-breadcrumbs large>
+                    <v-breadcrumbs-item v-for="(breadcrumb, index) in breadcrumbList"
+                                        :key="index"
+                                        :disabled="breadcrumb.disabled"
+                                        :to="breadcrumb.to"
+                                        :exact="true">
+                        <span v-if="breadcrumb.text !== 'Home'">{{ breadcrumb.text }}</span>
+                        <span v-else>
                         <font-awesome-icon :icon="['fas', 'home']"></font-awesome-icon>
                     </span>
-                </v-breadcrumbs-item>
-            </v-breadcrumbs>
+                    </v-breadcrumbs-item>
+                </v-breadcrumbs>
+            </v-chip>
             <v-spacer></v-spacer>
             <v-menu offset-y>
                 <v-btn icon large slot="activator">
