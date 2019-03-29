@@ -13,8 +13,22 @@
                     Logo
                 </a>
             </v-toolbar-title>
+            <v-chip class="ml-5 hidden-xs-only">
+                <v-breadcrumbs :items="breadcrumbList">
+                    <v-breadcrumbs-item slot="item"
+                                        slot-scope="{ item }"
+                                        :disabled="item.disabled"
+                                        :to="item.to"
+                                        :exact="true">
+                        <span v-if="item.text !== 'Home'">{{ item.text }}</span>
+                        <span v-else>
+                            <font-awesome-icon :icon="['fas', 'home']"></font-awesome-icon>
+                        </span>
+                    </v-breadcrumbs-item>
+                </v-breadcrumbs>
+            </v-chip>
             <v-spacer></v-spacer>
-            <v-menu offset-y>
+            <v-menu offset-y bottom :nudge-width="200" :close-on-content-click="false">
                 <v-btn icon large slot="activator">
                     <v-avatar color="grey lighten-1" size="42" class="elevation-1">
                         <font-awesome-icon :icon="['fas', 'user']"></font-awesome-icon>
@@ -126,8 +140,14 @@
                 }
             }
         },
+        watch: {
+            '$route'() {
+                this.updateBreadcrumb()
+            }
+        },
         created() {
             this.getUserRole()
+            this.updateBreadcrumb()
         },
         methods: {
             requestLogOut(page) {
@@ -143,6 +163,9 @@
             goToDashboard() {
                 window.location.href = '/admin/dashboard'
             },
+            updateBreadcrumb() {
+                this.breadcrumbList = this.$route.meta.breadcrumb
+            }
         }
     }
 </script>

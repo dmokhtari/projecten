@@ -13,20 +13,23 @@
                     Logo
                 </a>
             </v-toolbar-title>
+
+            <!-- Breadcrumb -->
             <v-chip class="ml-5 hidden-xs-only">
-                <v-breadcrumbs large>
-                    <v-breadcrumbs-item v-for="(breadcrumb, index) in breadcrumbList"
-                                        :key="index"
-                                        :disabled="breadcrumb.disabled"
-                                        :to="breadcrumb.to"
+                <v-breadcrumbs :items="breadcrumbList" large>
+                    <v-breadcrumbs-item slot="item"
+                                        slot-scope="{ item }"
+                                        :disabled="item.disabled"
+                                        :to="item.to"
                                         :exact="true">
-                        <span v-if="breadcrumb.text !== 'Home'">{{ breadcrumb.text }}</span>
+                        <span v-if="item.text !== 'Home'">{{ item.text }}</span>
                         <span v-else>
                         <font-awesome-icon :icon="['fas', 'home']"></font-awesome-icon>
                     </span>
                     </v-breadcrumbs-item>
                 </v-breadcrumbs>
             </v-chip>
+
             <v-spacer></v-spacer>
             <v-menu offset-y>
                 <v-btn icon large slot="activator">
@@ -85,6 +88,27 @@
                         <v-list-tile-title>{{ item.text }}</v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
+
+                <v-list-group
+                    prepend-icon="settings"
+                >
+                    <template v-slot:activator>
+                        <v-list-tile>
+                            <v-list-tile-title>Instellingen</v-list-tile-title>
+                        </v-list-tile>
+                    </template>
+                    <v-list-tile
+                        v-for="(setting, i) in settings"
+                        :key="i"
+                        :to="setting.slug"
+                    >
+                        <v-list-tile-action class="pl-4">
+                            <font-awesome-icon :icon="['fas', setting.icon]"></font-awesome-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-title class="pl-3" v-text="setting.text"></v-list-tile-title>
+                    </v-list-tile>
+                </v-list-group>
+
             </v-list>
 
         </v-navigation-drawer>
@@ -104,9 +128,12 @@
                 navigationMenu: [
                     { slug: '/admin/dashboard', icon: 'home', text: 'Dashboard' },
                     { slug: '/admin/files', icon: 'book', text: 'Files' },
-                    { slug: '/admin/modules', icon: 'book', text: 'Modules' },
+                    { slug: '/admin/modules', icon: 'file', text: 'Modules' },
                     { slug: '/admin/elements', icon: 'puzzle-piece', text: 'Elements' },
                     { slug: '/admin/users', icon: 'users', text: 'Gebruikers' },
+                ],
+                settings: [
+                    { slug: '/admin/settings/icons', icon: 'sign', text: 'Icons' }
                 ],
                 userMenu: [
                     { slug: '/auth/user', icon: 'user-circle', text: 'Profiel' },
