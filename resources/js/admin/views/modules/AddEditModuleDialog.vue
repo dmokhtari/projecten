@@ -15,7 +15,6 @@
             <form @submit.prevent="form.id ? put(form.id) : post()" class="px-4 py-4" @keydown="form.errors.clear($event.target.name)">
                 <v-text-field
                     outline
-                    type="text"
                     label="Title"
                     :rules="[form.errors.get('title')]"
                     :errors="form.errors.has('title')"
@@ -24,23 +23,21 @@
                 ></v-text-field>
                 <v-text-field
                     outline
-                    type="text"
                     label="Subtitle"
                     :rules="[form.errors.get('subtitle')]"
                     :errors="form.errors.has('subtitle')"
                     v-model="form.subtitle"
                 ></v-text-field>
-
-                <v-text-field
+                <v-select
                     outline
-                    type="text"
-                    label="Upload een photo"
-                    :rules="[form.errors.get('background_image')]"
-                    :errors="form.errors.has('background_image')"
-                    v-model="form.background_image_name"
-                    @click="onClickImageInput"
-                ></v-text-field>
-                <input type="file" ref="image" style="display:none" @change="onImageChange">
+                    label="Koppel aan een file"
+                    :items="files"
+                    item-text="title"
+                    item-value="id"
+                    v-model="form.file_id"
+                    :return-object="false"
+                ></v-select>
+
                 <v-card-actions>
                     <v-btn color="grey" @click="onCancel" flat>Annuleer</v-btn>
                     <v-spacer></v-spacer>
@@ -58,6 +55,7 @@
             return {
                 dialog: false,
                 form: null,
+                files: []
             }
         },
         created() {
@@ -68,8 +66,9 @@
         },
         methods: {
             onShow(obj) {
-                this.initForm()
                 this.dialog = true
+                this.getFiles()
+                this.initForm()
                 if(obj) {
                     for(let key in obj) {
                         if(obj[key] !== null) {
@@ -81,24 +80,15 @@
             initForm() {
                 this.form = new Form({
                     id: null,
+                    file_id: null,
                     title: '',
                     subtitle: '',
-                    background_image: '',
-                    background_image_name: '',
-                    background_color: '',
+                    text: ''
                 })
             },
             onCancel() {
                 this.dialog = false
                 this.form = new Form({})
-            },
-            onClickImageInput() {
-                this.$refs.imageInput.click()
-            },
-            onImageChange(e) {
-                let image = e.target.files[0]
-                this.form.background_image = image
-                this.form.background_image_name = image.name
             },
             post() {
                 this.form.post('/api/modules')
@@ -107,7 +97,7 @@
                         this.$emit('posted')
                         eventHub.$emit('show-message', response.status,  response.data)
                     })
-                    .catch(response => eventHub.$emit('show-message', response.data.status,  response.data.data))
+                    .catch(response => console.error(response))
             },
             put(id) {
                 this.form.put('/api/modules/' + id)
@@ -116,8 +106,13 @@
                         this.$emit('update')
                         eventHub.$emit('show-message', response.status,  response.data)
                     })
-                    .catch(response => eventHub.$emit('show-message', response.data.status,  response.data.data))
+                    .catch(response => console.error(response))
             },
+            getFiles() {
+                axios.get('/api/files')
+                    .then(response => this.files = response.data.data)
+                    .catch(response => console.error(response))
+            }
         }
     }
 </script>

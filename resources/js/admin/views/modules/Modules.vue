@@ -34,6 +34,8 @@
                         <template slot="items" slot-scope="props">
                             <td><a @click="goToModule(props.item.id)">{{ props.item.title }}</a></td>
                             <td>{{ props.item.subtitle }}</td>
+                            <td>{{ showFileTitle(props.item.files) }}</td>
+                            <td><v-chip>{{ props.item.elements_count }}</v-chip></td>
                             <td class="text-xs-center">
                                 <v-menu bottom left>
                                     <v-btn slot="activator" icon>
@@ -59,7 +61,6 @@
 </template>
 <script>
     import AddEditModuleDialog from './AddEditModuleDialog';
-    import vuetifyColors from 'vuetify/es5/util/colors';
     export default {
         name: 'adminModules',
         title: 'Modules - admin',
@@ -74,21 +75,33 @@
                     headers: [
                         { text: 'Title', sortable: true, value: 'title' },
                         { text: 'Subtitle', sortable: false, value: 'subtitle' },
+                        { text: 'Gekoppeld Bestanden', sortable: false, value: 'file' },
+                        { text: 'Antal elementen', sortable: false, value: 'elements_count', width: '30' },
                         { text: 'Acties', sortable: false, value: '', width: '30' }
                     ],
                     items: [],
                     actions: [
+                        { title: 'Tonen', value: 'show' },
                         { title: 'Wijzigen', value: 'edit' },
                         { title: 'Verwijderen', value: 'delete' },
                     ]
                 },
-                colors: [],
 
+            }
+        },
+        computed: {
+            showFileTitle(item) {
+                return (item) => {
+                    if(item.length > 0) {
+                        return item[0].title
+                    } else {
+                        return 'Geen bestanden gekoppeld'
+                    }
+                }
             }
         },
         created() {
             this.get()
-            this.getColors()
         },
         methods: {
             onAction(action, obj) {
@@ -106,10 +119,6 @@
             onAddEditModule(obj = null) {
                 eventHub.$emit('add-edit-module-dialog', obj)
             },
-            getColors() {
-                let col = Object.entries(vuetifyColors)
-                console.log(col)
-            },
             goToModule(id) {
                 this.$router.push({ name: 'module', params: {id: id} })
             },
@@ -126,7 +135,7 @@
                         this.get()
                         eventHub.$emit('show-message', response.data.status, response.data.data)
                     })
-                    .catch(response => eventHub.$emit('show-message', response.data.status, response.data.data))
+                    .catch(error => console.error(error))
             }
         }
     }

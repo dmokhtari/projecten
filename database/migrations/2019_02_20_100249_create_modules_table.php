@@ -18,15 +18,12 @@ class CreateModulesTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->string('title');
             $table->string('subtitle')->nullable();
-            $table->string('background_path')->nullable();
-            $table->string('background_name')->nullable();
-            $table->string('background_color')->nullable();
             $table->text('text')->nullable();
             $table->timestamps();
         });
 
         Schema::table('modules', function($table) {
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');;
         });
     }
 

@@ -26,7 +26,7 @@ class ModuleController extends Controller
      */
     public function index()
     {
-        $modules = Module::all();
+        $modules = Module::with('files')->withCount('elements')->get();
         return response()->json(['status' => 'success', 'data' => $modules], 200);
     }
 
@@ -38,25 +38,25 @@ class ModuleController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'title' => 'required|string|max:200',
-            'subtitle' => 'nullable|string|max:200',
-            'background_image' => 'nullable|image',
-            'background_color' => 'nullable|string|max:200'
+            'title' => 'required|string|max:255',
+            'subtitle' => 'nullable|string|max:255',
+            'text' => 'nullable|string|max:65535',
+            'file_id' => 'nullable|exists:files,id'
         ]);
-        $image_path = null;
-        $image_name = null;
-        if($request->hasFile('background_image')) {
-            $image_name = $request->file('background_image')->getClientOriginalName();
-            $image_path = $request->file('background_image')->store('img/modules');
-        }
-        Module::create([
+
+        $id = Module::create([
             'user_id' => Auth::guard('api')->user()->id,
             'title' => $request->title,
             'subtitle' => $request->subtitle,
-            'background_name' => $image_path,
-            'background_path' => $image_name,
-            'background_color' => $request->background_color
+            'text' => $request->text,
+            'file_id' => $request->file_id
         ]);
+
+        // assign file id
+        if($request->file_id) {
+            $module = Module::findOrFail($id);
+            $module->files()->attach($request->file_id);
+        }
 
         return response()->json(['status' => 'success', 'data' => "{$request->title} is aangemaakt!"], 201);
     }
@@ -84,18 +84,14 @@ class ModuleController extends Controller
         $this->validate($request, [
             'title' => 'required|string|max:255',
             'subtitle' => 'nullable|string|max:255',
-            'background_image' => 'nullable|image',
-            'background_color' => 'nullable|string|max:255'
+            'text' => 'nullable|string|max:65535',
+            'file_id' => 'nullable|exists:files,id'
         ]);
 
         $module = Module::findOrFail($id);
-        $module->fill($request->only(['title', 'subtitle', 'background_color']));
+        $module->update($request->only(['title', 'subtitle', 'text']));
 
-        if($request->hasFile('background_image')) {
-            $module->background_name = $request->file('background_image')->getClientOriginalName();
-            $module->background_path = $request->file('background_image')->store('img/modules');
-        }
-        $module->save();
+        if($request->file_id) $module->files()->sync($request->file_id);
 
         return response()->json(['status' => 'success', 'data' => "{$request->title} is gewijzigd!"], 200);
     }
@@ -109,7 +105,10 @@ class ModuleController extends Controller
     public function destroy($id)
     {
         $module = Module::findOrFail($id);
-        if($module->background_path) Storage::delete($module->background_path);
+        if($module->elements()->exists()) {
+            return response()->json(['status' => 'error', 'data' => 'Deze module heeft elementen: verwijder eerst de elmenten!']);
+        }
+        $module->files()->sync([]);
         $module->delete();
         return response()->json(['status' => 'success', 'data' => "{$module->title} is verwijderd!"], 200);
     }

@@ -15,7 +15,6 @@
             <form @submit.prevent="form.id ? put(form.id) : post()" class="px-4 py-4" @keydown="form.errors.clear($event.target.name)">
                 <v-text-field
                     outline
-                    type="text"
                     label="Title"
                     :rules="[form.errors.get('title')]"
                     :errors="form.errors.has('title')"
@@ -24,7 +23,6 @@
                 ></v-text-field>
                 <v-text-field
                     outline
-                    type="text"
                     label="Subtitle"
                     :rules="[form.errors.get('subtitle')]"
                     :errors="form.errors.has('subtitle')"
@@ -33,14 +31,13 @@
 
                 <v-text-field
                     outline
-                    type="text"
                     label="Upload een photo"
                     :rules="[form.errors.get('background_image')]"
                     :errors="form.errors.has('background_image')"
                     v-model="form.background_image_name"
                     @click="onClickImageInput"
                 ></v-text-field>
-                <input type="file" ref="image" style="display:none" @change="onImageChange">
+                <input type="file" ref="imageInput" style="display:none" @change="onImageChange">
                 <v-card-actions>
                     <v-btn color="grey" @click="onCancel" flat>Annuleer</v-btn>
                     <v-spacer></v-spacer>
