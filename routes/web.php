@@ -31,10 +31,24 @@ Route::post('passwords/reset', 'Auth\ResetPasswordController@reset')->name('pass
 Route::middleware('auth', 'admin')->group(function() {
     Route::prefix('admin')->group(function() {
         Route::get('/dashboard', 'AppController@getDashboard');
+
+        // files
         Route::get('/files', 'AppController@getDashboard');
         Route::get('/files/{file}', 'AppController@getDashboard');
+
+        // modules
         Route::get('/modules', 'AppController@getDashboard');
         Route::get('/modules/{module}', 'AppController@getDashboard');
+
+        // elements
+        Route::get('/elements', 'AppController@getDashboard');
+        Route::get('/elements/create', 'AppController@getDashboard');
+        Route::get('/elements/{element}', 'AppController@getDashboard');
+
+        //user
         Route::get('/users', 'AppController@getDashboard');
+
+        // settings
+        Route::get('/settings/icons', 'AppController@getDashboard');
     });
 });

@@ -23,7 +23,14 @@ Route::get('/dashboard/users', 'API\DashboardController@getUsers');
 
 Route::apiResource('files', 'API\FileController');
 Route::apiResource('modules', 'API\ModuleController');
+Route::apiResource('elements', 'API\ElementController');
+Route::apiResource('subelements', 'API\SubElementController');
 Route::apiResource('users', 'API\UserController');
 Route::post('/users/import', 'API\UserController@import');
 
 Route::apiResource('roles', 'API\RoleController');
+
+// settings
+Route::prefix('settings')->group(function() {
+    Route::apiResource('icons', 'API\IconController');
+});

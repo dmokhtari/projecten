@@ -20,8 +20,8 @@ class CreateFileModuleTable extends Migration
         });
 
         Schema::table('file_module', function($table) {
-            $table->foreign('file_id')->references('id')->on('files');
-            $table->foreign('module_id')->references('id')->on('modules');
+            $table->foreign('file_id')->references('id')->on('files')->onDelete('cascade');;
+            $table->foreign('module_id')->references('id')->on('modules')->onDelete('cascade');;
         });
     }
 

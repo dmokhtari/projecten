@@ -20,8 +20,8 @@ class CreateRoleUserTable extends Migration
         });
 
         Schema::table('role_user', function($table) {
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('role_id')->references('id')->on('roles');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');;
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');;
         });
     }
 

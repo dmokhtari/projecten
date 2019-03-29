@@ -18,9 +18,6 @@ class Module extends Model
         'user_id',
         'title',
         'subtitle',
-        'background_path',
-        'background_name',
-        'background_color',
         'text'
     ];
 
@@ -30,5 +27,13 @@ class Module extends Model
     public function files()
     {
         return $this->belongsToMany(File::class)->withTimestamps();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function elements()
+    {
+        return $this->hasMany(Element::class);
     }
 }

@@ -63,13 +63,59 @@ export const router = new VueRouter({
             }
         },
         {
-            path: '/admin/users',
-            name: 'users',
-            component: require('./views/Users').default,
+            path: '/admin/elements',
+            name: 'elements',
+            component: require('./views/elements/Elements').default,
             meta: {
                 breadcrumb: [
                     { text: 'Home', disabled: false, to:'/admin/dashboard' },
-                    { text: 'Users', disabled: true, to:'/admin/users' },
+                    { text: 'Elements', disabled: true, to:'/admin/elements' },
+                ]
+            }
+        },
+        {
+            path: '/admin/elements/create',
+            name: 'addElement',
+            component: require('./views/elements/CreateElement').default,
+            meta: {
+                breadcrumb: [
+                    { text: 'Home', disabled: false, to:'/admin/dashboard' },
+                    { text: 'Elements', disabled: false, to:'/admin/elements' },
+                    { text: 'Aanmaken', disabled: true, to:'/admin/elements/create' },
+                ]
+            }
+        },
+        {
+            path: '/admin/elements/:id',
+            name: 'editElement',
+            component: require('./views/elements/EditElement').default,
+            meta: {
+                breadcrumb: [
+                    { text: 'Home', disabled: false, to:'/admin/dashboard' },
+                    { text: 'Elements', disabled: false, to:'/admin/elements' },
+                    { text: 'Wijzigen', disabled: true, to:'/admin/elements/element' },
+                ]
+            }
+        },
+        {
+            path: '/admin/users',
+            name: 'users',
+            component: require('./views/users/Users').default,
+            meta: {
+                breadcrumb: [
+                    { text: 'Home', disabled: false, to:'/admin/dashboard' },
+                    { text: 'Gebruikers', disabled: true, to:'/admin/users' },
+                ]
+            }
+        },
+        {
+            path: '/admin/settings/icons',
+            name: 'iconSettings',
+            component: require('./views/settings/Icons').default,
+            meta: {
+                breadcrumb: [
+                    { text: 'Home', disabled: false, to:'/admin/dashboard' },
+                    { text: 'Icons', disabled: true, to:'/admin/settings/icons' },
                 ]
             }
         }
