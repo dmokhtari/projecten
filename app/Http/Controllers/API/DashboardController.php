@@ -30,7 +30,8 @@ class DashboardController extends Controller
     }
 
     /**
-     * @return int Total users online
+     * Total users online
+     * @return int
      */
     protected function getOnlineUsers()
     {

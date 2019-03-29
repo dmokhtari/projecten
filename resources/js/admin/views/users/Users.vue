@@ -55,6 +55,27 @@
                             </td>
                         </template>
                     </v-data-table>
+                    <!--<v-divider></v-divider>-->
+                    <!--<v-layout>-->
+                        <!--<v-flex xs12 md3 offset-md6>-->
+                            <!--<v-select></v-select>-->
+                        <!--</v-flex>-->
+                        <!--<v-flex xs12 md3 class="text-xs-right pt-2">-->
+                            <!--<span>{{ table.pagination.from }}-{{ table.pagination.to }} van {{ table.pagination.total }}</span>-->
+                            <!--<v-btn icon-->
+                                   <!--:disabled="table.pagination.prev_page_url == null"-->
+                                   <!--@click="get(table.pagination.prev_page_url)"-->
+                            <!--&gt;-->
+                                <!--<font-awesome-icon :icon="['fas', 'chevron-left']"></font-awesome-icon>-->
+                            <!--</v-btn>-->
+                            <!--<v-btn icon-->
+                                   <!--:disabled="table.pagination.next_page_url == null"-->
+                                   <!--@click="get(table.pagination.next_page_url)"-->
+                            <!--&gt;-->
+                                <!--<font-awesome-icon :icon="['fas', 'chevron-right']"></font-awesome-icon>-->
+                            <!--</v-btn>-->
+                        <!--</v-flex>-->
+                    <!--</v-layout>-->
                 </v-card>
             </v-flex>
         </v-layout>
@@ -64,9 +85,8 @@
     </v-container>
 </template>
 <script>
-    import vuetifyColors from 'vuetify/es5/util/colors';
-    import addEditUserDialog from "./../components/AddEditUserDialog";
-    import uploadUserDialog from "./../components/UploadUsersDialog";
+    import addEditUserDialog from "./AddEditUserDialog";
+    import uploadUserDialog from "./UploadUsersDialog";
     export default {
         name: 'adminUsers',
         title: 'Users - admin',
@@ -90,12 +110,16 @@
                         { title: 'Tonen', value: 'show' },
                         { title: 'Wijzigen', value: 'edit' },
                         { title: 'Verwijderen', value: 'delete' },
-                    ]
+                    ],
+                    pagination: {
+                        from: 0,
+                        to: 0,
+                        next_page_url: null,
+                        prev_page_url: null,
+                        total: 0,
+                    }
                 }
             }
-        },
-        computed: {
-
         },
         created() {
             this.get()
@@ -119,17 +143,23 @@
             onUploadUser() {
                 eventHub.$emit('upload-user-dialog')
             },
-            getColors() {
-                let col = Object.entries(vuetifyColors)
-                console.log(col)
-            },
             goToModule(id) {
                 this.$router.push({ name: 'module', params: {id: id} })
             },
-            get() {
+            get(page = null) {
                 this.table.loading = true
-                axios.get('/api/users')
-                    .then(response => this.table.items = response.data.data)
+                console.log('page', page)
+                let url = '/api/users'
+                url = page ? page : url
+                axios.get(url)
+                    .then(response => {
+                        // for(let key in response.data.data) {
+                        //     if(this.table.pagination.hasOwnProperty(key)) {
+                        //         this.table.pagination[key] = response.data.data[key]
+                        //     }
+                        // }
+                        this.table.items = response.data.data
+                    })
                     .catch(response => console.error(response))
                     .finally(() => this.table.loading = false)
             },
