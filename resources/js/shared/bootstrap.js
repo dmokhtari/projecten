@@ -30,7 +30,8 @@ Vue.config.productionTip = false;
  */
 
 try {
-
+    // jquery is needed for trumbowyg
+    window.$ = window.jQuery = require('jquery');
 } catch (e) {}
 
 /**
