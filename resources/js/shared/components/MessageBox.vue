@@ -33,8 +33,7 @@
         },
         methods: {
             show(color, text) {
-                console.warn('i heard inside show')
-                console.log(color, text)
+                console.warn('i heard it inside messagebox', color + ': ' + text )
                 this.snackbar = true
                 this.color = color
                 this.text = text
