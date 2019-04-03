@@ -44,7 +44,7 @@
 
             }
         },
-        mounted() {
+        created() {
             setTimeout(() => this.onAddEditElement(), 500)
         },
         methods: {
@@ -52,6 +52,7 @@
                 eventHub.$emit('add-edit-subelement-video-dialog', obj)
             },
             onAddEditElement(obj = null) {
+                console.log('yes')
                 eventHub.$emit('add-edit-element-dialog', obj)
             },
             get(id) {

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\Element;
+use App\Models\SubElement;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Log;
 
 class SubElementController extends Controller
 {
@@ -42,11 +44,12 @@ class SubElementController extends Controller
             'description' => 'nullable|string',
         ]);
         
-        $element = Element::findOrFail($request->element_id);
-        
-        $element->subelements()->create($request->only(['type', 'title', 'url', 'icon_id', 'description', 'binary']));
-        
-        return response()->json(['status' => 'success', 'data' => 'Sub Element aangemaakt!'], 200);
+        $subElement = new SubElement();
+        $subElement->fill($request->only('type', 'title', 'url', 'description', 'binary'));
+        $subElement->save();
+        $subElement->icons()->attach($request->icon_id);
+
+        return response()->json(['status' => 'success', 'data' => 'Sub Element aangemaakt!'], 201);
     }
 
     /**
@@ -69,7 +72,21 @@ class SubElementController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'type' => 'required|string',
+            'element_id' => 'required',
+            'icon_id' => 'nullable|exists:icons,id',
+            'title' => 'nullable|string|max:255',
+            'url' => 'nullable|url|max:255',
+            'description' => 'nullable|string',
+        ]);
+
+        $subElement = SubElement::findOrFail($id);
+        $subElement->update($request->only('type', 'title', 'url', 'description', 'binary'));
+        Log::info(json_encode($request->icon_id));
+        $subElement->icons()->sync([$request->icon_id]);
+
+        return response()->json(['status' => 'success', 'data' => 'Sub element gewijzigd!'], 200);
     }
 
     /**
@@ -80,6 +97,10 @@ class SubElementController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $subelement = SubElement::findOrFail($id);
+        $subelement->icons()->delete();
+        $subelement->delete();
+        
+        return response()->json(['status' => 'success', 'data' => "Sub-element is verwijderd!"], 200);
     }
 }

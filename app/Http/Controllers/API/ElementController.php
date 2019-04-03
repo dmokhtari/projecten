@@ -51,7 +51,7 @@ class ElementController extends Controller
             'module_id' => $request->module_id
         ]);
 
-        return response()->json(['status' => 'success', 'data' => 'Element aangemaakt!'], 201);
+        return response()->json(['status' => 'success', 'data' => "{$request->title} is aangemaakt!"], 201);
     }
 
     /**
@@ -62,7 +62,7 @@ class ElementController extends Controller
      */
     public function show($id)
     {
-        $element = Element::with('subelements')->findOrFail($id);
+        $element = Element::with(['subelements', 'subelements.icons'])->findOrFail($id);
         return response()->json(['status' => 'success', 'data' => $element], 200);
     }
 
@@ -84,7 +84,7 @@ class ElementController extends Controller
         $element = Element::findOrFail($id);
         $element->update($request->only(['title', 'subtitle', 'module_id']));
 
-        return response()->json(['status' => 'success', 'data' => 'Element gewijzigd!'], 200);
+        return response()->json(['status' => 'success', 'data' => "{$request->title} is gewijzigd!"], 200);
     }
 
     /**

@@ -16,7 +16,6 @@ class SubElement extends Model
      */
     protected $fillable = [
         'element_id',
-        'icon_id',
         'type',
         'title',
         'description',
@@ -30,5 +29,13 @@ class SubElement extends Model
     public function element()
     {
         return $this->belongsTo(Element::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function icons()
+    {
+        return $this->belongsToMany(Icon::class)->withTimestamps();
     }
 }

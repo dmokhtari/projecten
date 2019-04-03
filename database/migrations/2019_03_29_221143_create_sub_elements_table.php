@@ -16,7 +16,6 @@ class CreateSubElementsTable extends Migration
         Schema::create('sub_elements', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('element_id')->unsigned();
-            $table->integer('icon_id')->unsigned()->nullable();
             $table->string('type');
             $table->string('title')->nullable();
             $table->string('url')->nullable();
@@ -26,8 +25,7 @@ class CreateSubElementsTable extends Migration
         });
 
         Schema::table('sub_elements', function($table) {
-            $table->foreign('element_id')->references('id')->on('elements')->onDelete('cascade');;
-            $table->foreign('icon_id')->references('id')->on('icons')->onDelete('cascade');;
+            $table->foreign('element_id')->references('id')->on('elements')->onDelete('cascade');
         });
     }
 

@@ -44,17 +44,12 @@ class ModuleController extends Controller
             'file_id' => 'nullable|exists:files,id'
         ]);
 
-        $id = Module::create([
-            'user_id' => Auth::guard('api')->user()->id,
-            'title' => $request->title,
-            'subtitle' => $request->subtitle,
-            'text' => $request->text,
-            'file_id' => $request->file_id
-        ]);
-
+        $module = new Module();
+        $module->fill($request->only('title', 'subtitle', 'text'));
+        $module->user_id = Auth::guard('api')->user()->id;
+        $module->save();
         // assign file id
         if($request->file_id) {
-            $module = Module::findOrFail($id);
             $module->files()->attach($request->file_id);
         }
 

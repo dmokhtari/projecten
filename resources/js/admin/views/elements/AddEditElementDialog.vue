@@ -2,7 +2,7 @@
     <v-dialog
         v-if="form"
         v-model="dialog"
-        width="500"
+        width="600"
         persistent
     >
         <v-card>
@@ -60,10 +60,11 @@
             eventHub.$on('add-edit-element-dialog', this.onShow)
         },
         beforeDestroy() {
-            eventHub.$off('add-edit-element-dialog')
+            eventHub.$off('add-edit-element-dialog', this.onShow)
         },
         methods: {
             onShow(obj) {
+                console.log('yyy')
                 this.dialog = true
                 this.getModules()
                 this.initForm()
