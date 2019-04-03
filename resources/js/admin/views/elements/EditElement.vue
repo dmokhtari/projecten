@@ -2,11 +2,9 @@
     <v-container>
         <v-layout justify-end>
             <v-flex xs12 md6>
-                <v-toolbar height="50">
-                    <v-toolbar-items>
-                        <v-btn @click="onVideo(element.id)">video</v-btn>
-                        <v-btn @click="onTextEditor(element.id)">Text editor</v-btn>
-                    </v-toolbar-items>
+                <v-toolbar class="elevation-1" dense>
+                    <v-btn flat @click="onVideo(element.id)">video</v-btn>
+                    <v-btn flat @click="onTextEditor(element.id)">Text editor</v-btn>
                 </v-toolbar>
             </v-flex>
         </v-layout>
@@ -19,16 +17,31 @@
                     <v-card-text v-if="element.subtitle">{{ element.subtitle }}</v-card-text>
 
                     <v-expansion-panel v-if="element.subelements.length > 0">
+
                         <v-expansion-panel-content v-for="subElement in element.subelements" :key="subElement.id"
                                                    v-if="subElement.type === 'video'">
                             <template v-slot:actions>
                                 <v-icon color="primary" class="subheading">$vuetify.icons.expand</v-icon>
                             </template>
                             <template v-slot:header>
-                                <div>{{ subElement.url }}</div>
+                                <div>{{ subElement.description }}</div>
                             </template>
                             <v-card>
-                                <v-card-text class="accent">{{ subElement.description }}</v-card-text>
+                                <v-card-text class="accent">
+                                    <v-layout>
+                                        <v-flex xs12 md10>
+                                            {{ subElement.url }}
+                                        </v-flex>
+                                        <v-flex xs12 md2 class="text-xs-right">
+                                            <v-btn icon small @click="onVideo(subElement)">
+                                                <font-awesome-icon :icon="['fas', 'pen']"></font-awesome-icon>
+                                            </v-btn>
+                                            <v-btn icon small @click="onDestroy(subElement.id)">
+                                                <font-awesome-icon :icon="['fas', 'trash-alt']"></font-awesome-icon>
+                                            </v-btn>
+                                        </v-flex>
+                                    </v-layout>
+                                </v-card-text>
                             </v-card>
                         </v-expansion-panel-content>
 
@@ -50,25 +63,32 @@
         </v-layout>
 
         <text-editor-sub-element-dialog></text-editor-sub-element-dialog>
-        <video-sub-element-dialog></video-sub-element-dialog>
+        <video-sub-element-dialog @video-posted="get" @video-updated="get"></video-sub-element-dialog>
         <add-edit-element-dialog :element-posted="get" :element-updated="get"></add-edit-element-dialog>
+
+        <delete-permanent-dialog @confirmed="destroy">
+            <p>Weet u zeker dat u deze sub-element wil verwijderen?</p>
+        </delete-permanent-dialog>
     </v-container>
 </template>
 <script>
     import videoSubElementDialog from './subElements/Video';
     import addEditElementDialog from './AddEditElementDialog';
     import textEditorSubElementDialog from './subElements/TextEditor';
+    import deletePermanentDialog from './../../../shared/components/DeletePermanent';
     export default {
         name: 'EditElement',
         title: 'Edit Element - admin',
         components: {
             videoSubElementDialog,
             textEditorSubElementDialog,
-            addEditElementDialog
+            addEditElementDialog,
+            deletePermanentDialog
         },
         data() {
             return {
-                element: null
+                element: null,
+                selectedSubElement: null
             }
         },
         created() {
@@ -84,13 +104,24 @@
             onAddEditElement(obj = null) {
                 eventHub.$emit('add-edit-element-dialog', obj)
             },
+            onDestroy(id) {
+                this.selectedSubElement = id
+                eventHub.$emit('show-delete-permanent')
+            },
             get() {
                 axios.get(`/api/elements/${this.$route.params.id}`)
                     .then(response => {
-                        console.log(response)
                         this.element = response.data.data
                     })
                     .catch(response => console.errors(response))
+            },
+            destroy() {
+                axios.delete('/api/subelements/' + this.selectedSubElement)
+                    .then(response => {
+                        this.get()
+                        eventHub.$emit('show-message', response.data.status, response.data.data)
+                    })
+                    .catch(response => eventHub.$emit('show-message', response.data.status, response.data.data))
             }
         }
     }

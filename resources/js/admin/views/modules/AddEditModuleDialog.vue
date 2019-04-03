@@ -75,6 +75,9 @@
                             this.form[key] = obj[key]
                         }
                     }
+                    if(obj.files.length > 0) {
+                        this.form.file_id = obj.files[0].id
+                    }
                 }
             },
             initForm() {

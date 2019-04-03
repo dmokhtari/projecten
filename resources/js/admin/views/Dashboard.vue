@@ -1,16 +1,73 @@
 <template>
-    <v-container>
+    <v-container grid-list-lg>
         <v-layout>
             <v-flex xs12 sm4>
-                <v-card v-if="users">
+                <v-card v-if="users" hover>
                     <v-card-title class="justify-center">
                         <font-awesome-icon class="display-4" :icon="['fas', 'users']"></font-awesome-icon>
                     </v-card-title>
-                    <v-card-text class="text-xs-center">
-                        <h2>Gebruikers</h2>
-                        <p>Totaal gebruikers: <v-chip>{{ users.total }}</v-chip></p>
-                        <p>Online gebruikers: <v-chip>{{ users.online }}</v-chip></p>
-                    </v-card-text>
+                    <v-list avatar>
+                        <v-divider></v-divider>
+                        <v-list-tile>
+                            <v-list-tile-content>
+                                <v-list-tile-title>Totaal gebruikers:</v-list-tile-title>
+                            </v-list-tile-content>
+                            <v-list-tile-avatar><v-chip>{{ users.total }}</v-chip></v-list-tile-avatar>
+                        </v-list-tile>
+                        <v-divider></v-divider>
+                        <v-list-tile>
+                            <v-list-tile-content>
+                                <v-list-tile-title>Totaal gebruikers online:</v-list-tile-title>
+                            </v-list-tile-content>
+                            <v-list-tile-avatar><v-chip>{{ users.online }}</v-chip></v-list-tile-avatar>
+                        </v-list-tile>
+                    </v-list>
+                </v-card>
+            </v-flex>
+            <v-flex xs12 sm4>
+                <v-card v-if="users" hover>
+                    <v-card-title class="justify-center">
+                        <font-awesome-icon class="display-4" :icon="['fas', 'users']"></font-awesome-icon>
+                    </v-card-title>
+                    <v-list avatar>
+                        <v-divider></v-divider>
+                        <v-list-tile>
+                            <v-list-tile-content>
+                                <v-list-tile-title>Totaal gebruikers:</v-list-tile-title>
+                            </v-list-tile-content>
+                            <v-list-tile-avatar><v-chip>{{ users.total }}</v-chip></v-list-tile-avatar>
+                        </v-list-tile>
+                        <v-divider></v-divider>
+                        <v-list-tile>
+                            <v-list-tile-content>
+                                <v-list-tile-title>Totaal gebruikers:</v-list-tile-title>
+                            </v-list-tile-content>
+                            <v-list-tile-avatar><v-chip>{{ users.online }}</v-chip></v-list-tile-avatar>
+                        </v-list-tile>
+                    </v-list>
+                </v-card>
+            </v-flex>
+            <v-flex xs12 sm4>
+                <v-card v-if="users" hover>
+                    <v-card-title class="justify-center">
+                        <font-awesome-icon class="display-4" :icon="['fas', 'users']"></font-awesome-icon>
+                    </v-card-title>
+                    <v-list avatar>
+                        <v-divider></v-divider>
+                        <v-list-tile>
+                            <v-list-tile-content>
+                                <v-list-tile-title>Totaal gebruikers:</v-list-tile-title>
+                            </v-list-tile-content>
+                            <v-list-tile-avatar><v-chip>{{ users.total }}</v-chip></v-list-tile-avatar>
+                        </v-list-tile>
+                        <v-divider></v-divider>
+                        <v-list-tile>
+                            <v-list-tile-content>
+                                <v-list-tile-title>Totaal gebruikers:</v-list-tile-title>
+                            </v-list-tile-content>
+                            <v-list-tile-avatar><v-chip>{{ users.online }}</v-chip></v-list-tile-avatar>
+                        </v-list-tile>
+                    </v-list>
                 </v-card>
             </v-flex>
         </v-layout>
@@ -19,7 +76,7 @@
 <script>
     export default {
         name: 'Dashboard',
-        title: 'Admin Page',
+        title: 'Admin dashboard',
         data() {
             return {
                 users: null,

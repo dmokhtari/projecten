@@ -1,5 +1,11 @@
 <template>
-    <h1>file</h1>
+    <v-container>
+        <v-layout>
+            <v-flex xs12>
+                <h1>file</h1>
+            </v-flex>
+        </v-layout>
+    </v-container>
 </template>
 <script>
     export default {
@@ -8,6 +14,9 @@
             return {
 
             }
+        },
+        created() {
+            console.log(this.$route.params.id)
         }
     }
 </script>

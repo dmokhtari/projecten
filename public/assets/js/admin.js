@@ -12735,10 +12735,11 @@ __webpack_require__.r(__webpack_exports__);
     eventHub.$on('add-edit-element-dialog', this.onShow);
   },
   beforeDestroy: function beforeDestroy() {
-    eventHub.$off('add-edit-element-dialog');
+    eventHub.$off('add-edit-element-dialog', this.onShow);
   },
   methods: {
     onShow: function onShow(obj) {
+      console.log('yyy');
       this.dialog = true;
       this.getModules();
       this.initForm();
@@ -12857,7 +12858,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {};
   },
-  mounted: function mounted() {
+  created: function created() {
     var _this = this;
 
     setTimeout(function () {
@@ -12871,6 +12872,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     onAddEditElement: function onAddEditElement() {
       var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      console.log('yes');
       eventHub.$emit('add-edit-element-dialog', obj);
     },
     get: function get(id) {
@@ -12897,6 +12899,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _subElements_Video__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./subElements/Video */ "./resources/js/admin/views/elements/subElements/Video.vue");
 /* harmony import */ var _AddEditElementDialog__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AddEditElementDialog */ "./resources/js/admin/views/elements/AddEditElementDialog.vue");
 /* harmony import */ var _subElements_TextEditor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./subElements/TextEditor */ "./resources/js/admin/views/elements/subElements/TextEditor.vue");
+/* harmony import */ var _shared_components_DeletePermanent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./../../../shared/components/DeletePermanent */ "./resources/js/shared/components/DeletePermanent.vue");
 //
 //
 //
@@ -12953,6 +12956,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -12962,11 +12983,13 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     videoSubElementDialog: _subElements_Video__WEBPACK_IMPORTED_MODULE_0__["default"],
     textEditorSubElementDialog: _subElements_TextEditor__WEBPACK_IMPORTED_MODULE_2__["default"],
-    addEditElementDialog: _AddEditElementDialog__WEBPACK_IMPORTED_MODULE_1__["default"]
+    addEditElementDialog: _AddEditElementDialog__WEBPACK_IMPORTED_MODULE_1__["default"],
+    deletePermanentDialog: _shared_components_DeletePermanent__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   data: function data() {
     return {
-      element: null
+      element: null,
+      selectedSubElement: null
     };
   },
   created: function created() {
@@ -12984,14 +13007,28 @@ __webpack_require__.r(__webpack_exports__);
       var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
       eventHub.$emit('add-edit-element-dialog', obj);
     },
+    onDestroy: function onDestroy(id) {
+      this.selectedSubElement = id;
+      eventHub.$emit('show-delete-permanent');
+    },
     get: function get() {
       var _this = this;
 
       axios.get("/api/elements/".concat(this.$route.params.id)).then(function (response) {
-        console.log(response);
         _this.element = response.data.data;
       }).catch(function (response) {
         return console.errors(response);
+      });
+    },
+    destroy: function destroy() {
+      var _this2 = this;
+
+      axios.delete('/api/subelements/' + this.selectedSubElement).then(function (response) {
+        _this2.get();
+
+        eventHub.$emit('show-message', response.data.status, response.data.data);
+      }).catch(function (response) {
+        return eventHub.$emit('show-message', response.data.status, response.data.data);
       });
     }
   }
@@ -13365,13 +13402,43 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'VideoSubElementDialog',
   data: function data() {
     return {
       dialog: false,
-      form: null
+      form: null,
+      icons: []
     };
   },
   created: function created() {
@@ -13382,8 +13449,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     onShow: function onShow(objOrId) {
-      this.initForm();
+      var _this = this;
+
       this.dialog = true;
+      this.getIcons();
+      this.initForm();
+      console.log(objOrId);
 
       if (objOrId) {
         if (typeof objOrId === 'number') {
@@ -13394,6 +13465,12 @@ __webpack_require__.r(__webpack_exports__);
               this.form[key] = objOrId[key];
             }
           }
+
+          if (objOrId.icons) {
+            objOrId.icons.forEach(function (icon) {
+              _this.form.icon_id.push(icon.id);
+            });
+          }
         }
       }
     },
@@ -13401,6 +13478,7 @@ __webpack_require__.r(__webpack_exports__);
       this.form = new _shared_helpers_Form__WEBPACK_IMPORTED_MODULE_0__["Form"]({
         id: null,
         element_id: null,
+        icon_id: [],
         type: 'video',
         url: '',
         description: ''
@@ -13411,12 +13489,12 @@ __webpack_require__.r(__webpack_exports__);
       this.form = new _shared_helpers_Form__WEBPACK_IMPORTED_MODULE_0__["Form"]({});
     },
     post: function post() {
-      var _this = this;
+      var _this2 = this;
 
       this.form.post('/api/subelements').then(function (response) {
-        _this.onCancel();
+        _this2.onCancel();
 
-        _this.$emit('posted');
+        _this2.$emit('video-posted');
 
         eventHub.$emit('show-message', response.status, response.data);
       }).catch(function (response) {
@@ -13424,16 +13502,25 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     put: function put(id) {
-      var _this2 = this;
+      var _this3 = this;
 
       this.form.put('/api/subelements/' + id).then(function (response) {
-        _this2.onCancel();
+        _this3.onCancel();
 
-        _this2.$emit('updated');
+        _this3.$emit('video-updated');
 
         eventHub.$emit('show-message', response.status, response.data);
       }).catch(function (response) {
         return eventHub.$emit('show-message', response.data.status, response.data.data);
+      });
+    },
+    getIcons: function getIcons() {
+      var _this4 = this;
+
+      axios.get('/api/settings/icons').then(function (response) {
+        return _this4.icons = response.data.data;
+      }).catch(function (response) {
+        return console.error(response);
       });
     }
   }
@@ -13871,6 +13958,10 @@ __webpack_require__.r(__webpack_exports__);
           if (obj[key] !== null) {
             this.form[key] = obj[key];
           }
+        }
+
+        if (obj.files.length > 0) {
+          this.form.file_id = obj.files[0].id;
         }
       }
     },
@@ -14965,6 +15056,63 @@ __webpack_require__.r(__webpack_exports__);
       }).catch(function (response) {
         return eventHub.$emit('show-message', response.data.status, response.data.data);
       });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/components/DeletePermanent.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/shared/components/DeletePermanent.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'DeletePermanent',
+  props: {
+    strTitle: {
+      required: false
+    }
+  },
+  data: function data() {
+    return {
+      dialog: false
+    };
+  },
+  created: function created() {
+    eventHub.$on('show-delete-permanent', this.onShow);
+  },
+  beforeDestroy: function beforeDestroy() {
+    eventHub.$off('show-delete-permanent', this.onShow);
+  },
+  methods: {
+    onShow: function onShow() {
+      this.dialog = true;
+    },
+    confirm: function confirm() {
+      this.$emit('confirmed');
+      this.dialog = false;
     }
   }
 });
@@ -29571,7 +29719,7 @@ var render = function() {
     ? _c(
         "v-dialog",
         {
-          attrs: { width: "500", persistent: "" },
+          attrs: { width: "600", persistent: "" },
           model: {
             value: _vm.dialog,
             callback: function($$v) {
@@ -29853,36 +30001,32 @@ var render = function() {
             [
               _c(
                 "v-toolbar",
-                { attrs: { height: "50" } },
+                { staticClass: "elevation-1", attrs: { dense: "" } },
                 [
                   _c(
-                    "v-toolbar-items",
-                    [
-                      _c(
-                        "v-btn",
-                        {
-                          on: {
-                            click: function($event) {
-                              return _vm.onVideo(_vm.element.id)
-                            }
-                          }
-                        },
-                        [_vm._v("video")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-btn",
-                        {
-                          on: {
-                            click: function($event) {
-                              return _vm.onTextEditor(_vm.element.id)
-                            }
-                          }
-                        },
-                        [_vm._v("Text editor")]
-                      )
-                    ],
-                    1
+                    "v-btn",
+                    {
+                      attrs: { flat: "" },
+                      on: {
+                        click: function($event) {
+                          return _vm.onVideo(_vm.element.id)
+                        }
+                      }
+                    },
+                    [_vm._v("video")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { flat: "" },
+                      on: {
+                        click: function($event) {
+                          return _vm.onTextEditor(_vm.element.id)
+                        }
+                      }
+                    },
+                    [_vm._v("Text editor")]
                   )
                 ],
                 1
@@ -29957,7 +30101,11 @@ var render = function() {
                                             fn: function() {
                                               return [
                                                 _c("div", [
-                                                  _vm._v(_vm._s(subElement.url))
+                                                  _vm._v(
+                                                    _vm._s(
+                                                      subElement.description
+                                                    )
+                                                  )
                                                 ])
                                               ]
                                             },
@@ -29975,10 +30123,112 @@ var render = function() {
                                               "v-card-text",
                                               { staticClass: "accent" },
                                               [
-                                                _vm._v(
-                                                  _vm._s(subElement.description)
+                                                _c(
+                                                  "v-layout",
+                                                  [
+                                                    _c(
+                                                      "v-flex",
+                                                      {
+                                                        attrs: {
+                                                          xs12: "",
+                                                          md10: ""
+                                                        }
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          "\n                                        " +
+                                                            _vm._s(
+                                                              subElement.url
+                                                            ) +
+                                                            "\n                                    "
+                                                        )
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "v-flex",
+                                                      {
+                                                        staticClass:
+                                                          "text-xs-right",
+                                                        attrs: {
+                                                          xs12: "",
+                                                          md2: ""
+                                                        }
+                                                      },
+                                                      [
+                                                        _c(
+                                                          "v-btn",
+                                                          {
+                                                            attrs: {
+                                                              icon: "",
+                                                              small: ""
+                                                            },
+                                                            on: {
+                                                              click: function(
+                                                                $event
+                                                              ) {
+                                                                return _vm.onVideo(
+                                                                  subElement
+                                                                )
+                                                              }
+                                                            }
+                                                          },
+                                                          [
+                                                            _c(
+                                                              "font-awesome-icon",
+                                                              {
+                                                                attrs: {
+                                                                  icon: [
+                                                                    "fas",
+                                                                    "pen"
+                                                                  ]
+                                                                }
+                                                              }
+                                                            )
+                                                          ],
+                                                          1
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "v-btn",
+                                                          {
+                                                            attrs: {
+                                                              icon: "",
+                                                              small: ""
+                                                            },
+                                                            on: {
+                                                              click: function(
+                                                                $event
+                                                              ) {
+                                                                return _vm.onDestroy(
+                                                                  subElement.id
+                                                                )
+                                                              }
+                                                            }
+                                                          },
+                                                          [
+                                                            _c(
+                                                              "font-awesome-icon",
+                                                              {
+                                                                attrs: {
+                                                                  icon: [
+                                                                    "fas",
+                                                                    "trash-alt"
+                                                                  ]
+                                                                }
+                                                              }
+                                                            )
+                                                          ],
+                                                          1
+                                                        )
+                                                      ],
+                                                      1
+                                                    )
+                                                  ],
+                                                  1
                                                 )
-                                              ]
+                                              ],
+                                              1
                                             )
                                           ],
                                           1
@@ -30068,11 +30318,19 @@ var render = function() {
       _vm._v(" "),
       _c("text-editor-sub-element-dialog"),
       _vm._v(" "),
-      _c("video-sub-element-dialog"),
+      _c("video-sub-element-dialog", {
+        on: { "video-posted": _vm.get, "video-updated": _vm.get }
+      }),
       _vm._v(" "),
       _c("add-edit-element-dialog", {
         attrs: { "element-posted": _vm.get, "element-updated": _vm.get }
-      })
+      }),
+      _vm._v(" "),
+      _c("delete-permanent-dialog", { on: { confirmed: _vm.destroy } }, [
+        _c("p", [
+          _vm._v("Weet u zeker dat u deze sub-element wil verwijderen?")
+        ])
+      ])
     ],
     1
   )
@@ -30518,6 +30776,72 @@ var render = function() {
                   }
                 },
                 [
+                  _c("v-select", {
+                    attrs: {
+                      outline: "",
+                      label: "Icon",
+                      items: _vm.icons,
+                      "item-value": "id",
+                      "item-text": "title",
+                      multiple: "",
+                      chip: "",
+                      "return-object": false
+                    },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "selection",
+                        fn: function(data) {
+                          return [
+                            _c(
+                              "v-chip",
+                              {
+                                key: JSON.stringify(data.item),
+                                staticClass: "v-chip--select-multi",
+                                attrs: {
+                                  close: "",
+                                  selected: data.selected,
+                                  disabled: data.disabled
+                                },
+                                on: {
+                                  input: function($event) {
+                                    return data.parent.selectItem(data.item)
+                                  }
+                                }
+                              },
+                              [
+                                _c(
+                                  "v-avatar",
+                                  { staticClass: "accent white--text" },
+                                  [
+                                    _c("img", {
+                                      attrs: {
+                                        src: "/storage/" + data.item.src,
+                                        alt: data.item.title
+                                      }
+                                    })
+                                  ]
+                                ),
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(data.item.title) +
+                                    "\n                    "
+                                )
+                              ],
+                              1
+                            )
+                          ]
+                        }
+                      }
+                    ]),
+                    model: {
+                      value: _vm.form.icon_id,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form, "icon_id", $$v)
+                      },
+                      expression: "form.icon_id"
+                    }
+                  }),
+                  _vm._v(" "),
                   _c("v-text-field", {
                     attrs: {
                       outline: "",
@@ -32533,6 +32857,93 @@ var render = function() {
       _c("add-edit-user-dialog", { on: { posted: _vm.get, updated: _vm.get } }),
       _vm._v(" "),
       _c("upload-user-dialog", { on: { posted: _vm.get } })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/components/DeletePermanent.vue?vue&type=template&id=0065ecf4&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/shared/components/DeletePermanent.vue?vue&type=template&id=0065ecf4& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-layout",
+    { attrs: { row: "", "justify-center": "" } },
+    [
+      _c(
+        "v-dialog",
+        {
+          attrs: { persistent: "", "max-width": "320" },
+          model: {
+            value: _vm.dialog,
+            callback: function($$v) {
+              _vm.dialog = $$v
+            },
+            expression: "dialog"
+          }
+        },
+        [
+          _c(
+            "v-card",
+            [
+              _c("v-card-title", { staticClass: "error title white--text" }, [
+                _vm._v("Verwijderen Bevestigen")
+              ]),
+              _vm._v(" "),
+              _c("v-card-text", [_vm._t("default")], 2),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { flat: "" },
+                      on: {
+                        click: function($event) {
+                          _vm.dialog = false
+                        }
+                      }
+                    },
+                    [_vm._v("Annuleren")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "error", flat: "" },
+                      on: { click: _vm.confirm }
+                    },
+                    [_vm._v("Ja, verwijder")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
     ],
     1
   )
@@ -73555,7 +73966,20 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.mixin(_shared_mixins_metaTags__WEBPAC
 window.Vue = vue__WEBPACK_IMPORTED_MODULE_1___default.a;
 window.eventHub = new vue__WEBPACK_IMPORTED_MODULE_1___default.a();
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.component('message-box', __webpack_require__(/*! ./../shared/components/MessageBox */ "./resources/js/shared/components/MessageBox.vue").default);
+ // Add a 401 response interceptor
 
+window.axios.interceptors.response.use(function (response) {
+  return response;
+}, function (error) {
+  if (401 === error.response.status) {
+    eventHub.$emit('show-message', 'error', 'Uw sessie is verlopen. U wordt naar login pagina gestuurd!');
+    setTimeout(function () {
+      window.location.href = '/login';
+    }, 4000);
+  } else {
+    return Promise.reject(error);
+  }
+});
 var app = new vue__WEBPACK_IMPORTED_MODULE_1___default.a({
   el: '#admin',
   components: {
@@ -75228,6 +75652,75 @@ if (token) {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/shared/components/DeletePermanent.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/shared/components/DeletePermanent.vue ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _DeletePermanent_vue_vue_type_template_id_0065ecf4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DeletePermanent.vue?vue&type=template&id=0065ecf4& */ "./resources/js/shared/components/DeletePermanent.vue?vue&type=template&id=0065ecf4&");
+/* harmony import */ var _DeletePermanent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DeletePermanent.vue?vue&type=script&lang=js& */ "./resources/js/shared/components/DeletePermanent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _DeletePermanent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _DeletePermanent_vue_vue_type_template_id_0065ecf4___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _DeletePermanent_vue_vue_type_template_id_0065ecf4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/shared/components/DeletePermanent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/shared/components/DeletePermanent.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/shared/components/DeletePermanent.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DeletePermanent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./DeletePermanent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/components/DeletePermanent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DeletePermanent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/shared/components/DeletePermanent.vue?vue&type=template&id=0065ecf4&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/shared/components/DeletePermanent.vue?vue&type=template&id=0065ecf4& ***!
+  \*******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DeletePermanent_vue_vue_type_template_id_0065ecf4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./DeletePermanent.vue?vue&type=template&id=0065ecf4& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/components/DeletePermanent.vue?vue&type=template&id=0065ecf4&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DeletePermanent_vue_vue_type_template_id_0065ecf4___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DeletePermanent_vue_vue_type_template_id_0065ecf4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 

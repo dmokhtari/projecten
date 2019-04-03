@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Requests\UserRegistrationRequest;
 use App\Imports\UserImport;
 use App\Models\User;
+use function GuzzleHttp\Promise\queue;
 use Hash;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -24,12 +25,20 @@ class UserController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
+//        $query = User::with('roles');
+//        if($request->search) {
+//            $query->where(function($query) {
+//                $query->where('email', 'like', '%' . request()->search . '%')
+//                    ->orWhere('forename', 'like', '%' . request()->search . '%');
+//            });
+//        }
+//
+//        $users = $query->paginate(5);
         $users = User::with('roles')->get();
         return response()->json(['status' => 'success', 'data' => $users], 200);
     }
