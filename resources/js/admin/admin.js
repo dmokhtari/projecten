@@ -12,6 +12,20 @@ Vue.component('message-box', require('./../shared/components/MessageBox').defaul
 import Admin from './views/Admin';
 
 
+// Add a 401 response interceptor
+window.axios.interceptors.response.use(function (response) {
+    return response;
+}, function (error) {
+    if (401 === error.response.status) {
+        eventHub.$emit('show-message', 'error', 'Uw sessie is verlopen. U wordt naar login pagina gestuurd!')
+        setTimeout(() => {
+            window.location.href = '/login'
+        }, 4000)
+    } else {
+        return Promise.reject(error);
+    }
+});
+
 const app = new Vue({
     el: '#admin',
     components: { Admin },
