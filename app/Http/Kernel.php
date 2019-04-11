@@ -43,6 +43,7 @@ class Kernel extends HttpKernel
             'bindings',
             'handlePutFormData',
             'lastUserActivity',
+            'convertUndefinedAndNullToNull',
         ],
     ];
 
@@ -67,6 +68,7 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\Admin::class,
         'handlePutFormData' => \App\Http\Middleware\HandlePutFormData::class,
         'lastUserActivity' => \App\Http\Middleware\LastUserActivity::class,
+        'convertUndefinedAndNullToNull' => \App\Http\Middleware\ConvertUndefinedAndNullToNull::class,
     ];
 
     /**
