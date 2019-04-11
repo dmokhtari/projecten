@@ -38,18 +38,17 @@ class SubElementController extends Controller
         $request->validate([
             'type' => 'required|string',
             'element_id' => 'required',
-            'icon_id' => 'nullable|exists:icons,id',
-            'title' => 'nullable|string|max:255',
+            'title' => 'nullable|string|max:191',
             'url' => 'nullable|url|max:255',
             'description' => 'nullable|string',
         ]);
         
         $subElement = new SubElement();
-        $subElement->fill($request->only('type', 'title', 'url', 'description', 'binary'));
+        $subElement->fill($request->only('type', 'title', 'url', 'description', 'binary', 'element_id'));
         $subElement->save();
         $subElement->icons()->attach($request->icon_id);
 
-        return response()->json(['status' => 'success', 'data' => 'Sub Element aangemaakt!'], 201);
+        return response()->json(['status' => 'success', 'data' => 'Sub-element aangemaakt!'], 201);
     }
 
     /**
@@ -75,9 +74,8 @@ class SubElementController extends Controller
         $request->validate([
             'type' => 'required|string',
             'element_id' => 'required',
-            'icon_id' => 'nullable|exists:icons,id',
-            'title' => 'nullable|string|max:255',
-            'url' => 'nullable|url|max:255',
+            'title' => 'nullable|string|max:191',
+            'url' => 'nullable|url|max:191',
             'description' => 'nullable|string',
         ]);
 
@@ -86,7 +84,7 @@ class SubElementController extends Controller
         Log::info(json_encode($request->icon_id));
         $subElement->icons()->sync([$request->icon_id]);
 
-        return response()->json(['status' => 'success', 'data' => 'Sub element gewijzigd!'], 200);
+        return response()->json(['status' => 'success', 'data' => 'Sub-element gewijzigd!'], 200);
     }
 
     /**

@@ -16,7 +16,7 @@ class ElementController extends Controller
     public function __construct()
     {
         $this->middleware('auth:api');
-        $this->middleware('admin:api');
+        $this->middleware('admin:api')->except('show');
     }
 
     /**
@@ -39,8 +39,8 @@ class ElementController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'subtitle' => 'nullable|string|max:255',
+            'title' => 'required|string|max:191',
+            'subtitle' => 'nullable|string|max:191',
             'module_id' => 'nullable|integer|exists:modules,id'
         ]);
 
@@ -76,8 +76,8 @@ class ElementController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'subtitle' => 'nullable|string|max:255',
+            'title' => 'required|string|max:191',
+            'subtitle' => 'nullable|string|max:191',
             'module_id' => 'nullable|integer|exists:modules,id'
         ]);
 

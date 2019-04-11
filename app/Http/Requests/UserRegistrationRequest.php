@@ -24,10 +24,10 @@ class UserRegistrationRequest extends FormRequest
     public function rules()
     {
         return [
-            'forename' => 'nullable|string|max:255',
-            'surname' => 'nullable|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . $this->id . ',id',
-            'class' => 'nullable|string|max:255',
+            'forename' => 'nullable|string|max:191',
+            'surname' => 'nullable|string|max:191',
+            'email' => 'required|email|max:191|unique:users,email,' . $this->id . ',id',
+            'class' => 'nullable|string|max:191',
             'end_date_study' => 'nullable|date_format:Y-m-d',
             'role' => 'required|exists:roles,id'
         ];

@@ -39,9 +39,9 @@ class FileController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'subtitle' => 'nullable|string|max:255',
-            'background_color' => 'nullable|string|max:255',
+            'title' => 'required|string|max:191',
+            'subtitle' => 'nullable|string|max:191',
+            'background_color' => 'nullable|string|max:191',
             'background_image' => 'nullable|image',
         ]);
         $image_path = null;
@@ -70,7 +70,7 @@ class FileController extends Controller
      */
     public function show($id)
     {
-        $file = File::findOrFail($id);
+        $file = File::with('modules')->findOrFail($id);
         return response()->json(['status' => 'success', 'data' => $file], 200);
     }
 
@@ -83,10 +83,10 @@ class FileController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'title' => 'required|string|max:255',
-            'subtitle' => 'nullable|string|max:255',
+            'title' => 'required|string|max:191',
+            'subtitle' => 'nullable|string|max:191',
             'background_image' => 'nullable|image',
-            'background_color' => 'nullable|string|max:255'
+            'background_color' => 'nullable|string|max:191'
         ]);
 
         $file = File::findOrFail($id);

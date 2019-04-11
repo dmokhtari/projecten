@@ -6,6 +6,7 @@ use App\Models\Module;
 use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Log;
 use Storage;
 
 class ModuleController extends Controller
@@ -38,8 +39,8 @@ class ModuleController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'title' => 'required|string|max:255',
-            'subtitle' => 'nullable|string|max:255',
+            'title' => 'required|string|max:191',
+            'subtitle' => 'nullable|string|max:191',
             'text' => 'nullable|string|max:65535',
             'file_id' => 'nullable|exists:files,id'
         ]);
@@ -64,7 +65,7 @@ class ModuleController extends Controller
      */
     public function show($id)
     {
-        $module = Module::findOrFail($id);
+        $module = Module::with('elements')->findOrFail($id);
         return response()->json(['status' => 'success', 'data' => $module], 200);
     }
 
@@ -77,8 +78,8 @@ class ModuleController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'title' => 'required|string|max:255',
-            'subtitle' => 'nullable|string|max:255',
+            'title' => 'required|string|max:191',
+            'subtitle' => 'nullable|string|max:191',
             'text' => 'nullable|string|max:65535',
             'file_id' => 'nullable|exists:files,id'
         ]);
@@ -86,7 +87,7 @@ class ModuleController extends Controller
         $module = Module::findOrFail($id);
         $module->update($request->only(['title', 'subtitle', 'text']));
 
-        if($request->file_id) $module->files()->sync($request->file_id);
+        $module->files()->sync($request->file_id);
 
         return response()->json(['status' => 'success', 'data' => "{$request->title} is gewijzigd!"], 200);
     }
