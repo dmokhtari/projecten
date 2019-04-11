@@ -57,7 +57,9 @@
             </v-flex>
         </v-layout>
         <add-edit-element-dialog></add-edit-element-dialog>
-        <delete-permanent-dialog @confirmed="deleteElement"></delete-permanent-dialog>
+        <delete-permanent-dialog @confirmed="deleteElement">
+            <p>Weet u zeker dat u dit <strong>element</strong> wil verwijderen?</p>
+        </delete-permanent-dialog>
     </v-container>
 </template>
 <script>

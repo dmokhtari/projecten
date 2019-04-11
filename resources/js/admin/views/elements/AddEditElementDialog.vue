@@ -64,7 +64,6 @@
         },
         methods: {
             onShow(obj) {
-                console.log('yyy')
                 this.dialog = true
                 this.getModules()
                 this.initForm()
