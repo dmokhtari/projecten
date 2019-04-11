@@ -28,10 +28,10 @@
                 </v-breadcrumbs>
             </v-chip>
             <v-spacer></v-spacer>
-            <v-menu offset-y bottom :nudge-width="200" :close-on-content-click="false">
+            <v-menu offset-y :nudge-width="200" :close-on-content-click="false">
                 <v-btn icon large slot="activator">
-                    <v-avatar color="grey lighten-1" size="42" class="elevation-1">
-                        <font-awesome-icon :icon="['fas', 'user']"></font-awesome-icon>
+                    <v-avatar color="primary" size="40">
+                        <font-awesome-icon :icon="['fas', 'user']" class="white--text"></font-awesome-icon>
                     </v-avatar>
                 </v-btn>
                 <v-list>
@@ -148,6 +148,10 @@
         created() {
             this.getUserRole()
             this.updateBreadcrumb()
+            eventHub.$on('toggle-sidebar', this.toggleSidebar)
+        },
+        beforeDestroy() {
+            eventHub.$off('toggle-sidebar',  this.toggleSidebar)
         },
         methods: {
             requestLogOut(page) {
@@ -165,6 +169,12 @@
             },
             updateBreadcrumb() {
                 this.breadcrumbList = this.$route.meta.breadcrumb
+            },
+            toggleSidebar() {
+                console.warn('going to hide sidebar')
+                setTimeout(() => {
+                    this.sidebar = false
+                }, 50)
             }
         }
     }
