@@ -16,7 +16,7 @@
 
             <!-- Breadcrumb -->
             <v-chip class="ml-5 hidden-xs-only">
-                <v-breadcrumbs :items="breadcrumbList" large>
+                <v-breadcrumbs :items="breadcrumbList" large divider=">">
                     <v-breadcrumbs-item slot="item"
                                         slot-scope="{ item }"
                                         :disabled="item.disabled"
@@ -24,8 +24,8 @@
                                         :exact="true">
                         <span v-if="item.text !== 'Home'">{{ item.text }}</span>
                         <span v-else>
-                        <font-awesome-icon :icon="['fas', 'home']"></font-awesome-icon>
-                    </span>
+                            <font-awesome-icon :icon="['fas', 'home']"></font-awesome-icon>
+                        </span>
                     </v-breadcrumbs-item>
                 </v-breadcrumbs>
             </v-chip>
@@ -127,9 +127,9 @@
                 sidebar: true,
                 navigationMenu: [
                     { slug: '/admin/dashboard', icon: 'home', text: 'Dashboard' },
-                    { slug: '/admin/files', icon: 'book', text: 'Files' },
-                    { slug: '/admin/modules', icon: 'file', text: 'Modules' },
-                    { slug: '/admin/elements', icon: 'puzzle-piece', text: 'Elements' },
+                    { slug: '/admin/files', icon: 'file', text: 'Bestanden' },
+                    { slug: '/admin/modules', icon: 'cubes', text: 'Modules' },
+                    { slug: '/admin/elements', icon: 'puzzle-piece', text: 'Elementen' },
                     { slug: '/admin/users', icon: 'users', text: 'Gebruikers' },
                 ],
                 settings: [
@@ -172,6 +172,10 @@
             },
             updateBreadcrumb() {
                 this.breadcrumbList = this.$route.meta.breadcrumb
+
+                if(this.$route.params.id) {
+                    this.breadcrumbList[2].text += ' ' + this.$route.params.id
+                }
             }
 
         }

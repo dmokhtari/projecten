@@ -4,8 +4,8 @@
             <v-flex xs12>
                 <v-card>
                     <v-card-title class="headline">
-                        <font-awesome-icon :icon="['fas', 'book']" class="mr-2"></font-awesome-icon>
-                        Files
+                        <font-awesome-icon :icon="['fas', 'file']" class="mr-2"></font-awesome-icon>
+                        Bestanden
                         <v-divider
                             class="mx-3"
                             inset
@@ -54,16 +54,20 @@
             </v-flex>
         </v-layout>
         <add-edit-file-dialog @posted="get" @updated="get"></add-edit-file-dialog>
+        <delete-permanent-dialog @confirmed="deleteFile">
+            <p>Weet u zeker dat u dit <strong>bestand</strong> wil verwijderen?</p>
+        </delete-permanent-dialog>
     </v-container>
 </template>
 <script>
     import AddEditFileDialog from './AddEditFileDialog';
-    import vuetifyColors from 'vuetify/es5/util/colors';
+    import DeletePermanentDialog from './../../../shared/components/DeletePermanent';
     export default {
         name: 'Files',
         title: 'Files - admin',
         components: {
-            AddEditFileDialog
+            AddEditFileDialog,
+            DeletePermanentDialog
         },
         data() {
             return {
@@ -82,7 +86,7 @@
                         { title: 'Verwijderen', value: 'delete' },
                     ]
                 },
-                colors: [],
+                selectedFile: null
             }
         },
         created() {
@@ -98,15 +102,15 @@
                         this.onAddEditFile(obj)
                         break;
                     case 'delete':
-                        this.delete(obj.id)
+                        this.onDeleteFile(obj.id)
                 }
             },
             onAddEditFile(obj = null) {
                 eventHub.$emit('add-edit-file-dialog', obj)
             },
-            getColors() {
-                let col = Object.entries(vuetifyColors)
-                console.log(col)
+            onDeleteFile(id) {
+                this.selectedFile = id
+                eventHub.$emit('show-delete-permanent')
             },
             goToFile(id) {
                 this.$router.push({ name: 'file', params: {id: id} })
@@ -118,13 +122,13 @@
                     .catch(response => console.error(response))
                     .finally(() => this.table.loading = false)
             },
-            delete(id) {
-                axios.delete('/api/files/' + id)
+            deleteFile() {
+                axios.delete(`/api/files/${this.selectedFile}`)
                     .then(response => {
                         this.get()
                         eventHub.$emit('show-message', response.data.status, response.data.data)
                     })
-                    .catch(response => eventHub.$emit('show-message', response.data.status, response.data.data))
+                    .catch(response => console.error(response))
             }
         }
     }

@@ -18,12 +18,24 @@ export const router = new VueRouter({
         },
         {
             path: '/files/:id',
-            name: 'file',
+            name: 'studentFile',
             component: require('./views/File').default,
             meta: {
                 breadcrumb: [
                     { text: 'Home', disabled: false, to:'/home' },
-                    { text: 'File', disabled: true, to:'/file/id' }
+                    { text: 'Bestand', disabled: true, to:'/files/id' }
+                ]
+            }
+        },
+        {
+            path: '/modules/:id',
+            name: 'studentModule',
+            component: require('./views/Module').default,
+            meta: {
+                breadcrumb: [
+                    { text: 'Home', disabled: false, to:'/home' },
+                    { text: 'Bestand', disabled: true, to:'/files/id' },
+                    { text: 'Module', disabled: true, to:'/modules/id' }
                 ]
             }
         }

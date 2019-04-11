@@ -23,7 +23,7 @@ export const router = new VueRouter({
             meta: {
                 breadcrumb: [
                     { text: 'Home', disabled: false, to:'/admin/dashboard' },
-                    { text: 'Files', disabled: true, to:'/admin/files' }
+                    { text: 'Bestanden', disabled: true, to:'/admin/files' }
                 ]
             }
         },
@@ -34,8 +34,8 @@ export const router = new VueRouter({
             meta: {
                 breadcrumb: [
                     { text: 'Home', disabled: false, to:'/admin/dashboard' },
-                    { text: 'Files', disabled: false, to:'/admin/files' },
-                    { text: 'File', disabled: true, to:'/admin/files/id' }
+                    { text: 'Bestanden', disabled: false, to:'/admin/files' },
+                    { text: 'Bestand', disabled: true, to:'/admin/files/id' }
                 ]
             }
         },
@@ -69,7 +69,7 @@ export const router = new VueRouter({
             meta: {
                 breadcrumb: [
                     { text: 'Home', disabled: false, to:'/admin/dashboard' },
-                    { text: 'Elements', disabled: true, to:'/admin/elements' },
+                    { text: 'Elements', disabled: true, to:'/admin/elementen' },
                 ]
             }
         },
@@ -80,8 +80,8 @@ export const router = new VueRouter({
             meta: {
                 breadcrumb: [
                     { text: 'Home', disabled: false, to:'/admin/dashboard' },
-                    { text: 'Elements', disabled: false, to:'/admin/elements' },
-                    { text: 'Aanmaken', disabled: true, to:'/admin/elements/create' },
+                    { text: 'Elements', disabled: false, to:'/admin/elementen' },
+                    { text: 'Aanmaken', disabled: true, to:'/admin/elementen/create' },
                 ]
             }
         },
@@ -92,8 +92,8 @@ export const router = new VueRouter({
             meta: {
                 breadcrumb: [
                     { text: 'Home', disabled: false, to:'/admin/dashboard' },
-                    { text: 'Elements', disabled: false, to:'/admin/elements' },
-                    { text: 'Wijzigen', disabled: true, to:'/admin/elements/element' },
+                    { text: 'Elements', disabled: false, to:'/admin/elementen' },
+                    { text: 'Wijzigen', disabled: true, to:'/admin/elementen/element' },
                 ]
             }
         },

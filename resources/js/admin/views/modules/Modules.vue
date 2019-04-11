@@ -4,8 +4,8 @@
             <v-flex xs12>
                 <v-card>
                     <v-card-title class="headline">
-                        <font-awesome-icon :icon="['fas', 'book']" class="mr-2"></font-awesome-icon>
-                            Modules
+                        <font-awesome-icon :icon="['fas', 'cubes']" class="mr-2"></font-awesome-icon>
+                        Modules
                         <v-divider
                             class="mx-3"
                             inset
@@ -56,16 +56,21 @@
                 </v-card>
             </v-flex>
         </v-layout>
-        <add-edit-module-dialog @posted="get" @update="get"></add-edit-module-dialog>
+        <add-edit-module-dialog @module-posted="get" @module-updated="get"></add-edit-module-dialog>
+        <delete-permanent-dialog @confirmed="deleteModule">
+            <p>Weet u zeker dat u deze module wil verwijderen?</p>
+        </delete-permanent-dialog>
     </v-container>
 </template>
 <script>
     import AddEditModuleDialog from './AddEditModuleDialog';
+    import DeletePermanentDialog from './../../../shared/components/DeletePermanent';
     export default {
         name: 'adminModules',
         title: 'Modules - admin',
         components: {
-            AddEditModuleDialog
+            AddEditModuleDialog,
+            DeletePermanentDialog
         },
         data() {
             return {
@@ -86,7 +91,7 @@
                         { title: 'Verwijderen', value: 'delete' },
                     ]
                 },
-
+                selectedModule: null
             }
         },
         computed: {
@@ -113,11 +118,15 @@
                         this.onAddEditModule(obj)
                         break;
                     case 'delete':
-                        this.delete(obj.id)
+                        this.onDeleteModule(obj.id)
                 }
             },
             onAddEditModule(obj = null) {
                 eventHub.$emit('add-edit-module-dialog', obj)
+            },
+            onDeleteModule(id) {
+                this.selectedModule = id
+                eventHub.$emit('show-delete-permanent')
             },
             goToModule(id) {
                 this.$router.push({ name: 'module', params: {id: id} })
@@ -129,8 +138,8 @@
                     .catch(response => console.error(response))
                     .finally(() => this.table.loading = false)
             },
-            delete(id) {
-                axios.delete('/api/modules/' + id)
+            deleteModule() {
+                axios.delete(`/api/modules/${this.selectedModule}`)
                     .then(response => {
                         this.get()
                         eventHub.$emit('show-message', response.data.status, response.data.data)
