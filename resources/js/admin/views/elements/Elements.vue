@@ -57,15 +57,18 @@
             </v-flex>
         </v-layout>
         <add-edit-element-dialog></add-edit-element-dialog>
+        <delete-permanent-dialog @confirmed="deleteElement"></delete-permanent-dialog>
     </v-container>
 </template>
 <script>
-    import addEditElementDialog from './AddEditElementDialog';
+    import AddEditElementDialog from './AddEditElementDialog';
+    import DeletePermanentDialog from './../../../shared/components/DeletePermanent';
     export default {
         name: 'Elements',
         title: 'Elements - admin',
         components: {
-            addEditElementDialog
+            AddEditElementDialog,
+            DeletePermanentDialog
         },
         data() {
             return {
@@ -75,7 +78,7 @@
                     headers: [
                         { text: 'Title', sortable: true, value: 'title' },
                         { text: 'Subtitle', sortable: false, value: 'subtitle' },
-                        { text: 'Total sub-elementen', sortable: false, value: 'subelements_count', width: '40' },
+                        { text: 'Total subelementen', sortable: false, value: 'subelements_count', width: '40' },
                         { text: 'Acties', sortable: false, value: '', width: '30' }
                     ],
                     items: [],
@@ -85,6 +88,7 @@
                         { title: 'Verwijderen', value: 'delete' },
                     ]
                 },
+                selectedElement: null
             }
         },
         created() {
@@ -100,11 +104,15 @@
                         this.onAddEditElement(obj)
                         break;
                     case 'delete':
-                        this.delete(obj.id)
+                        this.onDeleteElement(obj.id)
                 }
             },
             onAddEditElement(obj = null) {
                 eventHub.$emit('add-edit-element-dialog', obj)
+            },
+            onDeleteElement(id) {
+                this.selectedElement = id
+                eventHub.$emit('show-delete-permanent')
             },
             goToAddElement() {
                 this.$router.push({ name: 'addElement' })
@@ -119,13 +127,13 @@
                     .catch(response => console.error(response))
                     .finally(() => this.table.loading = false)
             },
-            delete(id) {
-                axios.delete('/api/elements/' + id)
+            deleteElement() {
+                axios.delete(`/api/elements/${this.selectedElement}`)
                     .then(response => {
                         this.get()
                         eventHub.$emit('show-message', response.data.status, response.data.data)
                     })
-                    .catch(response => eventHub.$emit('show-message', response.data.status, response.data.data))
+                    .catch(response => console.error(response))
             }
         }
     }

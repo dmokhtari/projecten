@@ -82,17 +82,22 @@
 
         <add-edit-user-dialog @posted="get" @updated="get"></add-edit-user-dialog>
         <upload-user-dialog @posted="get"></upload-user-dialog>
+        <delete-permanent-dialog @confirmed="deleteUser">
+            <p>Weet u zeker dat u deze <strong>gebruiker</strong> wil verwijderen?</p>
+        </delete-permanent-dialog>
     </v-container>
 </template>
 <script>
     import addEditUserDialog from "./AddEditUserDialog";
     import uploadUserDialog from "./UploadUsersDialog";
+    import deletePermanentDialog from './../../../shared/components/DeletePermanent';
     export default {
         name: 'adminUsers',
         title: 'Users - admin',
         components: {
             addEditUserDialog,
-            uploadUserDialog
+            uploadUserDialog,
+            deletePermanentDialog
         },
         data() {
             return {
@@ -118,7 +123,8 @@
                         prev_page_url: null,
                         total: 0,
                     }
-                }
+                },
+                selectedUser: null
             }
         },
         created() {
@@ -134,7 +140,7 @@
                         this.onAddEditUser(obj)
                         break;
                     case 'delete':
-                        this.delete(obj.id)
+                        this.onDeleteUser(obj.id)
                 }
             },
             onAddEditUser(obj = null) {
@@ -142,6 +148,10 @@
             },
             onUploadUser() {
                 eventHub.$emit('upload-user-dialog')
+            },
+            onDeleteUser(id) {
+                this.selectedUser = id
+                eventHub.$emit('show-delete-permanent')
             },
             goToModule(id) {
                 this.$router.push({ name: 'module', params: {id: id} })
@@ -163,13 +173,13 @@
                     .catch(response => console.error(response))
                     .finally(() => this.table.loading = false)
             },
-            delete(id) {
-                axios.delete('/api/users/' + id)
+            deleteUser() {
+                axios.delete(`/api/users/${this.selectedUser}`)
                     .then(response => {
                         this.get()
                         eventHub.$emit('show-message', response.data.status, response.data.data)
                     })
-                    .catch(response => eventHub.$emit('show-message', response.data.status, response.data.data))
+                    .catch(response => console.error(response))
             }
         }
     }
