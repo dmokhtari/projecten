@@ -7,7 +7,7 @@
     >
         <v-card>
             <v-card-title class="headline accent justify-center">
-                {{ form.id ? 'File wijzigen' : 'File toevoegen' }}
+                {{ form.id ? 'Bestand wijzigen' : 'Bestand aanmaken' }}
                 <v-btn flat icon absolute right @click="onCancel">
                     <font-awesome-icon class="title" :icon="['far', 'times-circle']"></font-awesome-icon>
                 </v-btn>
@@ -15,7 +15,7 @@
             <form @submit.prevent="form.id ? put(form.id) : post()" class="px-4 py-4" @keydown="form.errors.clear($event.target.name)">
                 <v-text-field
                     outline
-                    label="Title"
+                    label="Title*"
                     :rules="[form.errors.get('title')]"
                     :errors="form.errors.has('title')"
                     v-model="form.title"
@@ -29,9 +29,32 @@
                     v-model="form.subtitle"
                 ></v-text-field>
 
+                <v-select
+                    label="Kies een achtergrond kleur"
+                    outline
+                    v-model="form.background_color"
+                    :items="colors"
+                    item-text="name"
+                    item-value="value"
+                    single-line
+                    clearable
+                >
+                    <template slot="selection" slot-scope="data">
+                        <v-avatar :class="data.item.value" class="mr-3" size="35"></v-avatar>
+                        <div>{{ data.item.name }}</div>
+                    </template>
+                    <template slot="item" slot-scope="data">
+                        <v-list-tile-avatar :class="data.item.value" class="mr-3">
+                        </v-list-tile-avatar>
+                        <v-list-tile-content>
+                            <v-list-tile-title>{{ data.item.name }}</v-list-tile-title>
+                        </v-list-tile-content>
+                    </template>
+                </v-select>
                 <v-text-field
                     outline
                     label="Upload een photo"
+                    prepend-inner-icon="file_upload"
                     :rules="[form.errors.get('background_image')]"
                     :errors="form.errors.has('background_image')"
                     v-model="form.background_image_name"
@@ -55,6 +78,13 @@
             return {
                 dialog: false,
                 form: null,
+                colors: [
+                    { name: 'rood', value: 'linear-red' },
+                    { name: 'blauw', value: 'linear-blue' },
+                    { name: 'groen', value: 'linear-green' },
+                    { name: 'geel', value: 'linear-yellow' },
+                    { name: 'paars', value: 'linear-purple' },
+                ],
             }
         },
         created() {
@@ -82,7 +112,7 @@
                     subtitle: '',
                     background_image: '',
                     background_image_name: '',
-                    background_color: '',
+                    background_color: 'linear-red',
                 })
             },
             onCancel() {

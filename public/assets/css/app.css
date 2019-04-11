@@ -683,6 +683,42 @@ body.trumbowyg-body-fullscreen {
   cursor: pointer;
 }
 
+.center-x {
+  margin: 0 auto;
+  max-width: calc(100% - 32px);
+}
+
+.btn-group {
+  display: inline-flex;
+}
+
+.btn-group .v-btn {
+  justify-content: center;
+  width: auto;
+  padding: 0 8px;
+  margin: 0;
+}
+
+.linear-red {
+  background-image: linear-gradient(180deg, #f44881, #ec454f);
+}
+
+.linear-blue {
+  background-image: linear-gradient(180deg, #21c8f6, #637bff);
+}
+
+.linear-green {
+  background-image: linear-gradient(180deg, #6edcc4, #1aab8b);
+}
+
+.linear-purple {
+  background-image: linear-gradient(180deg, #8b60ed, #b372bd);
+}
+
+.linear-yellow {
+  background-image: linear-gradient(0deg, #f19a1a, #ffc73c);
+}
+
 #nprogress .bar {
   background-color: #D70096;
   height: 4px;
