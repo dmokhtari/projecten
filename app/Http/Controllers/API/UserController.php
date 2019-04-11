@@ -59,7 +59,7 @@ class UserController extends Controller
 
         $user->roles()->attach($request->role);
 
-        return response()->json(['status' => 'success', 'data' => 'Gebruiker aangemaakt!'], 201);
+        return response()->json(['status' => 'success', 'data' => "{$user->email} aangemaakt!"], 201);
     }
 
     /**
@@ -87,7 +87,7 @@ class UserController extends Controller
 
         $user->roles()->sync($request->role);
 
-        return response()->json(['status' => 'success', 'data' => 'Gebruiker gewijzigd!'], 200);
+        return response()->json(['status' => 'success', 'data' => "{$user->email} is gewijzigd!"], 200);
     }
 
     /**
@@ -102,7 +102,7 @@ class UserController extends Controller
         $user->roles()->sync([]);
         $user->delete();
 
-        return response()->json(['status' => 'success', 'data' => 'Gebruiker verwijderd!'], 200);
+        return response()->json(['status' => 'success', 'data' => "{$user->email} is verwijderd!"], 200);
     }
 
     /**

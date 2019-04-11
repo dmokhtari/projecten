@@ -7,7 +7,7 @@
     >
         <v-card>
             <v-card-title class="headline accent justify-center">
-                {{ form.id ? 'Gebruiker wijzigen' : 'Gebruiker toevoegen' }}
+                {{ form.id ? 'Video wijzigen' : 'Video toevoegen' }}
                 <v-btn flat icon absolute right @click="onCancel">
                     <font-awesome-icon class="title" :icon="['far', 'times-circle']"></font-awesome-icon>
                 </v-btn>

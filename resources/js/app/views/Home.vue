@@ -1,11 +1,15 @@
 <template>
     <v-container grid-list-lg>
         <v-layout row wrap>
-            <v-flex v-for="(file, index) in files" :key="index" xs6 md3>
-                <v-card @click="goToFile(file.id)" class="text-xs-center pa-5 ma-3" hover>
-                    <v-card-title>
-                        <h3>{{ file.title }}</h3>
-                    </v-card-title>
+            <v-flex v-for="(file, index) in files" :key="index" xs6 md4>
+                <v-card @click="goToFile(file.id)" hover style="border-radius:10px">
+                    <v-layout style="min-height:150px; margin-left:0" row wrap>
+                        <v-flex xs2 md3 :class="file.background_color"></v-flex>
+                        <v-flex xs10 md9>
+                            <h3 class="grey--text">{{ file.title }}</h3>
+                            <p>{{ file.subtitle }}</p>
+                        </v-flex>
+                    </v-layout>
                 </v-card>
             </v-flex>
         </v-layout>
@@ -29,7 +33,7 @@
                     .catch(response => console.error(response))
             },
             goToFile(id) {
-                this.$router.push({ name: 'file', params: {id: id} })
+                this.$router.push({ name: 'studentFile', params: { id: id } })
             }
         }
     }

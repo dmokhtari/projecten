@@ -2,7 +2,7 @@
     <v-dialog
         v-if="form"
         v-model="dialog"
-        width="400"
+        width="500"
         persistent
     >
         <v-card>
@@ -28,13 +28,24 @@
                     :errors="form.errors.has('subtitle')"
                     v-model="form.subtitle"
                 ></v-text-field>
+                <v-textarea
+                    outline
+                    label="Text"
+                    rows="7"
+                    :rules="[form.errors.get('text')]"
+                    :errors="form.errors.has('text')"
+                    v-model="form.text"
+                ></v-textarea>
                 <v-select
                     outline
+                    clearable
                     label="Koppel aan een file"
                     :items="files"
                     item-text="title"
                     item-value="id"
                     v-model="form.file_id"
+                    :rules="[form.errors.get('file_id')]"
+                    :errors="form.errors.has('file_id')"
                     :return-object="false"
                 ></v-select>
 
@@ -83,7 +94,7 @@
             initForm() {
                 this.form = new Form({
                     id: null,
-                    file_id: null,
+                    file_id: '',
                     title: '',
                     subtitle: '',
                     text: ''
@@ -97,7 +108,7 @@
                 this.form.post('/api/modules')
                     .then(response => {
                         this.onCancel()
-                        this.$emit('posted')
+                        this.$emit('module-posted')
                         eventHub.$emit('show-message', response.status,  response.data)
                     })
                     .catch(response => console.error(response))
@@ -106,7 +117,7 @@
                 this.form.put('/api/modules/' + id)
                     .then(response => {
                         this.onCancel()
-                        this.$emit('update')
+                        this.$emit('module-updated')
                         eventHub.$emit('show-message', response.status,  response.data)
                     })
                     .catch(response => console.error(response))
