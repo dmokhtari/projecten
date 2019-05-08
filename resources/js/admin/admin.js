@@ -8,7 +8,6 @@ Vue.mixin(MetaTags);
 window.Vue = Vue;
 window.eventHub = new Vue();
 
-Vue.component('message-box', require('./../shared/components/MessageBox').default);
 import Admin from './views/Admin';
 
 

@@ -171,11 +171,12 @@
                 window.location.href = '/home'
             },
             updateBreadcrumb() {
+                this.breadcrumbList = []
                 this.breadcrumbList = this.$route.meta.breadcrumb
-
-                if(this.$route.params.id) {
-                    this.breadcrumbList[2].text += ' ' + this.$route.params.id
-                }
+                // Object.entries(this.$route.params).forEach(([key, value], index) => {
+                //     this.breadcrumbList[index+1].text = (this.breadcrumbList[index+1].name + ' (' + value + ')')
+                //     this.breadcrumbList[index+1].to = ('/' + this.breadcrumbList[index+1].name.toLowerCase() + '/' + value)
+                // })
             }
 
         }

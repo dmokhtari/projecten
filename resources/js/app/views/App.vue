@@ -4,14 +4,17 @@
         <v-content>
             <router-view></router-view>
         </v-content>
+        <message-box></message-box>
     </v-app>
 </template>
 <script>
     import TopSidebar from '../components/TopSidebarComponent';
+    import MessageBox from './../../shared/components/MessageBox';
     export default {
         name: 'App',
         components: {
-            TopSidebar
+            TopSidebar,
+            MessageBox
         },
         data() {
             return {

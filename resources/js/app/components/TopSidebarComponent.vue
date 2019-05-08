@@ -14,7 +14,7 @@
                 </a>
             </v-toolbar-title>
             <v-chip class="ml-5 hidden-xs-only">
-                <v-breadcrumbs :items="breadcrumbList">
+                <v-breadcrumbs :items="breadcrumbList" divider=">">
                     <v-breadcrumbs-item slot="item"
                                         slot-scope="{ item }"
                                         :disabled="item.disabled"
@@ -168,7 +168,12 @@
                 window.location.href = '/admin/dashboard'
             },
             updateBreadcrumb() {
+                this.breadcrumbList = []
                 this.breadcrumbList = this.$route.meta.breadcrumb
+                Object.entries(this.$route.params).forEach(([key, value], index) => {
+                    this.breadcrumbList[index+1].text = (this.breadcrumbList[index+1].name + ' (' + value + ')')
+                    this.breadcrumbList[index+1].to = ('/' + this.breadcrumbList[index+1].name.toLowerCase() + '/' + value)
+                })
             },
             toggleSidebar() {
                 console.warn('going to hide sidebar')

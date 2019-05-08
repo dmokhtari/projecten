@@ -1,41 +1,46 @@
 <template>
     <v-container>
         <v-layout row wrap v-if="fileModule">
-            <v-flex xs12 class="text-xs-center">
-                <div class="btn-group">
-                    <v-btn v-for="(mod, index) in fileModule.elements.length" :key="index" outline>{{ index+1 }}</v-btn>
+            <v-flex xs12 class="text-xs-center" style="margin-bottom: 100px;">
+                <div class="element-btn">
+                    <v-btn v-if="fileModule.text" :color="isActive(0)" @click="getModuleIntro">Intro</v-btn>
+                    <v-btn v-for="(mod, index) in fileModule.elements"
+                           :key="index"
+                           :color="isActive(mod.id)"
+                           @click="getElement(mod.id)"
+                    >{{ index+1 }}</v-btn>
                 </div>
             </v-flex>
-            <v-flex xs12 class="mt-5">
-                <p>{{ fileModule.text }}</p>
+            <v-flex xs12 v-if="!element">
+                <p class="title">{{ fileModule.text }}</p>
             </v-flex>
         </v-layout>
 
+        <element-component :obj-element="element"></element-component>
 
-        <template v-if="element">
-            <v-layout row wrap v-for="(sub, index) in element.subelements" :key="index">
-                <v-flex xs12>
-                    <v-img v-if="sub.icons.length" :src="'/storage/' + sub.icons[0].src" width="80"></v-img>
-                </v-flex>
-                <template v-if="sub.type === 'video'">
-                    <v-flex xs12>
-                        <v-btn>Video bekijken</v-btn>
-                    </v-flex>
-                </template>
-                <template v-if="sub.type === 'binary'">
-                    <v-flex xs12 v-html="sub.binary"></v-flex>
-                </template>
-            </v-layout>
-        </template>
     </v-container>
 </template>
 <script>
+    import ElementComponent from './../components/ElementComponent';
     export default {
         name: 'Module',
+        components: {
+            ElementComponent
+        },
         data() {
             return {
                 fileModule: null,
-                element: null
+                element: null,
+                activeElement: 0
+            }
+        },
+        computed: {
+            isActive(id) {
+                return (id) => {
+                    if(id === this.activeElement) {
+                        return 'primary'
+                    }
+                }
             }
         },
         created() {
@@ -44,17 +49,25 @@
         },
         methods: {
             getModule() {
-                axios.get(`/api/modules/${this.$route.params.id}`)
+                axios.get(`/api/modules/${this.$route.params.moduleId}`)
                     .then(response => {
                         this.fileModule = response.data.data
-                        this.getElement(this.fileModule.elements[0].id)
+                        // this.getElement(this.fileModule.elements[0].id)
                     })
                     .catch(response => console.error(response))
             },
             getElement(id) {
+                if(id === this.activeElement) {
+                    return
+                }
+                this.activeElement = id
                 axios.get('/api/elements/' + id)
                     .then(response => this.element = response.data.data)
                     .catch(response => console.error(response))
+            },
+            getModuleIntro() {
+                this.element = null
+                this.activeElement = 0
             },
             hideSidebar() {
                 eventHub.$emit('toggle-sidebar')
@@ -63,9 +76,9 @@
     }
 </script>
 <style lang="scss" scoped>
-    .btn-group {
+    .element-btn {
         .v-btn {
-            min-width: 70px;
+            min-width: 60px;
         }
     }
 </style>

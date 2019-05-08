@@ -64,7 +64,7 @@
                     .catch(response => console.errors(response))
             },
             goToModule(id) {
-                this.$router.push({ name: 'studentModule', params: {id: id} })
+                this.$router.push({ name: 'studentModule', params: { fileId: this.$route.params.id, moduleId: id } })
             }
         }
     }

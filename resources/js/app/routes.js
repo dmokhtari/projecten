@@ -17,25 +17,25 @@ export const router = new VueRouter({
             }
         },
         {
-            path: '/files/:id',
+            path: '/bestanden/:id',
             name: 'studentFile',
             component: require('./views/File').default,
             meta: {
                 breadcrumb: [
                     { text: 'Home', disabled: false, to:'/home' },
-                    { text: 'Bestand', disabled: true, to:'/files/id' }
+                    { text: 'Bestand', name: 'Bestanden', disabled: true, to:'/bestanden/id' }
                 ]
             }
         },
         {
-            path: '/modules/:id',
+            path: '/bestanden/:fileId/modules/:moduleId',
             name: 'studentModule',
             component: require('./views/Module').default,
             meta: {
                 breadcrumb: [
                     { text: 'Home', disabled: false, to:'/home' },
-                    { text: 'Bestand', disabled: true, to:'/files/id' },
-                    { text: 'Module', disabled: true, to:'/modules/id' }
+                    { text: 'Bestand', name: 'Bestanden', disabled: false, to:'/bestanden/id' },
+                    { text: 'Module', name: 'Modules', disabled: true, to:'/modules/id' }
                 ]
             }
         }

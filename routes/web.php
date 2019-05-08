@@ -17,8 +17,8 @@ Route::middleware('auth')->group(function() {
     Route::get('/home', 'AppController@getHome')->name('home');
     Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
-    Route::get('/files/{file}', 'AppController@getHome');
-    Route::get('/modules/{module}', 'AppController@getHome');
+    Route::get('/bestanden/{bestand}', 'AppController@getHome');
+    Route::get('/bestanden/{bestand}/modules/{module}', 'AppController@getHome');
 
 });
 

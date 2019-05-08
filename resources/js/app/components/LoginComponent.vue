@@ -1,17 +1,20 @@
 <template>
     <v-app light>
 
-        <v-layout>
-            <v-flex md6>
+        <v-layout align-center>
+            <v-flex md7>
                 <v-carousel height="100vh" hide-controls>
                     <v-carousel-item
-                        style="background-color:#5ac6ba"
+                        v-for="(item, i) in items"
+                        :key="i"
+                        :src="item.src"
                     >
                     </v-carousel-item>
                 </v-carousel>
             </v-flex>
-            <v-flex xs12 md6>
-                <v-card class="px-5 elevation-0" style="padding-top:25%">
+
+            <v-flex xs12 md5>
+                <v-card class="px-5 elevation-0 transparent">
                     <v-card-title class="title">
                         {{ windowTitle }}
                     </v-card-title>
@@ -79,7 +82,18 @@
                 }),
                 emailForm: new Form({
                     email: null
-                })
+                }),
+                items: [
+                    {
+                        src: '/assets/img/item1.png'
+                    },
+                    {
+                        src: '/assets/img/item2.png'
+                    },
+                    {
+                        src: '/assets/img/item3.png'
+                    }
+                ]
             }
         },
         computed: {
