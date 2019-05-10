@@ -39,14 +39,20 @@ class SubElementController extends Controller
             'type' => 'required|string',
             'element_id' => 'required',
             'title' => 'nullable|string|max:191',
-            'url' => 'nullable|url|max:255',
+            'url' => 'nullable|url|max:191',
             'description' => 'nullable|string',
         ]);
+
+        $iconIds = [];
+        if(!empty($request->icon_id)) {
+            $iconIds = explode(",", $request->icon_id);
+        }
+        Log::info($iconIds);
         
         $subElement = new SubElement();
         $subElement->fill($request->only('type', 'title', 'url', 'description', 'binary', 'element_id'));
         $subElement->save();
-        $subElement->icons()->attach($request->icon_id);
+        $subElement->icons()->attach($iconIds);
 
         return response()->json(['status' => 'success', 'data' => 'Sub-element aangemaakt!'], 201);
     }
@@ -79,12 +85,18 @@ class SubElementController extends Controller
             'description' => 'nullable|string',
         ]);
 
+        // TODO axios with formData not sending array
+        $iconIds = [];
+        if(!empty($request->icon_id)) {
+            $iconIds = explode(",", $request->icon_id);
+        }
+        Log::info($iconIds);
+
         $subElement = SubElement::findOrFail($id);
         $subElement->update($request->only('type', 'title', 'url', 'description', 'binary'));
-        Log::info(json_encode($request->icon_id));
-        $subElement->icons()->sync([$request->icon_id]);
+        $subElement->icons()->sync($iconIds);
 
-        return response()->json(['status' => 'success', 'data' => 'Sub-element gewijzigd!'], 200);
+        return response()->json(['status' => 'success', 'data' => 'Subelement gewijzigd!'], 200);
     }
 
     /**
