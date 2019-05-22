@@ -46,8 +46,11 @@ Route::middleware('auth', 'admin')->group(function() {
         Route::get('/elements/create', 'AppController@getDashboard');
         Route::get('/elements/{element}', 'AppController@getDashboard');
 
-        //user
+        // user
         Route::get('/users', 'AppController@getDashboard');
+
+        // profile
+        Route::get('/profile', 'AppController@getDashboard');
 
         // settings
         Route::get('/settings/icons', 'AppController@getDashboard');

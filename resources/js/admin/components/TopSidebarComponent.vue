@@ -136,7 +136,7 @@
                     { slug: '/admin/settings/icons', icon: 'sign', text: 'Icons' }
                 ],
                 userMenu: [
-                    { slug: '/auth/user', icon: 'user-circle', text: 'Profiel' },
+                    { slug: '/admin/profile', icon: 'user-circle', text: 'Profiel' },
                 ],
                 logoutMenu: [
                     { slug: '/logout', icon: 'sign-out-alt', text: 'Uitloggen' }
