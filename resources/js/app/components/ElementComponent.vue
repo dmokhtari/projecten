@@ -3,8 +3,8 @@
         <v-layout row wrap v-for="(sub, index) in element.subelements" :key="index">
             <v-flex xs12>
                 <v-card-title class="py-1 px-3 accent">
-                    <v-avatar size="60">
-                        <v-img v-if="sub.icons.length" :src="'/storage/' + sub.icons[0].src"></v-img>
+                    <v-avatar size="40" v-for="(icon, i) in sub.icons" :key="i">
+                        <v-img v-if="sub.icons.length" :src="'/storage/' + icon.src"></v-img>
                     </v-avatar>
                 </v-card-title>
                 <v-divider></v-divider>

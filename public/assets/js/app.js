@@ -12841,6 +12841,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'VideoDialogComponent',
   data: function data() {
@@ -12861,6 +12864,11 @@ __webpack_require__.r(__webpack_exports__);
       this.videoSrc = uri;
       this.dialog = true;
       console.log(url);
+    },
+    onClose: function onClose() {
+      var iframeSrc = this.$refs.videoFrame.src;
+      this.$refs.videoFrame.src = iframeSrc;
+      this.dialog = false;
     }
   }
 });
@@ -25507,20 +25515,20 @@ var render = function() {
                     _c(
                       "v-card-title",
                       { staticClass: "py-1 px-3 accent" },
-                      [
-                        _c(
+                      _vm._l(sub.icons, function(icon, i) {
+                        return _c(
                           "v-avatar",
-                          { attrs: { size: "60" } },
+                          { key: i, attrs: { size: "40" } },
                           [
                             sub.icons.length
                               ? _c("v-img", {
-                                  attrs: { src: "/storage/" + sub.icons[0].src }
+                                  attrs: { src: "/storage/" + icon.src }
                                 })
                               : _vm._e()
                           ],
                           1
                         )
-                      ],
+                      }),
                       1
                     ),
                     _vm._v(" "),
@@ -26329,10 +26337,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/app/components/VideoDialogComponent.vue?vue&type=template&id=6feadc97&":
-/*!***************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/app/components/VideoDialogComponent.vue?vue&type=template&id=6feadc97& ***!
-  \***************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/app/components/VideoDialogComponent.vue?vue&type=template&id=6feadc97&scoped=true&":
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/app/components/VideoDialogComponent.vue?vue&type=template&id=6feadc97&scoped=true& ***!
+  \***************************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -26347,7 +26355,11 @@ var render = function() {
   return _c(
     "v-dialog",
     {
-      attrs: { "max-width": "800", persistent: "" },
+      attrs: {
+        "max-width": "840",
+        persistent: "",
+        "content-class": "elevation-0"
+      },
       model: {
         value: _vm.dialog,
         callback: function($$v) {
@@ -26359,26 +26371,43 @@ var render = function() {
     [
       _c(
         "v-card",
+        { staticStyle: { "background-color": "transparent" } },
         [
           _c(
-            "v-btn",
+            "v-card-title",
             {
-              staticStyle: { top: "-5px", right: "-5px" },
-              attrs: { icon: "", absolute: "", color: "primary" }
+              staticStyle: {
+                position: "relative",
+                "background-color": "transparent"
+              }
             },
-            [_c("v-icon", [_vm._v("close")])],
+            [
+              _c(
+                "v-btn",
+                {
+                  staticStyle: { top: "0", right: "0" },
+                  attrs: { icon: "", absolute: "", color: "primary" },
+                  on: { click: _vm.onClose }
+                },
+                [_c("v-icon", [_vm._v("close")])],
+                1
+              )
+            ],
             1
           ),
           _vm._v(" "),
-          _c("iframe", {
-            attrs: {
-              width: "800",
-              height: "500",
-              src: _vm.videoSrc,
-              frameborder: "0",
-              allowfullscreen: ""
-            }
-          })
+          _c("div", { staticClass: "mx-3 px-0 text-xs-center elevation-5" }, [
+            _c("iframe", {
+              ref: "videoFrame",
+              attrs: {
+                width: "800",
+                height: "500",
+                src: _vm.videoSrc,
+                frameborder: "0",
+                allowfullscreen: ""
+              }
+            })
+          ])
         ],
         1
       )
@@ -67723,7 +67752,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _VideoDialogComponent_vue_vue_type_template_id_6feadc97___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./VideoDialogComponent.vue?vue&type=template&id=6feadc97& */ "./resources/js/app/components/VideoDialogComponent.vue?vue&type=template&id=6feadc97&");
+/* harmony import */ var _VideoDialogComponent_vue_vue_type_template_id_6feadc97_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./VideoDialogComponent.vue?vue&type=template&id=6feadc97&scoped=true& */ "./resources/js/app/components/VideoDialogComponent.vue?vue&type=template&id=6feadc97&scoped=true&");
 /* harmony import */ var _VideoDialogComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./VideoDialogComponent.vue?vue&type=script&lang=js& */ "./resources/js/app/components/VideoDialogComponent.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
@@ -67735,11 +67764,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _VideoDialogComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _VideoDialogComponent_vue_vue_type_template_id_6feadc97___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _VideoDialogComponent_vue_vue_type_template_id_6feadc97___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _VideoDialogComponent_vue_vue_type_template_id_6feadc97_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _VideoDialogComponent_vue_vue_type_template_id_6feadc97_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  null,
+  "6feadc97",
   null
   
 )
@@ -67765,19 +67794,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/app/components/VideoDialogComponent.vue?vue&type=template&id=6feadc97&":
-/*!*********************************************************************************************!*\
-  !*** ./resources/js/app/components/VideoDialogComponent.vue?vue&type=template&id=6feadc97& ***!
-  \*********************************************************************************************/
+/***/ "./resources/js/app/components/VideoDialogComponent.vue?vue&type=template&id=6feadc97&scoped=true&":
+/*!*********************************************************************************************************!*\
+  !*** ./resources/js/app/components/VideoDialogComponent.vue?vue&type=template&id=6feadc97&scoped=true& ***!
+  \*********************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VideoDialogComponent_vue_vue_type_template_id_6feadc97___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./VideoDialogComponent.vue?vue&type=template&id=6feadc97& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/app/components/VideoDialogComponent.vue?vue&type=template&id=6feadc97&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VideoDialogComponent_vue_vue_type_template_id_6feadc97___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VideoDialogComponent_vue_vue_type_template_id_6feadc97_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./VideoDialogComponent.vue?vue&type=template&id=6feadc97&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/app/components/VideoDialogComponent.vue?vue&type=template&id=6feadc97&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VideoDialogComponent_vue_vue_type_template_id_6feadc97_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VideoDialogComponent_vue_vue_type_template_id_6feadc97___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VideoDialogComponent_vue_vue_type_template_id_6feadc97_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
