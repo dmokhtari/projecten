@@ -35,11 +35,15 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \Laravel\Passport\Http\Middleware\CreateFreshApiToken::class,
         ],
 
         'api' => [
             'throttle:60,1',
             'bindings',
+            'handlePutFormData',
+            'lastUserActivity',
+            'convertUndefinedAndNullToNull',
         ],
     ];
 
@@ -60,6 +64,11 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'cors' => \Barryvdh\Cors\HandleCors::class,
+        'admin' => \App\Http\Middleware\Admin::class,
+        'handlePutFormData' => \App\Http\Middleware\HandlePutFormData::class,
+        'lastUserActivity' => \App\Http\Middleware\LastUserActivity::class,
+        'convertUndefinedAndNullToNull' => \App\Http\Middleware\ConvertUndefinedAndNullToNull::class,
     ];
 
     /**

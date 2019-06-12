@@ -1,0 +1,46 @@
+
+.theme--light .active-page {
+    background: rgba(0,0,0,.04);
+}
+.theme--dark .active-page {
+    background: hsla(0,0%,100%,.08);
+}
+.active-page {
+    svg {
+        color: $primary;
+    }
+}
+.clickable {
+    cursor: pointer;
+}
+
+.center-x {
+    margin: 0 auto;
+    max-width: calc(100% - 32px);
+}
+
+.btn-group {
+    display: inline-flex;
+    .v-btn {
+        justify-content: center;
+        width: auto;
+        padding: 0 8px;
+        margin: 0;
+    }
+}
+
+.linear-red {
+    background-image: $linear-red;
+}
+.linear-blue {
+    background-image: $linear-blue;
+}
+.linear-green {
+    background-image: $linear-green;
+}
+.linear-purple {
+    background-image: $linear-purple;
+}
+.linear-yellow {
+    background-image: $linear-yellow;
+}

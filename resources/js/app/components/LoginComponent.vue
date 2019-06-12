@@ -1,0 +1,123 @@
+<template>
+    <v-app light>
+
+        <v-layout align-center>
+            <v-flex md7>
+                <v-carousel height="100vh" hide-controls>
+                    <v-carousel-item
+                        v-for="(item, i) in items"
+                        :key="i"
+                        :src="item.src"
+                    >
+                    </v-carousel-item>
+                </v-carousel>
+            </v-flex>
+
+            <v-flex xs12 md5>
+                <v-card class="px-5 elevation-0 transparent">
+                    <v-card-title class="title">
+                        {{ windowTitle }}
+                    </v-card-title>
+                    <v-window v-model="page">
+                        <v-window-item :value="1">
+                            <v-card-text>
+                                <form @submit.prevent="requestLogin" @keydown="form.errors.clear($event.target.name)">
+                                    <v-text-field
+                                        :errors="form.errors.has('email')"
+                                        :rules="[form.errors.get('email')]"
+                                        v-model="form.email"
+                                        label="Email"
+                                        type="email"
+                                    ></v-text-field>
+                                    <v-text-field
+                                        :errors="form.errors.has('password')"
+                                        :rules="[form.errors.get('password')]"
+                                        v-model="form.password"
+                                        label="Wachtwoord"
+                                        type="password"
+                                    ></v-text-field>
+                                    <v-btn class="mt-4" round type="submit" large :disabled="form.errors.any()">Inloggen</v-btn>
+                                    <v-btn class="mt-4" @click="page = 2" small flat color="primary">Wachtwoord vergeten?</v-btn>
+                                </form>
+                            </v-card-text>
+                        </v-window-item>
+                        <v-window-item :value="2">
+                            <v-card-text>
+                                <form @submit.prevent="requestEmailLink" @keydown="emailForm.errors.clear($event.target.name)">
+                                    <v-text-field
+                                        :errors="emailForm.errors.has('email')"
+                                        :rules="[emailForm.errors.get('email')]"
+                                        v-model="emailForm.email"
+                                        label="Email"
+                                        type="email"
+                                    ></v-text-field>
+                                    <v-btn round class="mt-4" type="submit" large :disabled="emailForm.errors.any()">Email verzenden</v-btn>
+                                    <v-btn class="mt-4" @click="page = 1" small flat color="primary">Terug naar Inloggen</v-btn>
+                                </form>
+                            </v-card-text>
+                        </v-window-item>
+                    </v-window>
+                </v-card>
+            </v-flex>
+        </v-layout>
+        <message-box></message-box>
+    </v-app>
+</template>
+
+<script>
+    import { Form } from "../../shared/helpers/Form";
+    import MessageBox from '../../shared/components/MessageBox';
+    import axios from 'axios';
+    export default {
+        name: 'LoginComponent',
+        components: {
+            MessageBox
+        },
+        data() {
+            return {
+                page: 1,
+                form: new Form({
+                    email: null,
+                    password: null
+                }),
+                emailForm: new Form({
+                    email: null
+                }),
+                items: [
+                    {
+                        src: '/assets/img/item1.png'
+                    },
+                    {
+                        src: '/assets/img/item2.png'
+                    },
+                    {
+                        src: '/assets/img/item3.png'
+                    }
+                ]
+            }
+        },
+        computed: {
+            windowTitle() {
+                switch (this.page) {
+                    case 1: return 'Inloggen'
+                    case 2: return 'Wachtwoord Vergeten'
+                }
+            }
+        },
+        methods: {
+            requestLogin() {
+                this.form.post('/login')
+                    .then(response => location.reload())
+                    .catch(response => console.log(response))
+            },
+            requestEmailLink() {
+                this.emailForm.post('/passwords/email')
+                    .then(response => eventHub.$emit('show-message', response.status, response.data))
+                    .catch(response => eventHub.$emit('show-message', response.status, response.data))
+            }
+        }
+    }
+</script>
+<style scoped lang="scss">
+
+</style>

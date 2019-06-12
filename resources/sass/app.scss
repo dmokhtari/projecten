@@ -1,14 +1,22 @@
 
-// Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
 
 // Variables
 @import 'variables';
 
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
+@import 'global';
 
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+@import '~nprogress/nprogress.css';
+
+@import '~trumbowyg/dist/ui/trumbowyg.css';
+
+@import '~animate.css/animate.css';
+
+#nprogress {
+    .bar {
+        background-color: $primary;
+        height: 4px;
+    }
+    .spinner {
+        display: none;
+    }
 }
