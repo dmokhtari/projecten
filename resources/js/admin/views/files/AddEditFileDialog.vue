@@ -12,7 +12,11 @@
                     <font-awesome-icon class="title" :icon="['far', 'times-circle']"></font-awesome-icon>
                 </v-btn>
             </v-card-title>
-            <form @submit.prevent="form.id ? put(form.id) : post()" class="px-4 py-4" @keydown="form.errors.clear($event.target.name)">
+            <v-form @submit.prevent="form.id ? put(form.id) : post()"
+                    class="px-4 py-4"
+                    @keydown.native="form.errors.clear($event.target.name)"
+                    ref="fileForm"
+            >
                 <v-text-field
                     outline
                     label="Title*"
@@ -51,22 +55,13 @@
                         </v-list-tile-content>
                     </template>
                 </v-select>
-                <v-text-field
-                    outline
-                    label="Upload een photo"
-                    prepend-inner-icon="file_upload"
-                    :rules="[form.errors.get('background_image')]"
-                    :errors="form.errors.has('background_image')"
-                    v-model="form.background_image_name"
-                    @click="onClickImageInput"
-                ></v-text-field>
-                <input type="file" ref="imageInput" style="display:none" @change="onImageChange">
+
                 <v-card-actions>
                     <v-btn color="grey" @click="onCancel" flat>Annuleer</v-btn>
                     <v-spacer></v-spacer>
                     <v-btn color="primary" type="submit">Opslaan</v-btn>
                 </v-card-actions>
-            </form>
+            </v-form>
         </v-card>
     </v-dialog>
 </template>
@@ -110,22 +105,12 @@
                     id: null,
                     title: '',
                     subtitle: '',
-                    background_image: '',
-                    background_image_name: '',
                     background_color: 'linear-red',
                 })
             },
             onCancel() {
                 this.dialog = false
                 this.form = new Form({})
-            },
-            onClickImageInput() {
-                this.$refs.imageInput.click()
-            },
-            onImageChange(e) {
-                let image = e.target.files[0]
-                this.form.background_image = image
-                this.form.background_image_name = image.name
             },
             post() {
                 this.form.post('/api/files')
@@ -134,7 +119,11 @@
                         this.$emit('posted')
                         eventHub.$emit('show-message', response.status,  response.data)
                     })
-                    .catch(response => eventHub.$emit('show-message', response.data.status,  response.data.data))
+                    .catch(error => {
+                        this.$refs.fileForm.validate()
+                        console.error(error)
+                        //eventHub.$emit('show-message', response.data.status,  response.data.data)
+                    })
             },
             put(id) {
                 this.form.put('/api/files/' + id)
@@ -143,7 +132,11 @@
                         this.$emit('updated')
                         eventHub.$emit('show-message', response.status,  response.data)
                     })
-                    .catch(response => eventHub.$emit('show-message', response.data.status,  response.data.data))
+                    .catch(error => {
+                        this.$refs.fileForm.validate()
+                        console.error(error)
+                        //eventHub.$emit('show-message', response.data.status,  response.data.data)
+                    })
             },
         }
     }

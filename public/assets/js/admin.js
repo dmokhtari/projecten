@@ -22246,6 +22246,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'AddEditElementDialog',
@@ -22298,7 +22302,9 @@ __webpack_require__.r(__webpack_exports__);
 
         eventHub.$emit('show-message', response.status, response.data);
       })["catch"](function (response) {
-        return eventHub.$emit('show-message', response.data.status, response.data.data);
+        _this.$refs.elementForm.validate();
+
+        console.error(response); //eventHub.$emit('show-message', response.data.status,  response.data.data)
       });
     },
     put: function put(id) {
@@ -22311,7 +22317,9 @@ __webpack_require__.r(__webpack_exports__);
 
         eventHub.$emit('show-message', response.status, response.data);
       })["catch"](function (response) {
-        return eventHub.$emit('show-message', response.data.status, response.data.data);
+        _this2.$refs.elementForm.validate();
+
+        console.error(response); //eventHub.$emit('show-message', response.data.status,  response.data.data)
       });
     },
     getModules: function getModules() {
@@ -22897,6 +22905,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -22978,7 +22987,9 @@ __webpack_require__.r(__webpack_exports__);
 
         eventHub.$emit('show-message', response.status, response.data);
       })["catch"](function (response) {
-        return console.log(response);
+        _this3.$refs.textForm.validate();
+
+        console.error(response);
       });
     },
     put: function put(id) {
@@ -22991,7 +23002,9 @@ __webpack_require__.r(__webpack_exports__);
 
         eventHub.$emit('show-message', response.status, response.data);
       })["catch"](function (response) {
-        return console.error(response);
+        _this4.$refs.textForm.validate();
+
+        console.error(response);
       });
     },
     getIcons: function getIcons() {
@@ -23018,6 +23031,10 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _shared_helpers_Form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../shared/helpers/Form */ "./resources/js/shared/helpers/Form.js");
+//
+//
+//
+//
 //
 //
 //
@@ -23153,7 +23170,9 @@ __webpack_require__.r(__webpack_exports__);
 
         eventHub.$emit('show-message', response.status, response.data);
       })["catch"](function (response) {
-        return eventHub.$emit('show-message', response.data.status, response.data.data);
+        _this2.$refs.videoForm.validate();
+
+        console.error(response); //eventHub.$emit('show-message', response.data.status,  response.data.data)
       });
     },
     put: function put(id) {
@@ -23166,7 +23185,9 @@ __webpack_require__.r(__webpack_exports__);
 
         eventHub.$emit('show-message', response.status, response.data);
       })["catch"](function (response) {
-        return eventHub.$emit('show-message', response.data.status, response.data.data);
+        _this3.$refs.videoForm.validate();
+
+        console.error(response); //eventHub.$emit('show-message', response.data.status,  response.data.data)
       });
     },
     getIcons: function getIcons() {
@@ -23193,11 +23214,6 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _shared_helpers_Form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../shared/helpers/Form */ "./resources/js/shared/helpers/Form.js");
-//
-//
-//
-//
-//
 //
 //
 //
@@ -23314,22 +23330,12 @@ __webpack_require__.r(__webpack_exports__);
         id: null,
         title: '',
         subtitle: '',
-        background_image: '',
-        background_image_name: '',
         background_color: 'linear-red'
       });
     },
     onCancel: function onCancel() {
       this.dialog = false;
       this.form = new _shared_helpers_Form__WEBPACK_IMPORTED_MODULE_0__["Form"]({});
-    },
-    onClickImageInput: function onClickImageInput() {
-      this.$refs.imageInput.click();
-    },
-    onImageChange: function onImageChange(e) {
-      var image = e.target.files[0];
-      this.form.background_image = image;
-      this.form.background_image_name = image.name;
     },
     post: function post() {
       var _this = this;
@@ -23340,8 +23346,10 @@ __webpack_require__.r(__webpack_exports__);
         _this.$emit('posted');
 
         eventHub.$emit('show-message', response.status, response.data);
-      })["catch"](function (response) {
-        return eventHub.$emit('show-message', response.data.status, response.data.data);
+      })["catch"](function (error) {
+        _this.$refs.fileForm.validate();
+
+        console.error(error); //eventHub.$emit('show-message', response.data.status,  response.data.data)
       });
     },
     put: function put(id) {
@@ -23353,8 +23361,10 @@ __webpack_require__.r(__webpack_exports__);
         _this2.$emit('updated');
 
         eventHub.$emit('show-message', response.status, response.data);
-      })["catch"](function (response) {
-        return eventHub.$emit('show-message', response.data.status, response.data.data);
+      })["catch"](function (error) {
+        _this2.$refs.fileForm.validate();
+
+        console.error(error); //eventHub.$emit('show-message', response.data.status,  response.data.data)
       });
     }
   }
@@ -23747,6 +23757,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'AddEditModuleDialog',
@@ -23804,7 +23818,9 @@ __webpack_require__.r(__webpack_exports__);
 
         eventHub.$emit('show-message', response.status, response.data);
       })["catch"](function (response) {
-        return console.error(response);
+        _this.$refs.moduleForm.validate();
+
+        console.error(response);
       });
     },
     put: function put(id) {
@@ -23817,7 +23833,9 @@ __webpack_require__.r(__webpack_exports__);
 
         eventHub.$emit('show-message', response.status, response.data);
       })["catch"](function (response) {
-        return console.error(response);
+        _this2.$refs.moduleForm.validate();
+
+        console.error(response);
       });
     },
     getFiles: function getFiles() {
@@ -24298,6 +24316,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Profile',
@@ -24350,7 +24372,9 @@ __webpack_require__.r(__webpack_exports__);
 
         eventHub.$emit('show-message', response.status, response.data);
       })["catch"](function (error) {
-        return console.error(error);
+        _this.$refs.profileForm.validate();
+
+        console.error(error);
       });
     },
     showUser: function showUser() {
@@ -24784,6 +24808,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'AddEditUserDialog',
@@ -24851,7 +24879,9 @@ __webpack_require__.r(__webpack_exports__);
 
         eventHub.$emit('show-message', response.status, response.data);
       })["catch"](function (response) {
-        return eventHub.$emit('show-message', response.data.status, response.data.data);
+        _this2.$refs.userForm.validate();
+
+        console.error(response); //eventHub.$emit('show-message', response.data.status,  response.data.data)
       });
     },
     put: function put(id) {
@@ -24864,7 +24894,9 @@ __webpack_require__.r(__webpack_exports__);
 
         eventHub.$emit('show-message', response.status, response.data);
       })["catch"](function (response) {
-        return eventHub.$emit('show-message', response.data.status, response.data.data);
+        _this3.$refs.userForm.validate();
+
+        console.error(response); //eventHub.$emit('show-message', response.data.status,  response.data.data)
       });
     }
   }
@@ -24882,6 +24914,10 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _shared_helpers_Form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../shared/helpers/Form */ "./resources/js/shared/helpers/Form.js");
+//
+//
+//
+//
 //
 //
 //
@@ -24960,7 +24996,10 @@ __webpack_require__.r(__webpack_exports__);
 
         eventHub.$emit('show-message', response.status, response.data);
       })["catch"](function (response) {
-        return eventHub.$emit('show-message', response.data.status, response.data.data);
+        console.error(response);
+
+        _this.$refs.userUploadForm.validate(); //eventHub.$emit('show-message', response.data.status, response.data.data)
+
       });
     }
   }
@@ -40889,14 +40928,17 @@ var render = function() {
               ),
               _vm._v(" "),
               _c(
-                "form",
+                "v-form",
                 {
+                  ref: "elementForm",
                   staticClass: "px-4 py-4",
                   on: {
                     submit: function($event) {
                       $event.preventDefault()
                       _vm.form.id ? _vm.put(_vm.form.id) : _vm.post()
-                    },
+                    }
+                  },
+                  nativeOn: {
                     keydown: function($event) {
                       return _vm.form.errors.clear($event.target.name)
                     }
@@ -41962,8 +42004,9 @@ var render = function() {
               ),
               _vm._v(" "),
               _c(
-                "form",
+                "v-form",
                 {
+                  ref: "textForm",
                   staticClass: "px-4 py-4",
                   on: {
                     submit: function($event) {
@@ -42185,8 +42228,9 @@ var render = function() {
               ),
               _vm._v(" "),
               _c(
-                "form",
+                "v-form",
                 {
+                  ref: "videoForm",
                   staticClass: "px-4 py-4",
                   on: {
                     submit: function($event) {
@@ -42400,14 +42444,17 @@ var render = function() {
               ),
               _vm._v(" "),
               _c(
-                "form",
+                "v-form",
                 {
+                  ref: "fileForm",
                   staticClass: "px-4 py-4",
                   on: {
                     submit: function($event) {
                       $event.preventDefault()
                       _vm.form.id ? _vm.put(_vm.form.id) : _vm.post()
-                    },
+                    }
+                  },
+                  nativeOn: {
                     keydown: function($event) {
                       return _vm.form.errors.clear($event.target.name)
                     }
@@ -42501,31 +42548,6 @@ var render = function() {
                       },
                       expression: "form.background_color"
                     }
-                  }),
-                  _vm._v(" "),
-                  _c("v-text-field", {
-                    attrs: {
-                      outline: "",
-                      label: "Upload een photo",
-                      "prepend-inner-icon": "file_upload",
-                      rules: [_vm.form.errors.get("background_image")],
-                      errors: _vm.form.errors.has("background_image")
-                    },
-                    on: { click: _vm.onClickImageInput },
-                    model: {
-                      value: _vm.form.background_image_name,
-                      callback: function($$v) {
-                        _vm.$set(_vm.form, "background_image_name", $$v)
-                      },
-                      expression: "form.background_image_name"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("input", {
-                    ref: "imageInput",
-                    staticStyle: { display: "none" },
-                    attrs: { type: "file" },
-                    on: { change: _vm.onImageChange }
                   }),
                   _vm._v(" "),
                   _c(
@@ -43138,14 +43160,17 @@ var render = function() {
               ),
               _vm._v(" "),
               _c(
-                "form",
+                "v-form",
                 {
+                  ref: "moduleForm",
                   staticClass: "px-4 py-4",
                   on: {
                     submit: function($event) {
                       $event.preventDefault()
                       _vm.form.id ? _vm.put(_vm.form.id) : _vm.post()
-                    },
+                    }
+                  },
+                  nativeOn: {
                     keydown: function($event) {
                       return _vm.form.errors.clear($event.target.name)
                     }
@@ -43984,16 +44009,19 @@ var render = function() {
               _c("br"),
               _vm._v(" "),
               _c(
-                "form",
+                "v-form",
                 {
+                  ref: "profileForm",
                   staticClass: "px-3",
                   on: {
-                    keydown: function($event) {
-                      return _vm.form.errors.clear($event.target.name)
-                    },
                     submit: function($event) {
                       $event.preventDefault()
                       return _vm.updatePassword($event)
+                    }
+                  },
+                  nativeOn: {
+                    keydown: function($event) {
+                      return _vm.form.errors.clear($event.target.name)
                     }
                   }
                 },
@@ -44540,14 +44568,17 @@ var render = function() {
               ),
               _vm._v(" "),
               _c(
-                "form",
+                "v-form",
                 {
+                  ref: "userForm",
                   staticClass: "px-4 py-4",
                   on: {
                     submit: function($event) {
                       $event.preventDefault()
                       _vm.form.id ? _vm.put(_vm.form.id) : _vm.post()
-                    },
+                    }
+                  },
+                  nativeOn: {
                     keydown: function($event) {
                       return _vm.form.errors.clear($event.target.name)
                     }
@@ -44900,8 +44931,9 @@ var render = function() {
           ),
           _vm._v(" "),
           _c(
-            "form",
+            "v-form",
             {
+              ref: "userUploadForm",
               staticClass: "px-4 py-4",
               on: {
                 submit: function($event) {

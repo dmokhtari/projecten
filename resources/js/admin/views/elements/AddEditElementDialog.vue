@@ -12,7 +12,11 @@
                     <font-awesome-icon class="title" :icon="['far', 'times-circle']"></font-awesome-icon>
                 </v-btn>
             </v-card-title>
-            <form @submit.prevent="form.id ? put(form.id) : post()" class="px-4 py-4" @keydown="form.errors.clear($event.target.name)">
+            <v-form @submit.prevent="form.id ? put(form.id) : post()"
+                    class="px-4 py-4"
+                    @keydown.native="form.errors.clear($event.target.name)"
+                    ref="elementForm"
+            >
                 <v-select
                     outline
                     :items="modules"
@@ -41,7 +45,7 @@
                     <v-spacer></v-spacer>
                     <v-btn color="primary" type="submit">Opslaan</v-btn>
                 </v-card-actions>
-            </form>
+            </v-form>
         </v-card>
     </v-dialog>
 </template>
@@ -94,7 +98,11 @@
                         this.$emit('element-posted')
                         eventHub.$emit('show-message', response.status,  response.data)
                     })
-                    .catch(response => eventHub.$emit('show-message', response.data.status,  response.data.data))
+                    .catch(response => {
+                        this.$refs.elementForm.validate()
+                        console.error(response)
+                        //eventHub.$emit('show-message', response.data.status,  response.data.data)
+                    })
             },
             put(id) {
                 this.form.put('/api/elements/' + id)
@@ -103,7 +111,11 @@
                         this.$emit('element-updated')
                         eventHub.$emit('show-message', response.status,  response.data)
                     })
-                    .catch(response => eventHub.$emit('show-message', response.data.status,  response.data.data))
+                    .catch(response => {
+                        this.$refs.elementForm.validate()
+                        console.error(response)
+                        //eventHub.$emit('show-message', response.data.status,  response.data.data)
+                    })
             },
             getModules() {
                 axios.get('/api/modules')
