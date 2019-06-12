@@ -11,7 +11,7 @@
                         <v-card-title class="justify-center">
                             <h1>Wachtwoord wijzigen</h1>
                         </v-card-title>
-                        <form @submit.prevent="requestChangePassword" @keydown="form.errors.clear($event.target.name)" class="px-5">
+                        <v-form @submit.prevent="requestChangePassword" @keydown.native="form.errors.clear($event.target.name)" class="px-5" ref="resetPasswordForm">
                             <v-text-field
                                 outline
                                 :errors="form.errors.has('email')"
@@ -37,7 +37,7 @@
                                 type="password"
                             ></v-text-field>
                             <v-btn block type="submit" large :disabled="form.errors.any()">Wachtwoord wijzigen</v-btn>
-                        </form>
+                        </v-form>
                         <v-card-actions class="justify-center">
                             <a href="/passwords/email" class="pt-3">wachtwoord vergeten</a>
                         </v-card-actions>
@@ -76,9 +76,9 @@
                             window.location.href = '/home'
                         }, 1500)
                     })
-                    .catch(response => {
-                        eventHub.$emit('show-message', response.status, response.data)
-                        console.error(response)
+                    .catch(error => {
+                        this.$refs.resetPasswordForm.validate()
+                        console.error(error)
                     })
             }
         }
