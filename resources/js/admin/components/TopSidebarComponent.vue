@@ -10,7 +10,7 @@
             </v-btn>
             <v-toolbar-title>
                 <a href="/">
-                    Logo
+                    <img src="/assets/img/logo.png" width="100">
                 </a>
             </v-toolbar-title>
 

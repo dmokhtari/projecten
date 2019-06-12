@@ -40193,7 +40193,9 @@ var render = function() {
           _vm._v(" "),
           _c("v-toolbar-title", [
             _c("a", { attrs: { href: "/" } }, [
-              _vm._v("\n                Logo\n            ")
+              _c("img", {
+                attrs: { src: "/assets/img/logo.png", width: "100" }
+              })
             ])
           ]),
           _vm._v(" "),
