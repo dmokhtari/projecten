@@ -21,7 +21,7 @@
                     <v-window v-model="page">
                         <v-window-item :value="1">
                             <v-card-text>
-                                <form @submit.prevent="requestLogin" @keydown="form.errors.clear($event.target.name)">
+                                <v-form @submit.prevent="requestLogin" @keydown.native="form.errors.clear($event.target.name)" ref="loginForm">
                                     <v-text-field
                                         :errors="form.errors.has('email')"
                                         :rules="[form.errors.get('email')]"
@@ -38,12 +38,12 @@
                                     ></v-text-field>
                                     <v-btn class="mt-4" round type="submit" large :disabled="form.errors.any()">Inloggen</v-btn>
                                     <v-btn class="mt-4" @click="page = 2" small flat color="primary">Wachtwoord vergeten?</v-btn>
-                                </form>
+                                </v-form>
                             </v-card-text>
                         </v-window-item>
                         <v-window-item :value="2">
                             <v-card-text>
-                                <form @submit.prevent="requestEmailLink" @keydown="emailForm.errors.clear($event.target.name)">
+                                <v-form @submit.prevent="requestEmailLink" @keydown.native="emailForm.errors.clear($event.target.name)" ref="resetPassword">
                                     <v-text-field
                                         :errors="emailForm.errors.has('email')"
                                         :rules="[emailForm.errors.get('email')]"
@@ -53,7 +53,7 @@
                                     ></v-text-field>
                                     <v-btn round class="mt-4" type="submit" large :disabled="emailForm.errors.any()">Email verzenden</v-btn>
                                     <v-btn class="mt-4" @click="page = 1" small flat color="primary">Terug naar Inloggen</v-btn>
-                                </form>
+                                </v-form>
                             </v-card-text>
                         </v-window-item>
                     </v-window>
@@ -108,16 +108,19 @@
             requestLogin() {
                 this.form.post('/login')
                     .then(response => location.reload())
-                    .catch(response => console.log(response))
+                    .catch(error => {
+                        this.$refs.loginForm.validate()
+                        console.error(error)
+                    })
             },
             requestEmailLink() {
                 this.emailForm.post('/passwords/email')
                     .then(response => eventHub.$emit('show-message', response.status, response.data))
-                    .catch(response => eventHub.$emit('show-message', response.status, response.data))
+                    .catch(error => {
+                        this.$refs.resetPassword.validate()
+                        console.error(error)
+                    })
             }
         }
     }
 </script>
-<style scoped lang="scss">
-
-</style>
