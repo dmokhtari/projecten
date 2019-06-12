@@ -111,6 +111,6 @@ class SubElementController extends Controller
         $subelement->icons()->delete();
         $subelement->delete();
         
-        return response()->json(['status' => 'success', 'data' => "Sub-element is verwijderd!"], 200);
+        return response()->json(['status' => 'success', 'data' => "Subelement verwijderd!"], 200);
     }
 }
