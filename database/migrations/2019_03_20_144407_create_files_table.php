@@ -25,7 +25,7 @@ class CreateFilesTable extends Migration
         });
 
         Schema::table('files', function($table) {
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');;
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
