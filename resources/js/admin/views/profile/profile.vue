@@ -72,7 +72,11 @@
                 </v-card-title>
 
                     <br>
-                    <form class="px-3" @keydown="form.errors.clear($event.target.name)" @submit.prevent="updatePassword"> 
+                    <v-form class="px-3"
+                          @keydown.native="form.errors.clear($event.target.name)"
+                          @submit.prevent="updatePassword"
+                          ref="profileForm"
+                    >
 
                         <v-text-field
                             type="password"
@@ -109,7 +113,7 @@
                             <v-spacer></v-spacer>
                             <v-btn color="primary" type="submit">Update</v-btn>
                         </v-card-actions>
-                    </form>
+                    </v-form>
             </v-card>
         </v-dialog>
     </v-container>
@@ -158,29 +162,32 @@ export default {
 
         return textOne.indexOf(searchText) > -1 ||
           textTwo.indexOf(searchText) > -1
-      },
-      save () {
-        this.isEditing = !this.isEditing
-        this.hasSaved = true
-      },
-      updatePassword() {
-        this.form('/api/auth/user/update_password')
-            .then(response => {
-                this.onCancel()
-                eventHub.$emit('show-message', response.status,  response.data)
-            })
-            .catch(error => console.error(error))
-      },
-     showUser(){
+        },
+        save () {
+            this.isEditing = !this.isEditing
+            this.hasSaved = true
+        },
+        updatePassword() {
+            this.form('/api/auth/user/update_password')
+                .then(response => {
+                    this.onCancel()
+                    eventHub.$emit('show-message', response.status,  response.data)
+                })
+                .catch(error => {
+                    this.$refs.profileForm.validate()
+                    console.error(error)
+                })
+        },
+        showUser(){
          axios.get('/api/auth/user/show')
             .then(response => {
                 this.userForm.forename = response.data.data.forename
                 this.userForm.surname = response.data.data.surname
                 this.userForm.email = response.data.data.email
-                
+
             })
             .catch(error => console.error(error))
-     },
+        },
      
 
     }

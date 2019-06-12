@@ -21998,17 +21998,25 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     requestLogin: function requestLogin() {
+      var _this = this;
+
       this.form.post('/login').then(function (response) {
         return location.reload();
-      })["catch"](function (response) {
-        return console.log(response);
+      })["catch"](function (error) {
+        _this.$refs.loginForm.validate();
+
+        console.error(error);
       });
     },
     requestEmailLink: function requestEmailLink() {
+      var _this2 = this;
+
       this.emailForm.post('/passwords/email').then(function (response) {
         return eventHub.$emit('show-message', response.status, response.data);
-      })["catch"](function (response) {
-        return eventHub.$emit('show-message', response.status, response.data);
+      })["catch"](function (error) {
+        _this2.$refs.resetPassword.validate();
+
+        console.error(error);
       });
     }
   }
@@ -22097,14 +22105,17 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     requestChangePassword: function requestChangePassword() {
+      var _this = this;
+
       this.form.post('/passwords/reset').then(function (response) {
         eventHub.$emit('show-message', response.status, response.data);
         setTimeout(function () {
           window.location.href = '/home';
         }, 1500);
-      })["catch"](function (response) {
-        eventHub.$emit('show-message', response.status, response.data);
-        console.error(response);
+      })["catch"](function (error) {
+        _this.$refs.resetPasswordForm.validate();
+
+        console.error(error);
       });
     }
   }
@@ -36014,10 +36025,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/app/components/LoginComponent.vue?vue&type=template&id=49ed375e&scoped=true&":
-/*!*********************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/app/components/LoginComponent.vue?vue&type=template&id=49ed375e&scoped=true& ***!
-  \*********************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/app/components/LoginComponent.vue?vue&type=template&id=49ed375e&":
+/*!*********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/app/components/LoginComponent.vue?vue&type=template&id=49ed375e& ***!
+  \*********************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -36088,90 +36099,97 @@ var render = function() {
                         "v-window-item",
                         { attrs: { value: 1 } },
                         [
-                          _c("v-card-text", [
-                            _c(
-                              "form",
-                              {
-                                on: {
-                                  submit: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.requestLogin($event)
-                                  },
-                                  keydown: function($event) {
-                                    return _vm.form.errors.clear(
-                                      $event.target.name
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _c("v-text-field", {
-                                  attrs: {
-                                    errors: _vm.form.errors.has("email"),
-                                    rules: [_vm.form.errors.get("email")],
-                                    label: "Email",
-                                    type: "email"
-                                  },
-                                  model: {
-                                    value: _vm.form.email,
-                                    callback: function($$v) {
-                                      _vm.$set(_vm.form, "email", $$v)
-                                    },
-                                    expression: "form.email"
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("v-text-field", {
-                                  attrs: {
-                                    errors: _vm.form.errors.has("password"),
-                                    rules: [_vm.form.errors.get("password")],
-                                    label: "Wachtwoord",
-                                    type: "password"
-                                  },
-                                  model: {
-                                    value: _vm.form.password,
-                                    callback: function($$v) {
-                                      _vm.$set(_vm.form, "password", $$v)
-                                    },
-                                    expression: "form.password"
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c(
-                                  "v-btn",
-                                  {
-                                    staticClass: "mt-4",
-                                    attrs: {
-                                      round: "",
-                                      type: "submit",
-                                      large: "",
-                                      disabled: _vm.form.errors.any()
+                          _c(
+                            "v-card-text",
+                            [
+                              _c(
+                                "v-form",
+                                {
+                                  ref: "loginForm",
+                                  on: {
+                                    submit: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.requestLogin($event)
                                     }
                                   },
-                                  [_vm._v("Inloggen")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "v-btn",
-                                  {
-                                    staticClass: "mt-4",
+                                  nativeOn: {
+                                    keydown: function($event) {
+                                      return _vm.form.errors.clear(
+                                        $event.target.name
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("v-text-field", {
                                     attrs: {
-                                      small: "",
-                                      flat: "",
-                                      color: "primary"
+                                      errors: _vm.form.errors.has("email"),
+                                      rules: [_vm.form.errors.get("email")],
+                                      label: "Email",
+                                      type: "email"
                                     },
-                                    on: {
-                                      click: function($event) {
-                                        _vm.page = 2
+                                    model: {
+                                      value: _vm.form.email,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.form, "email", $$v)
+                                      },
+                                      expression: "form.email"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      errors: _vm.form.errors.has("password"),
+                                      rules: [_vm.form.errors.get("password")],
+                                      label: "Wachtwoord",
+                                      type: "password"
+                                    },
+                                    model: {
+                                      value: _vm.form.password,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.form, "password", $$v)
+                                      },
+                                      expression: "form.password"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      staticClass: "mt-4",
+                                      attrs: {
+                                        round: "",
+                                        type: "submit",
+                                        large: "",
+                                        disabled: _vm.form.errors.any()
                                       }
-                                    }
-                                  },
-                                  [_vm._v("Wachtwoord vergeten?")]
-                                )
-                              ],
-                              1
-                            )
-                          ])
+                                    },
+                                    [_vm._v("Inloggen")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      staticClass: "mt-4",
+                                      attrs: {
+                                        small: "",
+                                        flat: "",
+                                        color: "primary"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          _vm.page = 2
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Wachtwoord vergeten?")]
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
                         ],
                         1
                       ),
@@ -36180,74 +36198,83 @@ var render = function() {
                         "v-window-item",
                         { attrs: { value: 2 } },
                         [
-                          _c("v-card-text", [
-                            _c(
-                              "form",
-                              {
-                                on: {
-                                  submit: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.requestEmailLink($event)
-                                  },
-                                  keydown: function($event) {
-                                    return _vm.emailForm.errors.clear(
-                                      $event.target.name
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _c("v-text-field", {
-                                  attrs: {
-                                    errors: _vm.emailForm.errors.has("email"),
-                                    rules: [_vm.emailForm.errors.get("email")],
-                                    label: "Email",
-                                    type: "email"
-                                  },
-                                  model: {
-                                    value: _vm.emailForm.email,
-                                    callback: function($$v) {
-                                      _vm.$set(_vm.emailForm, "email", $$v)
-                                    },
-                                    expression: "emailForm.email"
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c(
-                                  "v-btn",
-                                  {
-                                    staticClass: "mt-4",
-                                    attrs: {
-                                      round: "",
-                                      type: "submit",
-                                      large: "",
-                                      disabled: _vm.emailForm.errors.any()
+                          _c(
+                            "v-card-text",
+                            [
+                              _c(
+                                "v-form",
+                                {
+                                  ref: "resetPassword",
+                                  on: {
+                                    submit: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.requestEmailLink($event)
                                     }
                                   },
-                                  [_vm._v("Email verzenden")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "v-btn",
-                                  {
-                                    staticClass: "mt-4",
+                                  nativeOn: {
+                                    keydown: function($event) {
+                                      return _vm.emailForm.errors.clear(
+                                        $event.target.name
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("v-text-field", {
                                     attrs: {
-                                      small: "",
-                                      flat: "",
-                                      color: "primary"
+                                      errors: _vm.emailForm.errors.has("email"),
+                                      rules: [
+                                        _vm.emailForm.errors.get("email")
+                                      ],
+                                      label: "Email",
+                                      type: "email"
                                     },
-                                    on: {
-                                      click: function($event) {
-                                        _vm.page = 1
+                                    model: {
+                                      value: _vm.emailForm.email,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.emailForm, "email", $$v)
+                                      },
+                                      expression: "emailForm.email"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      staticClass: "mt-4",
+                                      attrs: {
+                                        round: "",
+                                        type: "submit",
+                                        large: "",
+                                        disabled: _vm.emailForm.errors.any()
                                       }
-                                    }
-                                  },
-                                  [_vm._v("Terug naar Inloggen")]
-                                )
-                              ],
-                              1
-                            )
-                          ])
+                                    },
+                                    [_vm._v("Email verzenden")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      staticClass: "mt-4",
+                                      attrs: {
+                                        small: "",
+                                        flat: "",
+                                        color: "primary"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          _vm.page = 1
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Terug naar Inloggen")]
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
                         ],
                         1
                       )
@@ -36325,14 +36352,17 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c(
-                        "form",
+                        "v-form",
                         {
+                          ref: "resetPasswordForm",
                           staticClass: "px-5",
                           on: {
                             submit: function($event) {
                               $event.preventDefault()
                               return _vm.requestChangePassword($event)
-                            },
+                            }
+                          },
+                          nativeOn: {
                             keydown: function($event) {
                               return _vm.form.errors.clear($event.target.name)
                             }
@@ -78282,7 +78312,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _LoginComponent_vue_vue_type_template_id_49ed375e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LoginComponent.vue?vue&type=template&id=49ed375e&scoped=true& */ "./resources/js/app/components/LoginComponent.vue?vue&type=template&id=49ed375e&scoped=true&");
+/* harmony import */ var _LoginComponent_vue_vue_type_template_id_49ed375e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LoginComponent.vue?vue&type=template&id=49ed375e& */ "./resources/js/app/components/LoginComponent.vue?vue&type=template&id=49ed375e&");
 /* harmony import */ var _LoginComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LoginComponent.vue?vue&type=script&lang=js& */ "./resources/js/app/components/LoginComponent.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
@@ -78294,11 +78324,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _LoginComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _LoginComponent_vue_vue_type_template_id_49ed375e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _LoginComponent_vue_vue_type_template_id_49ed375e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _LoginComponent_vue_vue_type_template_id_49ed375e___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _LoginComponent_vue_vue_type_template_id_49ed375e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  "49ed375e",
+  null,
   null
   
 )
@@ -78324,19 +78354,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/app/components/LoginComponent.vue?vue&type=template&id=49ed375e&scoped=true&":
-/*!***************************************************************************************************!*\
-  !*** ./resources/js/app/components/LoginComponent.vue?vue&type=template&id=49ed375e&scoped=true& ***!
-  \***************************************************************************************************/
+/***/ "./resources/js/app/components/LoginComponent.vue?vue&type=template&id=49ed375e&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/app/components/LoginComponent.vue?vue&type=template&id=49ed375e& ***!
+  \***************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LoginComponent_vue_vue_type_template_id_49ed375e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./LoginComponent.vue?vue&type=template&id=49ed375e&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/app/components/LoginComponent.vue?vue&type=template&id=49ed375e&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LoginComponent_vue_vue_type_template_id_49ed375e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LoginComponent_vue_vue_type_template_id_49ed375e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./LoginComponent.vue?vue&type=template&id=49ed375e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/app/components/LoginComponent.vue?vue&type=template&id=49ed375e&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LoginComponent_vue_vue_type_template_id_49ed375e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LoginComponent_vue_vue_type_template_id_49ed375e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LoginComponent_vue_vue_type_template_id_49ed375e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

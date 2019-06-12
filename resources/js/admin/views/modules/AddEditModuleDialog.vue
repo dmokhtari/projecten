@@ -12,7 +12,11 @@
                     <font-awesome-icon class="title" :icon="['far', 'times-circle']"></font-awesome-icon>
                 </v-btn>
             </v-card-title>
-            <form @submit.prevent="form.id ? put(form.id) : post()" class="px-4 py-4" @keydown="form.errors.clear($event.target.name)">
+            <v-form @submit.prevent="form.id ? put(form.id) : post()"
+                    class="px-4 py-4"
+                    @keydown.native="form.errors.clear($event.target.name)"
+                    ref="moduleForm"
+            >
                 <v-text-field
                     outline
                     label="Title"
@@ -54,7 +58,7 @@
                     <v-spacer></v-spacer>
                     <v-btn color="primary" type="submit">Opslaan</v-btn>
                 </v-card-actions>
-            </form>
+            </v-form>
         </v-card>
     </v-dialog>
 </template>
@@ -111,7 +115,10 @@
                         this.$emit('module-posted')
                         eventHub.$emit('show-message', response.status,  response.data)
                     })
-                    .catch(response => console.error(response))
+                    .catch(response => {
+                        this.$refs.moduleForm.validate()
+                        console.error(response)
+                    })
             },
             put(id) {
                 this.form.put('/api/modules/' + id)
@@ -120,7 +127,10 @@
                         this.$emit('module-updated')
                         eventHub.$emit('show-message', response.status,  response.data)
                     })
-                    .catch(response => console.error(response))
+                    .catch(response => {
+                        this.$refs.moduleForm.validate()
+                        console.error(response)
+                    })
             },
             getFiles() {
                 axios.get('/api/files')

@@ -12,7 +12,11 @@
                     <font-awesome-icon class="title" :icon="['far', 'times-circle']"></font-awesome-icon>
                 </v-btn>
             </v-card-title>
-            <form @submit.prevent="form.id ? put(form.id) : post()" class="px-4 py-4" @keydown="form.errors.clear($event.target.name)">
+            <v-form @submit.prevent="form.id ? put(form.id) : post()"
+                    class="px-4 py-4"
+                    @keydown="form.errors.clear($event.target.name)"
+                    ref="videoForm"
+            >
                 <v-select
                     outline
                     label="Icon"
@@ -62,7 +66,7 @@
                     <v-spacer></v-spacer>
                     <v-btn color="primary" type="submit">Opslaan</v-btn>
                 </v-card-actions>
-            </form>
+            </v-form>
         </v-card>
     </v-dialog>
 </template>
@@ -128,7 +132,11 @@
                         this.$emit('video-posted')
                         eventHub.$emit('show-message', response.status,  response.data)
                     })
-                    .catch(response => eventHub.$emit('show-message', response.data.status,  response.data.data))
+                    .catch(response => {
+                        this.$refs.videoForm.validate()
+                        console.error(response)
+                        //eventHub.$emit('show-message', response.data.status,  response.data.data)
+                    })
             },
             put(id) {
                 this.form.put('/api/subelements/' + id)
@@ -137,7 +145,11 @@
                         this.$emit('video-updated')
                         eventHub.$emit('show-message', response.status,  response.data)
                     })
-                    .catch(response => eventHub.$emit('show-message', response.data.status,  response.data.data))
+                    .catch(response => {
+                        this.$refs.videoForm.validate()
+                        console.error(response)
+                        //eventHub.$emit('show-message', response.data.status,  response.data.data)
+                    })
             },
             getIcons() {
                 axios.get('/api/settings/icons')

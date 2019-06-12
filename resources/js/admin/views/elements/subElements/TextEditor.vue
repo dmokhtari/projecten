@@ -15,9 +15,10 @@
 
                 <v-btn color="primary" absolute right @click="form.id ? put(form.id) : post()">Opslaan</v-btn>
             </v-card-title>
-            <form @submit.prevent="form.id ? put(form.id) : post()"
+            <v-form @submit.prevent="form.id ? put(form.id) : post()"
                   class="px-4 py-4"
                   @keydown="form.errors.clear($event.target.name)"
+                    ref="textForm"
             >
                 <v-layout row wrap>
                     <v-flex sm6 xs12 class="pr-3">
@@ -64,7 +65,7 @@
                     </v-flex>
                 </v-layout>
                 <textarea ref="textEditor" v-model="form.binary" rows="15"></textarea>
-            </form>
+            </v-form>
         </v-card>
     </v-dialog>
 </template>
@@ -150,7 +151,10 @@
                         this.$emit('text-posted')
                         eventHub.$emit('show-message', response.status,  response.data)
                     })
-                    .catch(response => console.log(response))
+                    .catch(response => {
+                        this.$refs.textForm.validate()
+                        console.error(response)
+                    })
             },
             put(id) {
                 this.form.put('/api/subelements/' + id)
@@ -159,7 +163,10 @@
                         this.$emit('text-updated')
                         eventHub.$emit('show-message', response.status,  response.data)
                     })
-                    .catch(response => console.error(response))
+                    .catch(response => {
+                        this.$refs.textForm.validate()
+                        console.error(response)
+                    })
             },
             getIcons() {
                 axios.get('/api/settings/icons')
