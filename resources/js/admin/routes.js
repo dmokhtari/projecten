@@ -118,6 +118,17 @@ export const router = new VueRouter({
                     { text: 'Icons', disabled: true, to:'/admin/settings/icons' },
                 ]
             }
+        },
+        {
+            path: '/admin/profile',
+            name: 'profile',
+            component: require('./views/profile/profile').default,
+            meta: {
+                breadcrumb: [
+                    { text: 'Home', disabled: false, to:'/admin/dashboard' },
+                    { text: 'Profile', disabled: true, to:'/admin/profile' },
+                ]
+            }
         }
     ]
 });
