@@ -88196,7 +88196,7 @@ function getTitle(vm) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/davoodmokhtari/code/projecten/resources/js/admin/admin.js */"./resources/js/admin/admin.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\projecten\resources\js\admin\admin.js */"./resources/js/admin/admin.js");
 
 
 /***/ })

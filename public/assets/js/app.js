@@ -79460,8 +79460,8 @@ function getTitle(vm) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/davoodmokhtari/code/projecten/resources/js/app/app.js */"./resources/js/app/app.js");
-module.exports = __webpack_require__(/*! /Users/davoodmokhtari/code/projecten/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\projecten\resources\js\app\app.js */"./resources/js/app/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\projecten\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
