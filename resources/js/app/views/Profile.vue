@@ -115,7 +115,7 @@
     </v-container>
 </template>
 <script>
-import { Form } from "../../../shared/helpers/Form";
+import { Form } from "./../../shared/helpers/Form";
 export default {
     name: 'Profile',
     data() {

@@ -17,6 +17,17 @@ export const router = new VueRouter({
             }
         },
         {
+            path: '/auth/user',
+            name: 'profile',
+            component: require('./views/Profile').default,
+            meta: {
+                breadcrumb: [
+                    { text: 'Home', disabled: false, to:'/home' },
+                    { text: 'Profile', disabled: true, to:'/auth/user' }
+                ]
+            }
+        },
+        {
             path: '/bestanden/:id',
             name: 'studentFile',
             component: require('./views/File').default,

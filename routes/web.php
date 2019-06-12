@@ -20,6 +20,8 @@ Route::middleware('auth')->group(function() {
     Route::get('/bestanden/{bestand}', 'AppController@getHome');
     Route::get('/bestanden/{bestand}/modules/{module}', 'AppController@getHome');
 
+    Route::get('/auth/user', 'AppController@getHome');
+
 });
 
 Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
