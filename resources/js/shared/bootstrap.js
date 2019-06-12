@@ -7,6 +7,8 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import 'vuetify/dist/vuetify.min.css';
 
+import '@babel/polyfill';
+
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 library.add(fas);

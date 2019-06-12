@@ -16,7 +16,7 @@ window.axios.interceptors.response.use(function (response) {
     return response;
 }, function (error) {
     if (401 === error.response.status) {
-        eventHub.$emit('show-message', 'error', 'Uw sessie is verlopen. U wordt naar login pagina gestuurd!')
+        eventHub.$emit('show-message', 'error', 'Uw sessie is verlopen. U wordt naar de login pagina gestuurd!')
         setTimeout(() => {
             window.location.href = '/login'
         }, 4000)
