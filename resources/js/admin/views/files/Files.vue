@@ -53,7 +53,7 @@
                 </v-card>
             </v-flex>
         </v-layout>
-        <add-edit-file-dialog @posted="get" @updated="get"></add-edit-file-dialog>
+        <add-edit-file-dialog @file-posted="get" @file-updated="get"></add-edit-file-dialog>
         <delete-permanent-dialog @confirmed="deleteFile">
             <p>Weet u zeker dat u dit <strong>bestand</strong> wil verwijderen?</p>
         </delete-permanent-dialog>

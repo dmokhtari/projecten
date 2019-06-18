@@ -10,7 +10,7 @@ window.eventHub = new Vue();
 
 import Admin from './views/Admin';
 
-
+// console.log('my this', router)
 // Add a 401 response interceptor
 window.axios.interceptors.response.use(function (response) {
     return response;
@@ -20,6 +20,8 @@ window.axios.interceptors.response.use(function (response) {
         setTimeout(() => {
             window.location.href = '/login'
         }, 4000)
+    } else if(404 === error.response.status) {
+        return router.push('404')
     } else {
         return Promise.reject(error);
     }
@@ -28,5 +30,10 @@ window.axios.interceptors.response.use(function (response) {
 const app = new Vue({
     el: '#admin',
     components: { Admin },
-    router
+    router,
+    data() {
+        return {
+            fileColor: ''
+        }
+    }
 });

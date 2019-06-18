@@ -133,7 +133,8 @@
                     { slug: '/admin/users', icon: 'users', text: 'Gebruikers' },
                 ],
                 settings: [
-                    { slug: '/admin/settings/icons', icon: 'sign', text: 'Icons' }
+                    { slug: '/admin/settings/icons', icon: 'sign', text: 'Icons' },
+                    { slug: '/admin/settings/documentation', icon: 'passport', text: 'Documentatie' },
                 ],
                 userMenu: [
                     { slug: '/admin/profile', icon: 'user-circle', text: 'Profiel' },
@@ -174,8 +175,18 @@
                 this.breadcrumbList = []
                 this.breadcrumbList = this.$route.meta.breadcrumb
                 // Object.entries(this.$route.params).forEach(([key, value], index) => {
-                //     this.breadcrumbList[index+1].text = (this.breadcrumbList[index+1].name + ' (' + value + ')')
-                //     this.breadcrumbList[index+1].to = ('/' + this.breadcrumbList[index+1].name.toLowerCase() + '/' + value)
+                //     console.log('length', this.breadcrumbList.length)
+                //     if(this.$route.meta.breadcrumb.length === 3) {
+                //         this.breadcrumbList[2].text = (this.breadcrumbList[2].text + ' (' + value + ')')
+                //         this.breadcrumbList[2].to = ('/admin/' + this.breadcrumbList[2].name.toLowerCase() + '/' + value)
+                //     }
+                //     if(this.$route.meta.breadcrumb.length === 4) {
+                //         this.breadcrumbList[2].text = (this.breadcrumbList[2].text + ' (' + value + ')')
+                //         this.breadcrumbList[2].to = ('/admin/' + this.breadcrumbList[2].name.toLowerCase() + '/' + value)
+                //
+                //         this.breadcrumbList[3].text = (this.breadcrumbList[2].text + ' (' + value + ')')
+                //         this.breadcrumbList[3].to = ('/admin/' + this.breadcrumbList[3].name.toLowerCase() + '/' + value)
+                //     }
                 // })
             }
 
