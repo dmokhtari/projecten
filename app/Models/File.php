@@ -30,4 +30,12 @@ class File extends Model
     {
         return $this->belongsToMany(Module::class)->withTimestamps();
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function ranking()
+    {
+        return $this->hasOne(Ranking::class, 'table_id', 'id')->where('type', '=', 'file');
+    }
 }

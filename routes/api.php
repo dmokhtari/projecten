@@ -30,12 +30,19 @@ Route::apiResource('modules', 'API\ModuleController');
 Route::apiResource('elements', 'API\ElementController');
 Route::apiResource('subelements', 'API\SubElementController');
 Route::apiResource('users', 'API\UserController');
+Route::apiResource('roles', 'API\RoleController');
+
+//rankings
+Route::put('/files/ranking/{file}', 'API\FileController@rank');
+Route::put('/modules/ranking/{module}', 'API\ModuleController@rank');
+Route::put('/elements/ranking/{element}', 'API\ElementController@rank');
 
 Route::post('/users/import', 'API\UserController@import');
 
-Route::apiResource('roles', 'API\RoleController');
+
 
 // settings
 Route::prefix('settings')->group(function() {
     Route::apiResource('icons', 'API\IconController');
+    Route::apiResource('documentations', 'API\DocumentationController');
 });

@@ -39,6 +39,9 @@ Route::middleware('auth', 'admin')->group(function() {
         Route::get('/files', 'AppController@getDashboard');
         Route::get('/files/{file}', 'AppController@getDashboard');
 
+        Route::get('/files/{file}/modules/{module}', 'AppController@getDashboard');
+        Route::get('/files/{file}/modules/{module}/elements/{element}', 'AppController@getDashboard');
+
         // modules
         Route::get('/modules', 'AppController@getDashboard');
         Route::get('/modules/{module}', 'AppController@getDashboard');
@@ -50,11 +53,15 @@ Route::middleware('auth', 'admin')->group(function() {
 
         // user
         Route::get('/users', 'AppController@getDashboard');
+        Route::get('/users/{user}', 'AppController@getDashboard');
 
         // profile
         Route::get('/profile', 'AppController@getDashboard');
 
         // settings
         Route::get('/settings/icons', 'AppController@getDashboard');
+
+        // documentation
+        Route::get('/settings/documentation', 'AppController@getDashboard');
     });
 });

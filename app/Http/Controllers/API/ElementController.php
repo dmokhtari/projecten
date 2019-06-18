@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\Element;
+use App\Models\Module;
+use App\Models\Ranking;
 use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -62,7 +64,7 @@ class ElementController extends Controller
      */
     public function show($id)
     {
-        $element = Element::with(['subelements', 'subelements.icons'])->findOrFail($id);
+        $element = Element::with(['subelements', 'subelements.icons', 'ranking'])->findOrFail($id);
         return response()->json(['status' => 'success', 'data' => $element], 200);
     }
 
@@ -100,8 +102,39 @@ class ElementController extends Controller
         if($element->subElements()->exists()) {
             return response()->json(['status' => 'error', 'data' => 'Dit element has subelementen: verwijder eerst de subelementen!']);
         }
+
+        // delete parent ranking
+        $moduleId = $element->module_id;
+        $module = Module::findOrFail($moduleId);
+        $module->ranking()->delete();
+
+        // delete own ranking
+        $element->ranking()->delete();
         
         $element->delete();
         return response()->json(['status' => 'success', 'data' => "{$element->title} is verwijderd!"], 200);
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function rank(Request $request, $id)
+    {
+        $element = Element::findOrFail($id);
+
+        if($element->ranking()->exists()) {
+            $element->ranking()->update([
+                'ranking' => $request->ranking
+            ]);
+        } else {
+            $element->ranking()->create([
+                'type' => 'element',
+                'ranking' => $request->ranking
+            ]);
+        }
+
+        return response()->json(['status' => 'success', 'data' => "{$element->title} is rangschikt!"], 200);
     }
 }

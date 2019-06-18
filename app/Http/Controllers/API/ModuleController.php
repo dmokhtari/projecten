@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\File;
 use App\Models\Module;
 use Auth;
 use Illuminate\Http\Request;
@@ -65,7 +66,7 @@ class ModuleController extends Controller
      */
     public function show($id)
     {
-        $module = Module::with('elements')->findOrFail($id);
+        $module = Module::with(['elements', 'ranking', 'files'])->findOrFail($id);
         return response()->json(['status' => 'success', 'data' => $module], 200);
     }
 
@@ -104,8 +105,42 @@ class ModuleController extends Controller
         if($module->elements()->exists()) {
             return response()->json(['status' => 'error', 'data' => 'Deze module heeft elementen: verwijder eerst de elmenten!']);
         }
+
+        // delete parent ranking
+        $fileId = $module->files()->first()->id;
+        $file = File::findOrFail($fileId);
+        $file->ranking()->delete();
+
+        // delete own ranking
+        $module->ranking()->delete();
+
+        // delete relation with file
         $module->files()->sync([]);
+
         $module->delete();
         return response()->json(['status' => 'success', 'data' => "{$module->title} is verwijderd!"], 200);
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function rank(Request $request, $id)
+    {
+        $module = Module::findOrFail($id);
+
+        if($module->ranking()->exists()) {
+            $module->ranking()->update([
+                'ranking' => $request->ranking
+            ]);
+        } else {
+            $module->ranking()->create([
+                'type' => 'module',
+                'ranking' => $request->ranking
+            ]);
+        }
+
+        return response()->json(['status' => 'success', 'data' => "{$module->title} is rangschikt!"], 200);
     }
 }

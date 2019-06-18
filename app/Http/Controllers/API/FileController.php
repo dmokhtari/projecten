@@ -70,7 +70,7 @@ class FileController extends Controller
      */
     public function show($id)
     {
-        $file = File::with('modules')->findOrFail($id);
+        $file = File::with(['modules', 'ranking'])->findOrFail($id);
         return response()->json(['status' => 'success', 'data' => $file], 200);
     }
 
@@ -111,7 +111,29 @@ class FileController extends Controller
     {
         $file = File::findOrFail($id);
         if($file->background_path) Storage::delete($file->background_path);
+
+        // delete own ranking
+        $file->ranking()->delete();
+
         $file->delete();
         return response()->json(['status' => 'success', 'data' => "{$file->title} is verwijderd!"], 200);
+    }
+
+    public function rank(Request $request, $id)
+    {
+        $file = File::findOrFail($id);
+
+        if($file->ranking()->exists()) {
+            $file->ranking()->update([
+                'ranking' => $request->ranking
+            ]);
+        } else {
+            $file->ranking()->create([
+                'type' => 'file',
+                'ranking' => $request->ranking
+            ]);
+        }
+
+        return response()->json(['status' => 'success', 'data' => "{$file->title} is rangschikt!"], 200);
     }
 }
