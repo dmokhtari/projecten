@@ -180,7 +180,7 @@
                         this.onAddEditVideo({ element_id: this.element.id })
                         break;
                     case 2:
-                        this.onAddEditUrl({ element_id: this.element.id })
+                        this.onAddEditRead({ element_id: this.element.id })
                         break;
                     case 3:
                         this.onAddEditTextEditor({ element_id: this.element.id })
