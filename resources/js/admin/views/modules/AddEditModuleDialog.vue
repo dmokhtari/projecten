@@ -96,7 +96,6 @@
                         }
                     }
                 }
-                console.log('addedit module', obj)
             },
             initForm() {
                 this.form = new Form({

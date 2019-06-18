@@ -30,6 +30,7 @@
         "vue": "^2.5.17",
         "vue-router": "^3.0.2",
         "vue-template-compiler": "^2.6.6",
+        "vuedraggable": "^2.21.0",
         "vuetify": "^1.5.7"
     }
 }
