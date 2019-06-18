@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\Element;
+use App\Models\Ranking;
 use App\Models\SubElement;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -41,6 +42,7 @@ class SubElementController extends Controller
             'title' => 'nullable|string|max:191',
             'url' => 'nullable|url|max:191',
             'description' => 'nullable|string',
+            'pdf_file' => 'nullable|mimes:pdf|max:10000'
         ]);
 
         $iconIds = [];
@@ -51,10 +53,23 @@ class SubElementController extends Controller
         
         $subElement = new SubElement();
         $subElement->fill($request->only('type', 'title', 'url', 'description', 'binary', 'element_id'));
+
+
+        if($request->type === 'file') {
+            $file_path = null;
+            $file_name = null;
+            if($request->hasFile('pdf_file')) {
+                $file_name = $request->file('pdf_file')->getClientOriginalName();
+                $file_path = $request->file('pdf_file')->store('img/files');
+            }
+            $subElement->url = $file_path;
+            $subElement->title = $file_name;
+        }
+
         $subElement->save();
         $subElement->icons()->attach($iconIds);
 
-        return response()->json(['status' => 'success', 'data' => 'Sub-element aangemaakt!'], 201);
+        return response()->json(['status' => 'success', 'data' => 'Subelement aangemaakt!'], 201);
     }
 
     /**
@@ -83,6 +98,7 @@ class SubElementController extends Controller
             'title' => 'nullable|string|max:191',
             'url' => 'nullable|url|max:191',
             'description' => 'nullable|string',
+            'pdf_file' => 'nullable|mimes:pdf|max:10000'
         ]);
 
         // TODO axios with formData not sending array
@@ -94,6 +110,19 @@ class SubElementController extends Controller
 
         $subElement = SubElement::findOrFail($id);
         $subElement->update($request->only('type', 'title', 'url', 'description', 'binary'));
+
+        if($request->type === 'file') {
+            $file_path = null;
+            $file_name = null;
+            if($request->hasFile('pdf_file')) {
+                $file_name = $request->file('pdf_file')->getClientOriginalName();
+                $file_path = $request->file('pdf_file')->store('img/files');
+            }
+            $subElement->update([
+                'url' => $file_path,
+                'title' => $file_name
+            ]);
+        }
         $subElement->icons()->sync($iconIds);
 
         return response()->json(['status' => 'success', 'data' => 'Subelement gewijzigd!'], 200);
@@ -109,6 +138,12 @@ class SubElementController extends Controller
     {
         $subelement = SubElement::findOrFail($id);
         $subelement->icons()->delete();
+
+        // delete parent ranking
+        $elementId = $subelement->element_id;
+        $element = Element::findOrFail($elementId);
+        $element->ranking()->delete();
+
         $subelement->delete();
         
         return response()->json(['status' => 'success', 'data' => "Subelement verwijderd!"], 200);
