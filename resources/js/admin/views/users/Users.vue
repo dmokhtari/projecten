@@ -35,7 +35,7 @@
                     >
                         <v-progress-linear slot="progress" indeterminate></v-progress-linear>
                         <template slot="items" slot-scope="props">
-                            <td><a @click="goToModule(props.item.id)">{{ props.item.email }}</a></td>
+                            <td><a @click="goToUser(props.item.id)">{{ props.item.email }}</a></td>
                             <td>{{ props.item.forename }}</td>
                             <td><v-chip>{{ props.item.roles[0].display_title }}</v-chip></td>
                             <td class="text-xs-center">
@@ -153,8 +153,8 @@
                 this.selectedUser = id
                 eventHub.$emit('show-delete-permanent')
             },
-            goToModule(id) {
-                this.$router.push({ name: 'module', params: {id: id} })
+            goToUser(id) {
+                this.$router.push({ name: 'user', params: {id: id} })
             },
             get(page = null) {
                 this.table.loading = true
