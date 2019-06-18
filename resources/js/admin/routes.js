@@ -23,7 +23,7 @@ export const router = new VueRouter({
             meta: {
                 breadcrumb: [
                     { text: 'Home', disabled: false, to:'/admin/dashboard' },
-                    { text: 'Bestanden', disabled: true, to:'/admin/files' }
+                    { text: 'Bestand', name: 'Bestanden', disabled: true, to:'/admin/files' }
                 ]
             }
         },
@@ -34,8 +34,34 @@ export const router = new VueRouter({
             meta: {
                 breadcrumb: [
                     { text: 'Home', disabled: false, to:'/admin/dashboard' },
-                    { text: 'Bestanden', disabled: false, to:'/admin/files' },
-                    { text: 'Bestand', disabled: true, to:'/admin/files/id' }
+                    { text: 'Bestanden', name: 'Files', disabled: false, to:'/admin/files' },
+                    { text: 'Bestand', name: 'Files', disabled: true, to:'/admin/files/id' }
+                ]
+            }
+        },
+        {
+            path: '/admin/files/:fileId/modules/:moduleId',
+            name: 'fileElements',
+            component: require('./views/files/FileElements').default,
+            meta: {
+                breadcrumb: [
+                    { text: 'Home', disabled: false, to:'/admin/dashboard' },
+                    { text: 'Bestanden', name: 'Files', disabled: false, to:'/admin/files' },
+                    { text: 'Bestanden', name: 'Files', disabled: false, to:'/admin/files/id' },
+                    { text: 'Module', name: 'Modules', disabled: true, to:'/admin/modules/id' }
+                ]
+            }
+        },
+        {
+            path: '/admin/files/:fileId/modules/:moduleId/elements/:elementId',
+            name: 'fileSubElements',
+            component: require('./views/files/FileSubElements').default,
+            meta: {
+                breadcrumb: [
+                    { text: 'Home', disabled: false, to:'/admin/dashboard' },
+                    { text: 'Bestanden', disabled: false, to:'/admin/files/id' },
+                    { text: 'Module', disabled: true, to:'/admin/modules/id' },
+                    { text: 'Element', disabled: true, to:'/admin/elements/id' }
                 ]
             }
         },
@@ -109,6 +135,18 @@ export const router = new VueRouter({
             }
         },
         {
+            path: '/admin/users/:id',
+            name: 'user',
+            component: require('./views/users/User').default,
+            meta: {
+                breadcrumb: [
+                    { text: 'Home', disabled: false, to:'/admin/dashboard' },
+                    { text: 'Gebruikers', disabled: false, to:'/admin/users' },
+                    { text: 'Gebruiker', disabled: true, to:'/admin/users/id' },
+                ]
+            }
+        },
+        {
             path: '/admin/settings/icons',
             name: 'iconSettings',
             component: require('./views/settings/Icons').default,
@@ -116,6 +154,17 @@ export const router = new VueRouter({
                 breadcrumb: [
                     { text: 'Home', disabled: false, to:'/admin/dashboard' },
                     { text: 'Icons', disabled: true, to:'/admin/settings/icons' },
+                ]
+            }
+        },
+        {
+            path: '/admin/settings/documentation',
+            name: 'documentation',
+            component: require('./views/settings/Documentation').default,
+            meta: {
+                breadcrumb: [
+                    { text: 'Home', disabled: false, to:'/admin/dashboard' },
+                    { text: 'Documentatie', disabled: true, to:'/admin/documentatie' },
                 ]
             }
         },
@@ -129,7 +178,12 @@ export const router = new VueRouter({
                     { text: 'Profile', disabled: true, to:'/admin/profile' },
                 ]
             }
-        }
+        },
+        {
+            path: '*',
+            name: '404',
+            component: require('./views/404').default,
+        },
     ]
 });
 
