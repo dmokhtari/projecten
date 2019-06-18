@@ -27,6 +27,9 @@ class UserImport implements ToModel
         $user = new User([
             'email' => $row[0],
             'end_date_study' => $this->transformDate($row[1]),
+            'class' => ($row[2] ?: ''),
+            'forename' => ($row[3] ?: 'student'),
+            'surname' => ($row[4] ?: ''),
             'remember_token' => Str::random(10),
             'password' => Hash::make(str_random(8))
         ]);
