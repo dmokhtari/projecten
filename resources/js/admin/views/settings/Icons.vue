@@ -60,15 +60,20 @@
             </v-flex>
         </v-layout>
         <add-edit-icon-dialog @posted="get" @update="get"></add-edit-icon-dialog>
+        <delete-permanent-dialog @confirmed="deleteIcon">
+            <p>Weet u zeker dat u deze <strong>icon</strong> wil verwijderen?</p>
+        </delete-permanent-dialog>
     </v-container>
 </template>
 <script>
     import AddEditIconDialog from './AddEditIconDialog';
+    import DeletePermanentDialog from './../../../shared/components/DeletePermanent';
     export default {
         name: 'adminSettingsIcon',
         title: 'Icons - admin',
         components: {
-            AddEditIconDialog
+            AddEditIconDialog,
+            DeletePermanentDialog
         },
         data() {
             return {
@@ -87,7 +92,7 @@
                         { title: 'Verwijderen', value: 'delete' },
                     ]
                 },
-
+                selectedIcon: null,
             }
         },
         created() {
@@ -103,7 +108,7 @@
                         this.onAddEditIcon(obj)
                         break;
                     case 'delete':
-                        this.delete(obj.id)
+                        this.onDeleteIcon(obj.id)
                 }
             },
             onAddEditIcon(obj = null) {
@@ -119,7 +124,11 @@
                     .catch(response => console.error(response))
                     .finally(() => this.table.loading = false)
             },
-            delete(id) {
+            onDeleteIcon(id) {
+                this.selectedIcon = id
+                eventHub.$emit('show-delete-permanent')
+            },
+            deleteIcon(id) {
                 axios.delete('/api/settings/icons/' + id)
                     .then(response => {
                         this.get()

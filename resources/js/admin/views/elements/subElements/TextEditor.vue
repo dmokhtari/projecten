@@ -177,7 +177,7 @@
     }
 </script>
 <style scoped lang="scss">
-    .trumbowyg .trumbowyg-editor {
-        min-height: 400px;
+    .trumbowyg-box .trumbowyg-editor {
+        min-height: 60vh;
     }
 </style>

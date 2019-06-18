@@ -4341,6 +4341,11 @@ body.trumbowyg-body-fullscreen {
   background-image: linear-gradient(0deg, #f19a1a, #ffc73c);
 }
 
+.border-2 {
+  border: 2px solid rgba(0, 0, 0, 0.54);
+  border-radius: 5px;
+}
+
 #nprogress .bar {
   background-color: #D70096;
   height: 4px;

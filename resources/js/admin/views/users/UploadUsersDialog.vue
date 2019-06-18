@@ -1,7 +1,7 @@
 <template>
     <v-dialog
         v-model="dialog"
-        width="300"
+        width="350"
         persistent
     >
         <v-card>
@@ -28,7 +28,7 @@
                 ></v-text-field>
                 <input type="file" ref="file" style="display:none" @change="onFileChange">
                 <v-card-actions>
-                    <v-btn color="grey" @click="onCancel" flat>Annuleer</v-btn>
+                    <v-btn color="grey" @click="onCancel" flat>Annuleren</v-btn>
                     <v-spacer></v-spacer>
                     <v-btn color="primary" type="submit">Opslaan</v-btn>
                 </v-card-actions>

@@ -19,7 +19,7 @@
             >
                 <v-text-field
                     outline
-                    label="Title"
+                    label="Title*"
                     :rules="[form.errors.get('title')]"
                     :errors="form.errors.has('title')"
                     v-model="form.title"
@@ -54,7 +54,7 @@
                 ></v-select>
 
                 <v-card-actions>
-                    <v-btn color="grey" @click="onCancel" flat>Annuleer</v-btn>
+                    <v-btn color="grey" @click="onCancel" flat>Annuleren</v-btn>
                     <v-spacer></v-spacer>
                     <v-btn color="primary" type="submit">Opslaan</v-btn>
                 </v-card-actions>
@@ -73,7 +73,7 @@
                 files: []
             }
         },
-        created() {
+        mounted() {
             eventHub.$on('add-edit-module-dialog', this.onShow)
         },
         beforeDestroy() {
@@ -90,10 +90,13 @@
                             this.form[key] = obj[key]
                         }
                     }
-                    if(obj.files.length > 0) {
-                        this.form.file_id = obj.files[0].id
+                    if(obj.hasOwnProperty('files')) {
+                        if(obj.files.length > 0) {
+                            this.form.file_id = obj.files[0].id
+                        }
                     }
                 }
+                console.log('addedit module', obj)
             },
             initForm() {
                 this.form = new Form({
