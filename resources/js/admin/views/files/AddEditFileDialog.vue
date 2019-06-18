@@ -82,7 +82,7 @@
                 ],
             }
         },
-        created() {
+        mounted() {
             eventHub.$on('add-edit-file-dialog', this.onShow)
         },
         beforeDestroy() {
@@ -116,7 +116,7 @@
                 this.form.post('/api/files')
                     .then(response => {
                         this.onCancel()
-                        this.$emit('posted')
+                        this.$emit('file-posted')
                         eventHub.$emit('show-message', response.status,  response.data)
                     })
                     .catch(error => {
@@ -129,7 +129,7 @@
                 this.form.put('/api/files/' + id)
                     .then(response => {
                         this.onCancel()
-                        this.$emit('updated')
+                        this.$emit('file-updated')
                         eventHub.$emit('show-message', response.status,  response.data)
                     })
                     .catch(error => {
