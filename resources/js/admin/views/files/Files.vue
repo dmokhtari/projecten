@@ -70,7 +70,7 @@
     import DeletePermanentDialog from './../../../shared/components/DeletePermanent';
     export default {
         name: 'Files',
-        title: 'Files - admin',
+        title: 'Bestanden - admin',
         components: {
             AddEditFileDialog,
             DeletePermanentDialog
@@ -81,8 +81,8 @@
                     loading: false,
                     search: '',
                     headers: [
-                        { text: 'Title', sortable: true, value: 'title' },
-                        { text: 'Subtitle', sortable: false, value: 'subtitle' },
+                        { text: 'Titel', sortable: true, value: 'title' },
+                        { text: 'Subtitel', sortable: false, value: 'subtitle' },
                         { text: 'Acties', sortable: false, value: 'action', width: '30' }
                     ],
                     items: [],

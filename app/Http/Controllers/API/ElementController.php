@@ -100,7 +100,7 @@ class ElementController extends Controller
         $element = Element::findOrFail($id);
         // throw error if element has subelements
         if($element->subElements()->exists()) {
-            return response()->json(['status' => 'error', 'data' => 'Dit element has subelementen: verwijder eerst de subelementen!']);
+            return response()->json(['status' => 'error', 'data' => 'Deze opdracht heeft subelementen: verwijder eerst de subelementen!']);
         }
 
         // delete parent ranking

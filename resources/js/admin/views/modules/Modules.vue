@@ -5,7 +5,7 @@
                 <v-card>
                     <v-card-title class="headline">
                         <font-awesome-icon :icon="['fas', 'cubes']" class="mr-2"></font-awesome-icon>
-                        Modules
+                        Thema's
                         <v-divider
                             class="mx-3"
                             inset
@@ -64,7 +64,7 @@
         </v-layout>
         <add-edit-module-dialog @module-posted="get" @module-updated="get"></add-edit-module-dialog>
         <delete-permanent-dialog @confirmed="deleteModule">
-            <p>Weet u zeker dat u deze module wil verwijderen?</p>
+            <p>Weet u zeker dat u dit <strong>thema</strong> wil verwijderen?</p>
         </delete-permanent-dialog>
     </v-container>
 </template>
@@ -73,7 +73,7 @@
     import DeletePermanentDialog from './../../../shared/components/DeletePermanent';
     export default {
         name: 'adminModules',
-        title: 'Modules - admin',
+        title: 'Thema\'s - admin',
         components: {
             AddEditModuleDialog,
             DeletePermanentDialog
@@ -84,10 +84,10 @@
                     loading: false,
                     search: '',
                     headers: [
-                        { text: 'Title', sortable: true, value: 'title' },
-                        { text: 'Subtitle', sortable: false, value: 'subtitle' },
+                        { text: 'Titel', sortable: true, value: 'title' },
+                        { text: 'Subtitel', sortable: false, value: 'subtitle' },
                         { text: 'Gekoppeld Bestanden', sortable: false, value: 'file' },
-                        { text: 'Antal elementen', sortable: false, value: 'elements_count', width: '30' },
+                        { text: 'Antal opdrachten', sortable: false, value: 'elements_count', width: '30' },
                         { text: 'Acties', sortable: false, value: 'action', width: '30' }
                     ],
                     items: [],

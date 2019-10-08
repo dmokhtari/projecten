@@ -103,7 +103,7 @@ class ModuleController extends Controller
     {
         $module = Module::findOrFail($id);
         if($module->elements()->exists()) {
-            return response()->json(['status' => 'error', 'data' => 'Deze module heeft elementen: verwijder eerst de elmenten!']);
+            return response()->json(['status' => 'error', 'data' => 'Dit thema heeft opdrachten: verwijder eerst de opdrachten!']);
         }
 
         // delete parent ranking

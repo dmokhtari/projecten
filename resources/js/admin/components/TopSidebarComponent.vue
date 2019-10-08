@@ -130,8 +130,8 @@
                 navigationMenu: [
                     { slug: '/admin/dashboard', icon: 'home', text: 'Dashboard' },
                     { slug: '/admin/files', icon: 'file', text: 'Bestanden' },
-                    { slug: '/admin/modules', icon: 'cubes', text: 'Modules' },
-                    { slug: '/admin/elements', icon: 'puzzle-piece', text: 'Elementen' },
+                    { slug: '/admin/modules', icon: 'cubes', text: 'Thema\'s' },
+                    { slug: '/admin/elements', icon: 'puzzle-piece', text: 'Opdrachten' },
                     { slug: '/admin/users', icon: 'users', text: 'Gebruikers' },
                 ],
                 settings: [

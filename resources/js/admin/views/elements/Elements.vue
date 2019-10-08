@@ -5,7 +5,7 @@
                 <v-card>
                     <v-card-title class="headline">
                         <font-awesome-icon :icon="['fas', 'puzzle-piece']" class="mr-2"></font-awesome-icon>
-                        Elements
+                        Opdrachten
                         <v-divider
                             class="mx-3"
                             inset
@@ -64,7 +64,7 @@
         </v-layout>
         <add-edit-element-dialog></add-edit-element-dialog>
         <delete-permanent-dialog @confirmed="deleteElement">
-            <p>Weet u zeker dat u dit <strong>element</strong> wil verwijderen?</p>
+            <p>Weet u zeker dat u deze <strong>opdracht</strong> wil verwijderen?</p>
         </delete-permanent-dialog>
     </v-container>
 </template>
@@ -73,7 +73,7 @@
     import DeletePermanentDialog from './../../../shared/components/DeletePermanent';
     export default {
         name: 'Elements',
-        title: 'Elements - admin',
+        title: 'Opdrachten - admin',
         components: {
             AddEditElementDialog,
             DeletePermanentDialog
@@ -84,8 +84,8 @@
                     loading: false,
                     search: '',
                     headers: [
-                        { text: 'Title', sortable: true, value: 'title' },
-                        { text: 'Subtitle', sortable: false, value: 'subtitle' },
+                        { text: 'Titel', sortable: true, value: 'title' },
+                        { text: 'Subtitel', sortable: false, value: 'subtitle' },
                         { text: 'Total subelementen', sortable: false, value: 'subelements_count', width: '40' },
                         { text: 'Acties', sortable: false, value: 'action', width: '30' }
                     ],
