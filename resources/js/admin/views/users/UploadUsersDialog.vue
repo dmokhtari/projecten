@@ -4,7 +4,7 @@
         width="350"
         persistent
     >
-        <v-card>
+        <v-card v-if="form">
             <v-card-title class="headline accent justify-center">
                 Excel file uploaden
                 <v-btn text icon absolute right @click="onCancel">
@@ -16,17 +16,13 @@
                     @keydown="form.errors.clear($event.target.name)"
                     ref="userUploadForm"
             >
-                <v-text-field
+                <v-file-input
+                    label="upload een excel file"
                     outlined
-                    type="text"
-                    label="Upload een excel file"
-                    prepend-inner-icon="file_upload"
                     :rules="[form.errors.get('excel_file')]"
                     :errors="form.errors.has('excel_file')"
-                    v-model="form.excel_file_name"
-                    @click="onClickFileInput"
-                ></v-text-field>
-                <input type="file" ref="file" style="display:none" @change="onFileChange">
+                    v-model="form.excel_file"
+                ></v-file-input>
                 <v-card-actions>
                     <v-btn color="grey" @click="onCancel" text>Annuleren</v-btn>
                     <v-spacer></v-spacer>
@@ -44,10 +40,7 @@
         data() {
             return {
                 dialog: false,
-                form: new Form({
-                    excel_file: '',
-                    excel_file_name: ''
-                })
+                form: null
             }
         },
         created() {
@@ -59,14 +52,12 @@
         methods: {
             onShow() {
                 this.dialog = true
+                this.initForm()
             },
-            onClickFileInput() {
-                this.$refs.file.click()
-            },
-            onFileChange(e) {
-                let file = e.target.files[0]
-                this.form.excel_file = file
-                this.form.excel_file_name = file.name
+            initForm() {
+                this.form = new Form({
+                    excel_file: []
+                })
             },
             onCancel() {
                 this.dialog = false

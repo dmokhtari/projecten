@@ -5,7 +5,7 @@
             persistent
             fullscreen hide-overlay transition="dialog-bottom-transition"
     >
-        <v-card>
+        <v-card v-if="form">
             <v-card-title class="headline accent justify-center">
                 <v-btn text icon absolute left @click="onCancel">
                     <font-awesome-icon class="title" :icon="['far', 'times-circle']"></font-awesome-icon>
