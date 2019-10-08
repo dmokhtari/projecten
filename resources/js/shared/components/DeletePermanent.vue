@@ -7,9 +7,9 @@
                     <slot></slot>
                 </v-card-text>
                 <v-card-actions>
+                    <v-btn text @click="dialog = false">Annuleer</v-btn>
                     <v-spacer></v-spacer>
-                    <v-btn flat @click="dialog = false">Annuleren</v-btn>
-                    <v-btn color="error" flat @click="confirm">Ja, verwijder</v-btn>
+                    <v-btn color="error" text @click="confirm">Ja, verwijder</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>

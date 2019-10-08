@@ -2,10 +2,12 @@
 import '../shared/bootstrap';
 import Vue from 'vue';
 import { router } from './routes';
-import MetaTags from '../shared/mixins/metaTags';
+import vuetify from './../shared/plugins/vuetify';
+import MetaTags from './../shared/mixins/metaTags';
 Vue.mixin(MetaTags);
 
-window.Vue = Vue;
+// remove production tip
+Vue.config.productionTip = false;
 window.eventHub = new Vue();
 
 Vue.component('login-component', require('./components/LoginComponent.vue').default);
@@ -29,6 +31,7 @@ window.axios.interceptors.response.use(function (response) {
 
 const app = new Vue({
     el: '#app',
+    vuetify,
     components: { App },
     router
 });

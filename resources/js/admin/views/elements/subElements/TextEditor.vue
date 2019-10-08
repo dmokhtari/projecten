@@ -7,7 +7,7 @@
     >
         <v-card>
             <v-card-title class="headline accent justify-center">
-                <v-btn flat icon absolute left @click="onCancel">
+                <v-btn text icon absolute left @click="onCancel">
                     <font-awesome-icon class="title" :icon="['far', 'times-circle']"></font-awesome-icon>
                 </v-btn>
 
@@ -23,8 +23,8 @@
                 <v-layout row wrap>
                     <v-flex sm6 xs12 class="pr-3">
                         <v-text-field
-                            outline
-                            label="Title"
+                            outlined
+                            label="Titel"
                             :rules="[form.errors.get('title')]"
                             :errors="form.errors.has('title')"
                             v-model="form.title"
@@ -32,7 +32,7 @@
                     </v-flex>
                     <v-flex xs12 sm6>
                         <v-select
-                            outline
+                            outlined
                             label="Icon"
                             :items="icons"
                             item-value="id"
@@ -48,7 +48,7 @@
                                 <v-chip
                                     close
                                     :key="JSON.stringify(data.item)"
-                                    :selected="data.selected"
+                                    :input-value="data.selected"
                                     :disabled="data.disabled"
                                     class="v-chip--select-multi"
                                     @input="data.parent.selectItem(data.item)"

@@ -7,7 +7,7 @@
         <v-card>
             <v-card-title class="headline accent justify-center">
                 Excel file uploaden
-                <v-btn flat icon absolute right @click="onCancel">
+                <v-btn text icon absolute right @click="onCancel">
                     <font-awesome-icon class="title" :icon="['far', 'times-circle']"></font-awesome-icon>
                 </v-btn>
             </v-card-title>
@@ -17,7 +17,7 @@
                     ref="userUploadForm"
             >
                 <v-text-field
-                    outline
+                    outlined
                     type="text"
                     label="Upload een excel file"
                     prepend-inner-icon="file_upload"
@@ -28,7 +28,7 @@
                 ></v-text-field>
                 <input type="file" ref="file" style="display:none" @change="onFileChange">
                 <v-card-actions>
-                    <v-btn color="grey" @click="onCancel" flat>Annuleren</v-btn>
+                    <v-btn color="grey" @click="onCancel" text>Annuleren</v-btn>
                     <v-spacer></v-spacer>
                     <v-btn color="primary" type="submit">Opslaan</v-btn>
                 </v-card-actions>

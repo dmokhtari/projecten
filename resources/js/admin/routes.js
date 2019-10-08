@@ -3,6 +3,10 @@ import VueRouter from 'vue-router';
 import NProgress from 'nprogress';
 Vue.use(VueRouter);
 
+// function page (path) {
+//     return () => import(/* webpackChunkName: 'admin-group' */ `${path}`)
+// }
+
 export const router = new VueRouter({
     mode: 'history',
     routes: [

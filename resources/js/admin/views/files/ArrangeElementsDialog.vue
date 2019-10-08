@@ -4,10 +4,10 @@
             width="500"
             persistent
     >
-        <v-card>
+        <v-card v-if="form">
             <v-card-title class="headline accent justify-center">
                 <span>Rangschikken</span>
-                <v-btn flat icon absolute right @click="onCancel">
+                <v-btn text icon absolute right @click="onCancel">
                     <font-awesome-icon class="title" :icon="['far', 'times-circle']"></font-awesome-icon>
                 </v-btn>
             </v-card-title>
@@ -15,23 +15,23 @@
                 <v-list>
                     <draggable v-model="list" @sort="onSort">
                         <transition-group type="transition" name="flip-list">
-                            <v-list-tile v-for="(item, i) in list" :key="item.id" class="mb-1 border-2" style="cursor: move">
-                                <v-list-tile-avatar color="grey">
+                            <v-list-item v-for="(item, i) in list" :key="item.id" class="mb-1 border-2" style="cursor: move">
+                                <v-list-item-avatar color="grey">
                                     <v-avatar>{{ i+1 }}</v-avatar>
-                                </v-list-tile-avatar>
-                                <v-list-tile-content>
-                                    <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                                </v-list-tile-content>
-                                <v-list-tile-action>
+                                </v-list-item-avatar>
+                                <v-list-item-content>
+                                    <v-list-item-title>{{ item.title }}</v-list-item-title>
+                                </v-list-item-content>
+                                <v-list-item-action>
                                     <font-awesome-icon :icon="['fas', 'arrows-alt-v']"></font-awesome-icon>
-                                </v-list-tile-action>
-                            </v-list-tile>
+                                </v-list-item-action>
+                            </v-list-item>
                         </transition-group>
                     </draggable>
                 </v-list>
             </v-card-text>
             <v-card-actions>
-                <v-btn color="grey" @click="onCancel" flat>Annuleren</v-btn>
+                <v-btn color="grey" @click="onCancel" text>Annuleren</v-btn>
                 <v-spacer></v-spacer>
                 <v-btn color="primary" @click="requestArrange">Opslaan</v-btn>
             </v-card-actions>

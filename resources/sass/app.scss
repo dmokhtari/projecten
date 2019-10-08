@@ -11,6 +11,9 @@
 
 @import '~animate.css/animate.css';
 
+@import '~vuetify/dist/vuetify.min.css';
+@import '~@mdi/font/css/materialdesignicons.css';
+
 #nprogress {
     .bar {
         background-color: $primary;

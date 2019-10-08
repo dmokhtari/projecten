@@ -1,28 +1,5 @@
 import '@babel/polyfill';
 
-import Vue from 'vue';
-import Vuetify from 'vuetify';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { fas } from '@fortawesome/free-solid-svg-icons';
-import { far } from '@fortawesome/free-regular-svg-icons';
-import 'vuetify/dist/vuetify.min.css';
-
-Vue.component('font-awesome-icon', FontAwesomeIcon);
-library.add(fas);
-library.add(far);
-Vue.use(Vuetify, {
-    iconfont: 'faSvg',
-    theme: {
-        primary: '#D70096',
-        secondary: '#24126e',
-        accent: '#7a7fa3'
-    }
-});
-
-// remove production tip
-Vue.config.productionTip = false;
-
 window._ = require('lodash');
 
 /**

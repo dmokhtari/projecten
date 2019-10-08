@@ -1,14 +1,13 @@
 <template>
     <v-dialog
-        v-if="form"
         v-model="dialog"
         width="500"
         persistent
     >
-        <v-card>
+        <v-card v-if="form">
             <v-card-title class="headline accent justify-center">
                 {{ form.id ? 'Module wijzigen' : 'Module toevoegen' }}
-                <v-btn flat icon absolute right @click="onCancel">
+                <v-btn text icon absolute right @click="onCancel">
                     <font-awesome-icon class="title" :icon="['far', 'times-circle']"></font-awesome-icon>
                 </v-btn>
             </v-card-title>
@@ -18,7 +17,7 @@
                     ref="moduleForm"
             >
                 <v-text-field
-                    outline
+                    outlined
                     label="Title*"
                     :rules="[form.errors.get('title')]"
                     :errors="form.errors.has('title')"
@@ -26,14 +25,14 @@
                     autofocus
                 ></v-text-field>
                 <v-text-field
-                    outline
+                    outlined
                     label="Subtitle"
                     :rules="[form.errors.get('subtitle')]"
                     :errors="form.errors.has('subtitle')"
                     v-model="form.subtitle"
                 ></v-text-field>
                 <v-textarea
-                    outline
+                    outlined
                     label="Text"
                     rows="7"
                     :rules="[form.errors.get('text')]"
@@ -41,7 +40,7 @@
                     v-model="form.text"
                 ></v-textarea>
                 <v-select
-                    outline
+                    outlined
                     clearable
                     label="Koppel aan een file"
                     :items="files"
@@ -54,7 +53,7 @@
                 ></v-select>
 
                 <v-card-actions>
-                    <v-btn color="grey" @click="onCancel" flat>Annuleren</v-btn>
+                    <v-btn color="grey" @click="onCancel" text>Annuleren</v-btn>
                     <v-spacer></v-spacer>
                     <v-btn color="primary" type="submit">Opslaan</v-btn>
                 </v-card-actions>

@@ -31,26 +31,32 @@
                         :search="table.search"
                     >
                         <v-progress-linear slot="progress" indeterminate></v-progress-linear>
-                        <template slot="items" slot-scope="props">
-                            <td><a @click="goToModule(props.item.id)">{{ props.item.title }}</a></td>
-                            <td>{{ props.item.subtitle }}</td>
-                            <td>{{ showFileTitle(props.item.files) }}</td>
-                            <td><v-chip>{{ props.item.elements_count }}</v-chip></td>
-                            <td class="text-xs-center">
-                                <v-menu bottom left>
-                                    <v-btn slot="activator" icon>
-                                        <font-awesome-icon class="subheading" :icon="['fas', 'ellipsis-v']"></font-awesome-icon>
-                                    </v-btn>
-                                    <v-list>
-                                        <v-list-tile v-for="(action, i) in table.actions"
-                                                     :key="i"
-                                                     @click="onAction(action.value, props.item)"
-                                        >
-                                            <v-list-tile-title>{{ action.title }}</v-list-tile-title>
-                                        </v-list-tile>
-                                    </v-list>
-                                </v-menu>
-                            </td>
+                        <template v-slot:body="{ items }">
+                            <tbody>
+                                <tr v-for="item in items" :key="item.id">
+                                    <td><a @click="goToModule(item.id)">{{ item.title }}</a></td>
+                                    <td>{{ item.subtitle }}</td>
+                                    <td>{{ showFileTitle(item.files) }}</td>
+                                    <td><v-chip>{{ item.elements_count }}</v-chip></td>
+                                    <td class="text-xs-center">
+                                        <v-menu bottom left>
+                                            <template v-slot:activator="{ on }">
+                                                <v-btn icon v-on="on">
+                                                    <font-awesome-icon class="subheading" :icon="['fas', 'ellipsis-v']"></font-awesome-icon>
+                                                </v-btn>
+                                            </template>
+                                            <v-list>
+                                                <v-list-item v-for="(action, i) in table.actions"
+                                                             :key="i"
+                                                             @click="onAction(action.value, item)"
+                                                >
+                                                    <v-list-item-title>{{ action.title }}</v-list-item-title>
+                                                </v-list-item>
+                                            </v-list>
+                                        </v-menu>
+                                    </td>
+                                </tr>
+                            </tbody>
                         </template>
                     </v-data-table>
                 </v-card>
@@ -82,7 +88,7 @@
                         { text: 'Subtitle', sortable: false, value: 'subtitle' },
                         { text: 'Gekoppeld Bestanden', sortable: false, value: 'file' },
                         { text: 'Antal elementen', sortable: false, value: 'elements_count', width: '30' },
-                        { text: 'Acties', sortable: false, value: '', width: '30' }
+                        { text: 'Acties', sortable: false, value: 'action', width: '30' }
                     ],
                     items: [],
                     actions: [

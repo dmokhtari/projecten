@@ -1,9 +1,8 @@
 <template>
     <v-app light>
-
-        <v-layout align-center>
-            <v-flex md7>
-                <v-carousel height="100vh" hide-controls>
+        <v-layout>
+            <v-flex md8 class="d-none d-md-flex">
+                <v-carousel height="100vh" :show-arrows="false">
                     <v-carousel-item
                         v-for="(item, i) in items"
                         :key="i"
@@ -13,8 +12,11 @@
                 </v-carousel>
             </v-flex>
 
-            <v-flex xs12 md5>
-                <v-card class="px-5 elevation-0 transparent">
+            <v-flex xs12 md4>
+                <v-card class="px-5 elevation-0 transparent pt-10">
+                    <v-layout justify-center>
+                        <v-img src="/assets/img/logo.png" alt="Summa College logo" max-width="200"></v-img>
+                    </v-layout>
                     <v-card-title class="title">
                         {{ windowTitle }}
                     </v-card-title>
@@ -28,6 +30,7 @@
                                         v-model="form.email"
                                         label="Email"
                                         type="email"
+                                        outlined
                                     ></v-text-field>
                                     <v-text-field
                                         :errors="form.errors.has('password')"
@@ -35,9 +38,10 @@
                                         v-model="form.password"
                                         label="Wachtwoord"
                                         type="password"
+                                        outlined
                                     ></v-text-field>
-                                    <v-btn class="mt-4" round type="submit" large :disabled="form.errors.any()">Inloggen</v-btn>
-                                    <v-btn class="mt-4" @click="page = 2" small flat color="primary">Wachtwoord vergeten?</v-btn>
+                                    <v-btn class="mt-4" type="submit" large :disabled="form.errors.any()">Inloggen</v-btn>
+                                    <v-btn class="mt-4" @click="page = 2" text color="primary">Wachtwoord herstellen?</v-btn>
                                 </v-form>
                             </v-card-text>
                         </v-window-item>
@@ -50,9 +54,10 @@
                                         v-model="emailForm.email"
                                         label="Email"
                                         type="email"
+                                        outlined
                                     ></v-text-field>
-                                    <v-btn round class="mt-4" type="submit" large :disabled="emailForm.errors.any()">Email verzenden</v-btn>
-                                    <v-btn class="mt-4" @click="page = 1" small flat color="primary">Terug naar Inloggen</v-btn>
+                                    <v-btn class="mt-4" type="submit" large :disabled="emailForm.errors.any()">Email verzenden</v-btn>
+                                    <v-btn class="mt-4" @click="page = 1" text color="primary">Terug naar Inloggen</v-btn>
                                 </v-form>
                             </v-card-text>
                         </v-window-item>

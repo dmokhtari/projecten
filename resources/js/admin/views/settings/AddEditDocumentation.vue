@@ -7,7 +7,7 @@
     >
         <v-card>
             <v-card-title class="headline accent justify-center">
-                <v-btn flat icon absolute left @click="onCancel">
+                <v-btn text icon absolute left @click="onCancel">
                     <font-awesome-icon class="title" :icon="['far', 'times-circle']"></font-awesome-icon>
                 </v-btn>
 
@@ -23,8 +23,8 @@
                 <v-layout row justify-center>
                     <v-flex xs12 md6>
                         <v-text-field
-                                outline
-                                label="Title"
+                                outlined
+                                label="Titel"
                                 :rules="[form.errors.get('title')]"
                                 :errors="form.errors.has('title')"
                                 v-model="form.title"

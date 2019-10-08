@@ -1,14 +1,13 @@
 <template>
     <v-dialog
-        v-if="form"
         v-model="dialog"
         width="400"
         persistent
     >
-        <v-card>
+        <v-card v-if="form">
             <v-card-title class="headline accent justify-center">
                 {{ form.id ? 'Bestand wijzigen' : 'Bestand aanmaken' }}
-                <v-btn flat icon absolute right @click="onCancel">
+                <v-btn text icon absolute right @click="onCancel">
                     <font-awesome-icon class="title" :icon="['far', 'times-circle']"></font-awesome-icon>
                 </v-btn>
             </v-card-title>
@@ -18,15 +17,14 @@
                     ref="fileForm"
             >
                 <v-text-field
-                    outline
-                    label="Title*"
+                    label="Titles"
                     :rules="[form.errors.get('title')]"
                     :errors="form.errors.has('title')"
                     v-model="form.title"
-                    autofocus
+                    outlined
                 ></v-text-field>
                 <v-text-field
-                    outline
+                    outlined
                     label="Subtitle"
                     :rules="[form.errors.get('subtitle')]"
                     :errors="form.errors.has('subtitle')"
@@ -35,7 +33,7 @@
 
                 <v-select
                     label="Kies een achtergrond kleur"
-                    outline
+                    outlined
                     v-model="form.background_color"
                     :items="colors"
                     item-text="name"
@@ -48,16 +46,15 @@
                         <div>{{ data.item.name }}</div>
                     </template>
                     <template slot="item" slot-scope="data">
-                        <v-list-tile-avatar :class="data.item.value" class="mr-3">
-                        </v-list-tile-avatar>
-                        <v-list-tile-content>
-                            <v-list-tile-title>{{ data.item.name }}</v-list-tile-title>
-                        </v-list-tile-content>
+                        <v-list-item-avatar :class="data.item.value" class="mr-3"></v-list-item-avatar>
+                        <v-list-item-content>
+                            <v-list-item-title>{{ data.item.name }}</v-list-item-title>
+                        </v-list-item-content>
                     </template>
                 </v-select>
 
                 <v-card-actions>
-                    <v-btn color="grey" @click="onCancel" flat>Annuleer</v-btn>
+                    <v-btn color="grey" @click="onCancel" text>Annuleer</v-btn>
                     <v-spacer></v-spacer>
                     <v-btn color="primary" type="submit">Opslaan</v-btn>
                 </v-card-actions>

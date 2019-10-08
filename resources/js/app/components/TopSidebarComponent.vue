@@ -1,16 +1,16 @@
 <template>
     <div>
-        <v-toolbar
+        <v-app-bar
             app
             clipped-left
             scroll-off-screen
         >
-            <v-btn flat icon @click="sidebar = !sidebar">
+            <v-btn text icon @click="sidebar = !sidebar">
                 <font-awesome-icon class="title" :icon="['fas', 'bars']"></font-awesome-icon>
             </v-btn>
             <v-toolbar-title>
                 <a href="/">
-                    <img src="/assets/img/logo.png" width="100">
+                    <img src="/assets/img/logo.png" width="100" alt="Summa College logo">
                 </a>
             </v-toolbar-title>
             <v-chip class="ml-5 hidden-xs-only">
@@ -29,51 +29,53 @@
             </v-chip>
             <v-spacer></v-spacer>
             <v-menu offset-y :nudge-width="200" :close-on-content-click="false">
-                <v-btn icon large slot="activator">
-                    <v-avatar color="primary" size="40">
-                        <font-awesome-icon :icon="['fas', 'user']" class="white--text"></font-awesome-icon>
-                    </v-avatar>
-                </v-btn>
+                <template v-slot:activator="{ on }">
+                    <v-btn icon large v-on="on">
+                        <v-avatar color="primary" size="40">
+                            <font-awesome-icon :icon="['fas', 'user']" class="white--text"></font-awesome-icon>
+                        </v-avatar>
+                    </v-btn>
+                </template>
                 <v-list>
-                    <v-list-tile v-for="(item, i) in userMenu" :key="i" :to="item.slug">
-                        <v-list-tile-action>
+                    <v-list-item v-for="(item, i) in userMenu" :key="i" :to="item.slug">
+                        <v-list-item-action>
                             <font-awesome-icon :icon="['fas', item.icon]"></font-awesome-icon>
-                        </v-list-tile-action>
-                        <v-list-tile-content>
-                            <v-list-tile-title>{{ item.text }}</v-list-tile-title>
-                        </v-list-tile-content>
-                    </v-list-tile>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title>{{ item.text }}</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
 
-                    <v-list-tile v-if="userRole === 1" @click="goToDashboard">
-                        <v-list-tile-action>
+                    <v-list-item v-if="userRole === 1" @click="goToDashboard">
+                        <v-list-item-action>
                             <font-awesome-icon :icon="['fas', 'user-cog']"></font-awesome-icon>
-                        </v-list-tile-action>
-                        <v-list-tile-content>
-                            <v-list-tile-title>Dashboard</v-list-tile-title>
-                        </v-list-tile-content>
-                    </v-list-tile>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title>Dashboard</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
 
-                    <v-list-tile>
-                        <v-list-tile-action>
+                    <v-list-item>
+                        <v-list-item-action>
                             <v-switch v-model="theme" value="dark"></v-switch>
-                        </v-list-tile-action>
-                        <v-list-tile-content>
-                            <v-list-tile-title>Donker theme</v-list-tile-title>
-                        </v-list-tile-content>
-                    </v-list-tile>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title>Donker theme</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
 
-                    <v-list-tile v-for="(item, i) in logoutMenu" :key="i+1" @click="requestLogOut(item.slug)">
-                        <v-list-tile-action>
+                    <v-list-item v-for="(item, i) in logoutMenu" :key="i+1" @click="requestLogOut(item.slug)">
+                        <v-list-item-action>
                             <font-awesome-icon :icon="['fas', item.icon]"></font-awesome-icon>
-                        </v-list-tile-action>
-                        <v-list-tile-content>
-                            <v-list-tile-title>{{ item.text }}</v-list-tile-title>
-                        </v-list-tile-content>
-                    </v-list-tile>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title>{{ item.text }}</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
 
                 </v-list>
             </v-menu>
-        </v-toolbar>
+        </v-app-bar>
 
 
         <v-navigation-drawer
@@ -83,19 +85,21 @@
             width="200"
         >
             <v-list dense>
-                <v-list-tile v-for="(item, index) in navigationMenu"
+                <v-list-item v-for="(item, index) in navigationMenu"
                              :key="index"
                              :to="item.slug"
                              active-class="active-page"
                              :class="activePage === item.slug ? 'active-page' : ''"
                 >
                     <v-tooltip right>
-                        <v-list-tile-action slot="activator">
-                            <font-awesome-icon class="title" :icon="['fas', item.icon]"></font-awesome-icon>
-                        </v-list-tile-action>
+                        <template v-slot:activator="{ on }">
+                            <v-list-item-action v-on="on">
+                                <font-awesome-icon class="title" :icon="['fas', item.icon]"></font-awesome-icon>
+                            </v-list-item-action>
+                        </template>
                         <span>{{ item.text }}</span>
                     </v-tooltip>
-                </v-list-tile>
+                </v-list-item>
             </v-list>
 
         </v-navigation-drawer>

@@ -27,7 +27,7 @@
         methods: {
             getTheme(event) {
                 setTimeout(() => {
-                    this.darkTheme = localStorage.getItem('theme') === 'dark'
+                    this.$vuetify.theme.dark = localStorage.getItem('theme') === 'dark'
                 }, 200)
             },
         }

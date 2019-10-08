@@ -9,7 +9,6 @@
                     ></v-img>
 
                     <v-toolbar
-                        card
                         color="purple"
                         >
                         <v-icon>mdi-account</v-icon>
@@ -55,7 +54,7 @@
                         
 
                         <v-card-actions>
-                            <v-btn flat color="primary">Update</v-btn>
+                            <v-btn text color="primary">Update</v-btn>
                         </v-card-actions>
                     </form>
 
@@ -66,7 +65,7 @@
             <v-card>
                 <v-card-title class="headline accent justify-center">
                     Wachtwoord Wijzigen
-                    <v-btn flat icon absolute right @click="onCancel">
+                    <v-btn text icon absolute right @click="onCancel">
                         <font-awesome-icon class="title" :icon="['far', 'times-circle']"></font-awesome-icon>
                     </v-btn>
                 </v-card-title>
@@ -109,7 +108,7 @@
                         ></v-text-field>
                         <v-divider></v-divider>
                         <v-card-actions>
-                            <v-btn color="grey" @click="onCancel" flat>Annuleer</v-btn>
+                            <v-btn color="grey" @click="onCancel" text>Annuleer</v-btn>
                             <v-spacer></v-spacer>
                             <v-btn color="primary" type="submit">Update</v-btn>
                         </v-card-actions>

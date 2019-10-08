@@ -17,13 +17,13 @@
                             </template>
 
                             <v-list>
-                                <v-list-tile
+                                <v-list-item
                                         v-for="(item, i) in fileMenu"
                                         :key="i"
                                         @click="onFileMenuClick(item.id)"
                                 >
-                                    <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                                </v-list-tile>
+                                    <v-list-item-title>{{ item.title }}</v-list-item-title>
+                                </v-list-item>
                             </v-list>
                         </v-menu>
 
@@ -37,26 +37,25 @@
                         <v-subheader>Modules</v-subheader>
                         <template v-for="(mod, index) in orderedModules">
 
-                            <v-list-tile
+                            <v-list-item
                                     :key="index"
-                                    avatar
                                     ripple
                                     @click=""
                             >
-                                <v-list-tile-avatar color="grey">
+                                <v-list-item-avatar color="grey">
                                     <v-avatar>{{ index+1 }}</v-avatar>
-                                </v-list-tile-avatar>
+                                </v-list-item-avatar>
 
-                                <v-list-tile-content @click="goToFileElements(mod.id)">
-                                    <v-list-tile-title>{{ mod.title }}</v-list-tile-title>
-                                    <v-list-tile-sub-title>{{ mod.subtitle }} &mdash; {{ mod.text }}</v-list-tile-sub-title>
-                                </v-list-tile-content>
-                                <v-list-tile-action>
+                                <v-list-item-content @click="goToFileElements(mod.id)">
+                                    <v-list-item-title>{{ mod.title }}</v-list-item-title>
+                                    <v-list-item-subtitle>{{ mod.subtitle }} &mdash; {{ mod.text }}</v-list-item-subtitle>
+                                </v-list-item-content>
+                                <v-list-item-action>
                                     <v-btn icon ripple @click="onDestroyModule(mod.id)">
                                         <font-awesome-icon :icon="['fas', 'trash-alt']"></font-awesome-icon>
                                     </v-btn>
-                                </v-list-tile-action>
-                            </v-list-tile>
+                                </v-list-item-action>
+                            </v-list-item>
                         </template>
                     </v-list>
                     <v-list v-else>

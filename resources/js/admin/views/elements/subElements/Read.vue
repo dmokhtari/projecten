@@ -1,14 +1,13 @@
 <template>
     <v-dialog
-            v-if="form"
             v-model="dialog"
             width="600"
             persistent
     >
-        <v-card>
+        <v-card v-if="form">
             <v-card-title class="headline accent justify-center">
                 {{ form.id ? 'Lezen wijzigen' : 'Lezen toevoegen' }}
-                <v-btn flat icon absolute right @click="onCancel">
+                <v-btn text icon absolute right @click="onCancel">
                     <font-awesome-icon class="title" :icon="['far', 'times-circle']"></font-awesome-icon>
                 </v-btn>
             </v-card-title>
@@ -18,7 +17,7 @@
                     ref="readForm"
             >
                 <v-select
-                        outline
+                        outlined
                         label="Icon"
                         :items="icons"
                         item-value="id"
@@ -32,7 +31,7 @@
                         <v-chip
                                 close
                                 :key="JSON.stringify(data.item)"
-                                :selected="data.selected"
+                                :input-value="data.selected"
                                 :disabled="data.disabled"
                                 class="v-chip--select-multi"
                                 @input="data.parent.selectItem(data.item)"
@@ -47,7 +46,7 @@
                     </template>
                 </v-select>
                 <v-textarea
-                        outline
+                        outlined
                         label="Tekst"
                         :rules="[form.errors.get('description')]"
                         :errors="form.errors.has('description')"
@@ -55,7 +54,7 @@
                         rows="7"
                 ></v-textarea>
                 <v-card-actions>
-                    <v-btn color="grey" @click="onCancel" flat>Annuleer</v-btn>
+                    <v-btn color="grey" @click="onCancel" text>Annuleer</v-btn>
                     <v-spacer></v-spacer>
                     <v-btn color="primary" type="submit">Opslaan</v-btn>
                 </v-card-actions>

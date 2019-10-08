@@ -17,38 +17,40 @@
                         </v-btn>
                     </v-card-title>
                     <v-card-text>
-                        <v-expansion-panel v-if="docs">
-                            <v-expansion-panel-content
-                                    v-for="(doc,i) in docs"
-                                    :key="doc.id"
-                            >
-                                <template v-slot:actions>
-                                    <v-icon color="primary" class="subheading">$vuetify.icons.expand</v-icon>
-                                </template>
-                                <template v-slot:header>
-                                    <div class="title">{{ doc.title }}</div>
-                                </template>
-                                <v-card>
-                                    <v-card-text>
-                                        <v-layout row wrap>
-                                            <v-flex xs12 md10>
-                                                <div v-html="doc.text"></div>
-                                            </v-flex>
-                                            <v-flex xs12 md2 class="text-xs-right">
-                                                <div class="btn-group">
-                                                    <v-btn icon small @click="onAddEditDoc(doc)">
-                                                        <font-awesome-icon :icon="['fas', 'pen']"></font-awesome-icon>
-                                                    </v-btn>
-                                                    <v-btn icon small @click="onDestroyDoc(doc.id)">
-                                                        <font-awesome-icon :icon="['fas', 'trash-alt']"></font-awesome-icon>
-                                                    </v-btn>
-                                                </div>
-                                            </v-flex>
-                                        </v-layout>
-                                    </v-card-text>
-                                </v-card>
-                            </v-expansion-panel-content>
-                        </v-expansion-panel>
+                        <v-expansion-panels>
+                            <v-expansion-panel v-if="docs">
+                                <v-expansion-panel-content
+                                        v-for="(doc,i) in docs"
+                                        :key="doc.id"
+                                >
+                                    <template v-slot:actions>
+                                        <v-icon color="primary" class="subheading">$vuetify.icons.expand</v-icon>
+                                    </template>
+                                    <template v-slot:header>
+                                        <div class="title">{{ doc.title }}</div>
+                                    </template>
+                                    <v-card>
+                                        <v-card-text>
+                                            <v-layout row wrap>
+                                                <v-flex xs12 md10>
+                                                    <div v-html="doc.text"></div>
+                                                </v-flex>
+                                                <v-flex xs12 md2 class="text-xs-right">
+                                                    <div class="btn-group">
+                                                        <v-btn icon small @click="onAddEditDoc(doc)">
+                                                            <font-awesome-icon :icon="['fas', 'pen']"></font-awesome-icon>
+                                                        </v-btn>
+                                                        <v-btn icon small @click="onDestroyDoc(doc.id)">
+                                                            <font-awesome-icon :icon="['fas', 'trash-alt']"></font-awesome-icon>
+                                                        </v-btn>
+                                                    </div>
+                                                </v-flex>
+                                            </v-layout>
+                                        </v-card-text>
+                                    </v-card>
+                                </v-expansion-panel-content>
+                            </v-expansion-panel>
+                        </v-expansion-panels>
                     </v-card-text>
                 </v-card>
             </v-flex>

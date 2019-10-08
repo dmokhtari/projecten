@@ -34,25 +34,31 @@
                         :search="table.search"
                     >
                         <v-progress-linear slot="progress" indeterminate></v-progress-linear>
-                        <template slot="items" slot-scope="props">
-                            <td><a @click="goToUser(props.item.id)">{{ props.item.email }}</a></td>
-                            <td>{{ props.item.forename }}</td>
-                            <td><v-chip>{{ props.item.roles[0].display_title }}</v-chip></td>
-                            <td class="text-xs-center">
-                                <v-menu bottom left>
-                                    <v-btn slot="activator" icon>
-                                        <font-awesome-icon class="subheading" :icon="['fas', 'ellipsis-v']"></font-awesome-icon>
-                                    </v-btn>
-                                    <v-list>
-                                        <v-list-tile v-for="(action, i) in table.actions"
-                                                     :key="i"
-                                                     @click="onAction(action.value, props.item)"
-                                        >
-                                            <v-list-tile-title>{{ action.title }}</v-list-tile-title>
-                                        </v-list-tile>
-                                    </v-list>
-                                </v-menu>
-                            </td>
+                        <template v-slot:body="{ items }">
+                            <tbody>
+                                <tr v-for="(item, index) in items">
+                                    <td><a @click="goToUser(item.id)">{{ item.email }}</a></td>
+                                    <td>{{ item.forename }}</td>
+                                    <td><v-chip>{{ item.roles[0].display_title }}</v-chip></td>
+                                    <td class="text-xs-center">
+                                        <v-menu bottom left>
+                                            <template v-slot:activator="{ on }">
+                                                <v-btn icon v-on="on">
+                                                    <font-awesome-icon class="subheading" :icon="['fas', 'ellipsis-v']"></font-awesome-icon>
+                                                </v-btn>
+                                            </template>
+                                            <v-list>
+                                                <v-list-item v-for="(action, i) in table.actions"
+                                                             :key="i"
+                                                             @click="onAction(action.value, item)"
+                                                >
+                                                    <v-list-item-title>{{ action.title }}</v-list-item-title>
+                                                </v-list-item>
+                                            </v-list>
+                                        </v-menu>
+                                    </td>
+                                </tr>
+                            </tbody>
                         </template>
                     </v-data-table>
                     <!--<v-divider></v-divider>-->
@@ -108,7 +114,7 @@
                         { text: 'Email', sortable: true, value: 'email' },
                         { text: 'Voornaam', sortable: false, value: 'subtitle' },
                         { text: 'Role', sortable: false, value: 'role' },
-                        { text: 'Acties', sortable: false, value: '', width: '30' }
+                        { text: 'Acties', sortable: false, value: 'action', width: '30' }
                     ],
                     items: [],
                     actions: [

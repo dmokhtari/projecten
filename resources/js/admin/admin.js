@@ -2,10 +2,12 @@
 import '../shared/bootstrap';
 import Vue from 'vue';
 import { router } from './routes';
-import MetaTags from '../shared/mixins/metaTags';
+import vuetify from './../shared/plugins/vuetify';
+import MetaTags from './../shared/mixins/metaTags';
 Vue.mixin(MetaTags);
 
-window.Vue = Vue;
+// remove production tip
+Vue.config.productionTip = false;
 window.eventHub = new Vue();
 
 import Admin from './views/Admin';
@@ -29,6 +31,7 @@ window.axios.interceptors.response.use(function (response) {
 
 const app = new Vue({
     el: '#admin',
+    vuetify,
     components: { Admin },
     router,
     data() {

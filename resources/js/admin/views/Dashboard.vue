@@ -8,19 +8,19 @@
                     </v-card-title>
                     <v-list avatar>
                         <v-divider></v-divider>
-                        <v-list-tile>
-                            <v-list-tile-content>
-                                <v-list-tile-title>Totaal gebruikers:</v-list-tile-title>
-                            </v-list-tile-content>
-                            <v-list-tile-avatar><v-chip>{{ users.total }}</v-chip></v-list-tile-avatar>
-                        </v-list-tile>
+                        <v-list-item>
+                            <v-list-item-content>
+                                <v-list-item-title>Totaal gebruikers:</v-list-item-title>
+                            </v-list-item-content>
+                            <v-list-item-avatar><v-chip>{{ users.total }}</v-chip></v-list-item-avatar>
+                        </v-list-item>
                         <v-divider></v-divider>
-                        <v-list-tile>
-                            <v-list-tile-content>
-                                <v-list-tile-title>Totaal gebruikers online:</v-list-tile-title>
-                            </v-list-tile-content>
-                            <v-list-tile-avatar><v-chip>{{ users.online }}</v-chip></v-list-tile-avatar>
-                        </v-list-tile>
+                        <v-list-item>
+                            <v-list-item-content>
+                                <v-list-item-title>Totaal gebruikers online:</v-list-item-title>
+                            </v-list-item-content>
+                            <v-list-item-avatar><v-chip>{{ users.online }}</v-chip></v-list-item-avatar>
+                        </v-list-item>
                     </v-list>
                 </v-card>
             </v-flex>
@@ -31,19 +31,19 @@
                     </v-card-title>
                     <v-list avatar>
                         <v-divider></v-divider>
-                        <v-list-tile>
-                            <v-list-tile-content>
-                                <v-list-tile-title>Totaal gebruikers:</v-list-tile-title>
-                            </v-list-tile-content>
-                            <v-list-tile-avatar><v-chip>{{ users.total }}</v-chip></v-list-tile-avatar>
-                        </v-list-tile>
+                        <v-list-item>
+                            <v-list-item-content>
+                                <v-list-item-title>Totaal gebruikers:</v-list-item-title>
+                            </v-list-item-content>
+                            <v-list-item-avatar><v-chip>{{ users.total }}</v-chip></v-list-item-avatar>
+                        </v-list-item>
                         <v-divider></v-divider>
-                        <v-list-tile>
-                            <v-list-tile-content>
-                                <v-list-tile-title>Totaal gebruikers:</v-list-tile-title>
-                            </v-list-tile-content>
-                            <v-list-tile-avatar><v-chip>{{ users.online }}</v-chip></v-list-tile-avatar>
-                        </v-list-tile>
+                        <v-list-item>
+                            <v-list-item-content>
+                                <v-list-item-title>Totaal gebruikers:</v-list-item-title>
+                            </v-list-item-content>
+                            <v-list-item-avatar><v-chip>{{ users.online }}</v-chip></v-list-item-avatar>
+                        </v-list-item>
                     </v-list>
                 </v-card>
             </v-flex>
@@ -54,19 +54,19 @@
                     </v-card-title>
                     <v-list avatar>
                         <v-divider></v-divider>
-                        <v-list-tile>
-                            <v-list-tile-content>
-                                <v-list-tile-title>Totaal gebruikers:</v-list-tile-title>
-                            </v-list-tile-content>
-                            <v-list-tile-avatar><v-chip>{{ users.total }}</v-chip></v-list-tile-avatar>
-                        </v-list-tile>
+                        <v-list-item>
+                            <v-list-item-content>
+                                <v-list-item-title>Totaal gebruikers:</v-list-item-title>
+                            </v-list-item-content>
+                            <v-list-item-avatar><v-chip>{{ users.total }}</v-chip></v-list-item-avatar>
+                        </v-list-item>
                         <v-divider></v-divider>
-                        <v-list-tile>
-                            <v-list-tile-content>
-                                <v-list-tile-title>Totaal gebruikers:</v-list-tile-title>
-                            </v-list-tile-content>
-                            <v-list-tile-avatar><v-chip>{{ users.online }}</v-chip></v-list-tile-avatar>
-                        </v-list-tile>
+                        <v-list-item>
+                            <v-list-item-content>
+                                <v-list-item-title>Totaal gebruikers:</v-list-item-title>
+                            </v-list-item-content>
+                            <v-list-item-avatar><v-chip>{{ users.online }}</v-chip></v-list-item-avatar>
+                        </v-list-item>
                     </v-list>
                 </v-card>
             </v-flex>

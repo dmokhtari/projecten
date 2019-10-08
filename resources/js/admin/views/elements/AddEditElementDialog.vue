@@ -1,14 +1,13 @@
 <template>
     <v-dialog
-        v-if="form"
         v-model="dialog"
         width="600"
         persistent
     >
-        <v-card>
+        <v-card v-if="form">
             <v-card-title class="headline accent justify-center">
                 {{ form.id ? 'Element wijzigen' : 'Element aanmaken' }}
-                <v-btn flat icon absolute right @click="onCancel">
+                <v-btn text icon absolute right @click="onCancel">
                     <font-awesome-icon class="title" :icon="['far', 'times-circle']"></font-awesome-icon>
                 </v-btn>
             </v-card-title>
@@ -18,7 +17,7 @@
                     ref="elementForm"
             >
                 <v-select
-                    outline
+                    outlined
                     :items="modules"
                     item-text="title"
                     item-value="id"
@@ -27,21 +26,21 @@
                     v-model="form.module_id"
                 ></v-select>
                 <v-text-field
-                    outline
+                    outlined
                     label="Titel*"
                     :rules="[form.errors.get('title')]"
                     :errors="form.errors.has('title')"
                     v-model="form.title"
                 ></v-text-field>
                 <v-textarea
-                    outline
+                    outlined
                     label="Subtitel"
                     :rules="[form.errors.get('subtitle')]"
                     :errors="form.errors.has('subtitle')"
                     v-model="form.subtitle"
                 ></v-textarea>
                 <v-card-actions>
-                    <v-btn color="grey" @click="onCancel" flat>Annuleer</v-btn>
+                    <v-btn color="grey" @click="onCancel" text>Annuleer</v-btn>
                     <v-spacer></v-spacer>
                     <v-btn color="primary" type="submit">Opslaan</v-btn>
                 </v-card-actions>

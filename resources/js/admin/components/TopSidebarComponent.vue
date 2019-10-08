@@ -1,16 +1,16 @@
 <template>
     <div>
-        <v-toolbar
+        <v-app-bar
             app
             clipped-left
             scroll-off-screen
         >
-            <v-btn flat icon @click="sidebar = !sidebar">
+            <v-btn text icon @click="sidebar = !sidebar">
                 <font-awesome-icon class="title" :icon="['fas', 'bars']"></font-awesome-icon>
             </v-btn>
             <v-toolbar-title>
                 <a href="/">
-                    <img src="/assets/img/logo.png" width="100">
+                    <img src="/assets/img/logo.png" width="100" alt="Summa College logo">
                 </a>
             </v-toolbar-title>
 
@@ -32,40 +32,42 @@
 
             <v-spacer></v-spacer>
             <v-menu offset-y>
-                <v-btn icon large slot="activator">
-                    <v-avatar color="grey lighten-1" size="42" class="elevation-1">
-                        <font-awesome-icon :icon="['fas', 'user']"></font-awesome-icon>
-                    </v-avatar>
-                </v-btn>
+                <template v-slot:activator="{ on }">
+                    <v-btn icon large v-on="on">
+                        <v-avatar color="grey lighten-1" size="42" class="elevation-1">
+                            <font-awesome-icon :icon="['fas', 'user']"></font-awesome-icon>
+                        </v-avatar>
+                    </v-btn>
+                </template>
                 <v-list>
-                    <v-list-tile v-for="(item, i) in userMenu" :key="i" :to="item.slug">
-                        <v-list-tile-action>
+                    <v-list-item v-for="(item, i) in userMenu" :key="i" :to="item.slug">
+                        <v-list-item-action>
                             <font-awesome-icon :icon="['fas', item.icon]"></font-awesome-icon>
-                        </v-list-tile-action>
-                        <v-list-tile-content>
-                            <v-list-tile-title>{{ item.text }}</v-list-tile-title>
-                        </v-list-tile-content>
-                    </v-list-tile>
-                    <v-list-tile @click="goToHome">
-                        <v-list-tile-action>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title>{{ item.text }}</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+                    <v-list-item @click="goToHome">
+                        <v-list-item-action>
                             <font-awesome-icon :icon="['fas', 'user-graduate']"></font-awesome-icon>
-                        </v-list-tile-action>
-                        <v-list-tile-content>
-                            <v-list-tile-title>Student Home Pagina</v-list-tile-title>
-                        </v-list-tile-content>
-                    </v-list-tile>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title>Student Home Pagina</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
 
-                    <v-list-tile v-for="(item, i) in logoutMenu" :key="i+1" @click="requestLogOut(item.slug)">
-                        <v-list-tile-action>
+                    <v-list-item v-for="(item, i) in logoutMenu" :key="i+1" @click="requestLogOut(item.slug)">
+                        <v-list-item-action>
                             <font-awesome-icon :icon="['fas', item.icon]"></font-awesome-icon>
-                        </v-list-tile-action>
-                        <v-list-tile-content>
-                            <v-list-tile-title>{{ item.text }}</v-list-tile-title>
-                        </v-list-tile-content>
-                    </v-list-tile>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title>{{ item.text }}</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
                 </v-list>
             </v-menu>
-        </v-toolbar>
+        </v-app-bar>
 
         <v-navigation-drawer
             fixed
@@ -75,38 +77,38 @@
             width="220px"
         >
             <v-list dense>
-                <v-list-tile v-for="(item, index) in navigationMenu"
+                <v-list-item v-for="(item, index) in navigationMenu"
                              :key="index"
                              :to="item.slug"
                              active-class="active-page"
                              :class="activePage === item.slug ? 'active-page' : ''"
                 >
-                    <v-list-tile-action>
+                    <v-list-item-action>
                         <font-awesome-icon class="title" :icon="['fas', item.icon]"></font-awesome-icon>
-                    </v-list-tile-action>
-                    <v-list-tile-content>
-                        <v-list-tile-title>{{ item.text }}</v-list-tile-title>
-                    </v-list-tile-content>
-                </v-list-tile>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                        <v-list-item-title>{{ item.text }}</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
 
                 <v-list-group
                     prepend-icon="settings"
                 >
                     <template v-slot:activator>
-                        <v-list-tile>
-                            <v-list-tile-title>Instellingen</v-list-tile-title>
-                        </v-list-tile>
+                        <v-list-item>
+                            <v-list-item-title>Instellingen</v-list-item-title>
+                        </v-list-item>
                     </template>
-                    <v-list-tile
+                    <v-list-item
                         v-for="(setting, i) in settings"
                         :key="i"
                         :to="setting.slug"
                     >
-                        <v-list-tile-action class="pl-4">
+                        <v-list-item-action class="pl-4">
                             <font-awesome-icon :icon="['fas', setting.icon]"></font-awesome-icon>
-                        </v-list-tile-action>
-                        <v-list-tile-title class="pl-3" v-text="setting.text"></v-list-tile-title>
-                    </v-list-tile>
+                        </v-list-item-action>
+                        <v-list-item-title class="pl-3" v-text="setting.text"></v-list-item-title>
+                    </v-list-item>
                 </v-list-group>
 
             </v-list>

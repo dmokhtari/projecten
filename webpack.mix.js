@@ -14,3 +14,9 @@ const mix = require('laravel-mix');
 mix.js('resources/js/app/app.js', 'public/assets/js')
     .js('resources/js/admin/admin.js', 'public/assets/js/')
    .sass('resources/sass/app.scss', 'public/assets/css');
+
+mix.webpackConfig({
+    output: {
+        chunkFilename: 'assets/js/[name].js'
+    }
+})

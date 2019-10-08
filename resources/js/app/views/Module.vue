@@ -1,13 +1,14 @@
 <template>
     <v-container>
         <v-layout row wrap v-if="fileModule">
-            <v-flex xs12 class="text-xs-center" style="margin-bottom: 100px;">
+            <v-flex xs12 class="text-center" style="margin-bottom: 100px;">
                 <div class="element-btn">
                     <v-btn v-if="fileModule.text" :color="isActive(0)" @click="getModuleIntro">Intro</v-btn>
                     <v-btn v-for="(mod, index) in fileModule.elements"
                            :key="index"
                            :color="isActive(mod.id)"
                            @click="getElement(mod.id)"
+                           class="mr-1"
                     >{{ index+1 }}</v-btn>
                 </div>
             </v-flex>

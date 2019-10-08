@@ -1,14 +1,13 @@
 <template>
     <v-dialog
-        v-if="form"
         v-model="dialog"
         width="500"
         persistent
     >
-        <v-card>
+        <v-card v-if="form">
             <v-card-title class="headline accent justify-center">
                 {{ form.id ? 'Gebruiker wijzigen' : 'Gebruiker toevoegen' }}
-                <v-btn flat icon absolute right @click="onCancel">
+                <v-btn text icon absolute right @click="onCancel">
                     <font-awesome-icon class="title" :icon="['far', 'times-circle']"></font-awesome-icon>
                 </v-btn>
             </v-card-title>
@@ -18,7 +17,7 @@
                     ref="userForm"
             >
                 <v-text-field
-                    outline
+                    outlined
                     type="email"
                     label="Email*"
                     :rules="[form.errors.get('email')]"
@@ -27,17 +26,17 @@
                     autofocus
                 ></v-text-field>
                 <v-select
-                    outline
+                    outlined
                     :items="roles"
                     item-text="display_title"
                     item-value="id"
                     label="Rollen"
                     v-model="form.role"
                 ></v-select>
-                <v-layout row wrap>
-                    <v-flex sm6 xs12 class="pr-3">
+                <v-layout row wrap justify-center>
+                    <v-flex sm5 xs12 class="pr-md-6">
                         <v-text-field
-                            outline
+                            outlined
                             type="text"
                             label="Voornaam"
                             :rules="[form.errors.get('forename')]"
@@ -47,7 +46,7 @@
                     </v-flex>
                     <v-flex xs12 sm6>
                         <v-text-field
-                            outline
+                            outlined
                             type="text"
                             label="Achternaam"
                             :rules="[form.errors.get('surname')]"
@@ -59,7 +58,7 @@
                 <v-layout>
                     <v-flex sm4 xs12 class="pr-3">
                         <v-text-field
-                            outline
+                            outlined
                             type="text"
                             label="Klas"
                             :rules="[form.errors.get('class')]"
@@ -74,15 +73,12 @@
                             :close-on-content-click="false"
                             :nudge-right="40"
                             :return-value.sync="form.end_date_study"
-                            lazy
                             transition="scale-transition"
                             offset-y
-                            full-width
                             min-width="290px"
                         >
                             <template v-slot:activator="{ on }">
                                 <v-text-field
-                                    outline
                                     label="Kies een datum"
                                     v-model="form.end_date_study"
                                     readonly
@@ -92,14 +88,14 @@
                             </template>
                             <v-date-picker v-model="form.end_date_study" no-title scrollable>
                                 <v-spacer></v-spacer>
-                                <v-btn flat color="primary" @click="dateMenu = false">Annuleer</v-btn>
-                                <v-btn flat color="primary" @click="$refs.menu.save(form.end_date_study)">OK</v-btn>
+                                <v-btn text color="primary" @click="dateMenu = false">Annuleer</v-btn>
+                                <v-btn text color="primary" @click="$refs.menu.save(form.end_date_study)">OK</v-btn>
                             </v-date-picker>
                         </v-menu>
                     </v-flex>
                 </v-layout>
                 <v-card-actions>
-                    <v-btn color="grey" @click="onCancel" flat>Annuleer</v-btn>
+                    <v-btn color="grey" @click="onCancel" text>Annuleer</v-btn>
                     <v-spacer></v-spacer>
                     <v-btn color="primary" type="submit">Opslaan</v-btn>
                 </v-card-actions>
@@ -127,8 +123,8 @@
         },
         methods: {
             onShow(obj) {
-                this.initForm()
                 this.dialog = true
+                this.initForm()
                 this.getRoles()
                 if(obj) {
                     for(let key in obj) {

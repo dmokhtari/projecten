@@ -17,13 +17,13 @@
                             </template>
 
                             <v-list>
-                                <v-list-tile
+                                <v-list-item
                                         v-for="(item, i) in elementMenu"
                                         :key="i"
                                         @click="onElementMenuClick(item.id)"
                                 >
-                                    <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                                </v-list-tile>
+                                    <v-list-item-title>{{ item.title }}</v-list-item-title>
+                                </v-list-item>
                             </v-list>
                         </v-menu>
 
@@ -35,13 +35,13 @@
                             </template>
 
                             <v-list>
-                                <v-list-tile
+                                <v-list-item
                                         v-for="(item, i) in subElementMenu"
                                         :key="i"
                                         @click="onAddSubElementMenuClick(item.id)"
                                 >
-                                    <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                                </v-list-tile>
+                                    <v-list-item-title>{{ item.title }}</v-list-item-title>
+                                </v-list-item>
                             </v-list>
                         </v-menu>
                     </v-toolbar>
@@ -51,27 +51,26 @@
                         <v-subheader>Subelementen</v-subheader>
                         <template v-for="(subelement, index) in orderedSubElements">
 
-                            <v-list-tile
+                            <v-list-item
                                     :key="index"
-                                    avatar
                                     ripple
                                     @click=""
                             >
-                                <v-list-tile-avatar color="grey">
+                                <v-list-item-avatar color="grey">
                                     <v-avatar>{{ index+1 }}</v-avatar>
-                                </v-list-tile-avatar>
+                                </v-list-item-avatar>
 
-                                <v-list-tile-content @click="onSubElementClick(subelement)">
-                                    <v-list-tile-title>{{ subelement.title }} (type: {{ subelement.type }})</v-list-tile-title>
-                                    <v-list-tile-sub-title>{{ subelement.description }}</v-list-tile-sub-title>
-                                </v-list-tile-content>
+                                <v-list-item-content @click="onSubElementClick(subelement)">
+                                    <v-list-item-title>{{ subelement.title }} (type: {{ subelement.type }})</v-list-item-title>
+                                    <v-list-item-subtitle>{{ subelement.description }}</v-list-item-subtitle>
+                                </v-list-item-content>
 
-                                <v-list-tile-action>
+                                <v-list-item-action>
                                     <v-btn icon ripple @click="onDestroySubElement(subelement.id)">
                                         <font-awesome-icon :icon="['fas', 'trash-alt']"></font-awesome-icon>
                                     </v-btn>
-                                </v-list-tile-action>
-                            </v-list-tile>
+                                </v-list-item-action>
+                            </v-list-item>
                             <v-divider
                                     v-if="subelement.length > 1"
                                     :key="index"

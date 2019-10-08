@@ -19,21 +19,20 @@
                         <v-subheader>Modules</v-subheader>
                         <template v-for="(mod, index) in file.modules">
 
-                            <v-list-tile
+                            <v-list-item
                                 :key="index"
-                                avatar
                                 ripple
                                 @click="goToModule(mod.id)"
                             >
-                                <v-list-tile-avatar color="grey">
+                                <v-list-item-avatar color="grey">
                                     <v-avatar>{{ index+1 }}</v-avatar>
-                                </v-list-tile-avatar>
+                                </v-list-item-avatar>
 
-                                <v-list-tile-content>
-                                    <v-list-tile-title>{{ mod.title }}</v-list-tile-title>
-                                    <v-list-tile-sub-title>{{ mod.subtitle }} &mdash; {{ mod.text }}</v-list-tile-sub-title>
-                                </v-list-tile-content>
-                            </v-list-tile>
+                                <v-list-item-content>
+                                    <v-list-item-title>{{ mod.title }}</v-list-item-title>
+                                    <v-list-item-subtitle>{{ mod.subtitle }} &mdash; {{ mod.text }}</v-list-item-subtitle>
+                                </v-list-item-content>
+                            </v-list-item>
                             <v-divider
                                 v-if="mod.length > 1"
                                 :key="index"
