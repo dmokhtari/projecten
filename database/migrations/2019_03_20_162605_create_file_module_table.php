@@ -14,8 +14,8 @@ class CreateFileModuleTable extends Migration
     public function up()
     {
         Schema::create('file_module', function (Blueprint $table) {
-            $table->integer('file_id')->unsigned();
-            $table->integer('module_id')->unsigned();
+            $table->bigInteger('file_id')->unsigned();
+            $table->bigInteger('module_id')->unsigned();
             $table->timestamps();
         });
 

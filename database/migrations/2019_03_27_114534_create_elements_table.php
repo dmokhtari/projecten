@@ -14,9 +14,9 @@ class CreateElementsTable extends Migration
     public function up()
     {
         Schema::create('elements', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id')->unsigned();
-            $table->integer('module_id')->nullable()->unsigned();
+            $table->bigIncrements('id');
+            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('module_id')->nullable()->unsigned();
             $table->string('title');
             $table->string('subtitle')->nullable();
             $table->timestamps();

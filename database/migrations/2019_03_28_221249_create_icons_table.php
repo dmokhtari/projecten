@@ -14,7 +14,7 @@ class CreateIconsTable extends Migration
     public function up()
     {
         Schema::create('icons', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('src');
             $table->string('name');
             $table->string('title');

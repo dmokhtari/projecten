@@ -14,8 +14,8 @@ class CreateSubElementsTable extends Migration
     public function up()
     {
         Schema::create('sub_elements', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('element_id')->unsigned();
+            $table->bigIncrements('id');
+            $table->bigInteger('element_id')->unsigned();
             $table->string('type');
             $table->string('title')->nullable();
             $table->string('url')->nullable();

@@ -14,8 +14,8 @@ class CreateIconSubElementTable extends Migration
     public function up()
     {
         Schema::create('icon_sub_element', function (Blueprint $table) {
-            $table->integer('icon_id')->unsigned();
-            $table->integer('sub_element_id')->unsigned();
+            $table->bigInteger('icon_id')->unsigned();
+            $table->bigInteger('sub_element_id')->unsigned();
             $table->timestamps();
         });
 
