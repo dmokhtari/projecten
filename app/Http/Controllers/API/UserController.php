@@ -118,7 +118,7 @@ class UserController extends Controller
         try {
             Excel::import(new UserImport(), $request->file('excel_file'));
             return response()->json(['status' => 'success', 'data' => 'Bestand sucesvol geupload!'], 201);
-        } catch (\Exception $e) {
+        } catch (\InvalidArgumentException $e) {
             return response()->json(['status' => 'error', 'data' => $e], 500);
         }
     }
