@@ -33,8 +33,7 @@
                         :loading="table.loading"
                         :search="table.search"
                     >
-                        <v-progress-linear slot="progress" indeterminate></v-progress-linear>
-                        <template v-slot:body="{ items }">
+                        <template v-if="table.users.length > 0" v-slot:body="{ items }">
                             <tbody>
                                 <tr v-for="(item, index) in items">
                                     <td><a @click="goToUser(item.id)">{{ item.email }}</a></td>
@@ -59,6 +58,9 @@
                                     </td>
                                 </tr>
                             </tbody>
+                        </template>
+                        <template v-slot:no-data>
+                            <p>Geen gebruikers gevonden!</p>
                         </template>
                     </v-data-table>
                     <!--<v-divider></v-divider>-->

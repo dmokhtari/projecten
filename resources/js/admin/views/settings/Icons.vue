@@ -29,37 +29,39 @@
                         :loading="table.loading"
                         :search="table.search"
                     >
-                        <v-progress-linear slot="progress" indeterminate></v-progress-linear>
-                        <template v-slot:body="{items}">
+                        <template v-if="table.items.length > 0" v-slot:body="{items}">
                             <tbody>
-                            <tr v-for="item in items" :key="item.id">
-                                <td>{{ item.title }}</td>
-                                <td>
-                                    <v-avatar
-                                        :tile="false"
-                                    >
-                                        <img :src="'/storage/' + item.src" :alt="item.name">
-                                    </v-avatar>
-                                </td>
-                                <td>
-                                    <v-menu bottom left>
-                                        <template v-slot:activator="{ on }">
-                                            <v-btn icon v-on="on">
-                                                <font-awesome-icon class="subheading" :icon="['fas', 'ellipsis-v']"></font-awesome-icon>
-                                            </v-btn>
-                                        </template>
-                                        <v-list>
-                                            <v-list-item v-for="(action, i) in table.actions"
-                                                         :key="i"
-                                                         @click="onAction(action.value, item)"
-                                            >
-                                                <v-list-item-title>{{ action.title }}</v-list-item-title>
-                                            </v-list-item>
-                                        </v-list>
-                                    </v-menu>
-                                </td>
-                            </tr>
+                                <tr v-for="item in items" :key="item.id">
+                                    <td>{{ item.title }}</td>
+                                    <td>
+                                        <v-avatar
+                                            :tile="false"
+                                        >
+                                            <img :src="'/storage/' + item.src" :alt="item.name">
+                                        </v-avatar>
+                                    </td>
+                                    <td>
+                                        <v-menu bottom left>
+                                            <template v-slot:activator="{ on }">
+                                                <v-btn icon v-on="on">
+                                                    <font-awesome-icon class="subheading" :icon="['fas', 'ellipsis-v']"></font-awesome-icon>
+                                                </v-btn>
+                                            </template>
+                                            <v-list>
+                                                <v-list-item v-for="(action, i) in table.actions"
+                                                             :key="i"
+                                                             @click="onAction(action.value, item)"
+                                                >
+                                                    <v-list-item-title>{{ action.title }}</v-list-item-title>
+                                                </v-list-item>
+                                            </v-list>
+                                        </v-menu>
+                                    </td>
+                                </tr>
                             </tbody>
+                        </template>
+                        <template v-slot:no-data>
+                            <p>Geen icons gevonden!</p>
                         </template>
                     </v-data-table>
                 </v-card>

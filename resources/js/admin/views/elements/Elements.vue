@@ -29,8 +29,7 @@
                         :loading="table.loading"
                         :search="table.search"
                     >
-                        <v-progress-linear slot="progress" indeterminate></v-progress-linear>
-                        <template v-slot:body="{ items }">
+                        <template v-if="table.items.length > 0" v-slot:body="{ items }">
                             <tbody>
                                 <tr v-for="item in items" :key="item.id">
                                     <td><a @click="goToElement(item.id)">{{ item.title }}</a></td>
@@ -57,6 +56,9 @@
                                     </td>
                                 </tr>
                             </tbody>
+                        </template>
+                        <template v-slot:no-data>
+                            <p>Geen opdrachten gevonden!</p>
                         </template>
                     </v-data-table>
                 </v-card>
