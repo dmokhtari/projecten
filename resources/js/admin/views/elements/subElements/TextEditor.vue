@@ -1,17 +1,16 @@
 <template>
     <v-dialog
-        v-if="form"
         v-model="dialog"
         persistent
         fullscreen hide-overlay transition="dialog-bottom-transition"
     >
-        <v-card>
+        <v-card v-if="form">
             <v-card-title class="headline accent justify-center">
                 <v-btn text icon absolute left @click="onCancel">
                     <font-awesome-icon class="title" :icon="['far', 'times-circle']"></font-awesome-icon>
                 </v-btn>
 
-                {{ form.id ? 'Text wijzigen' : 'Text toevoegen' }}
+                {{ form.id ? 'Tekst wijzigen' : 'Tekst toevoegen' }}
 
                 <v-btn color="primary" absolute right @click="form.id ? put(form.id) : post()">Opslaan</v-btn>
             </v-card-title>

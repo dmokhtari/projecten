@@ -59,7 +59,7 @@
                         </template>
                     </v-list>
                     <v-list v-else>
-                        <v-subheader>Geen Modules</v-subheader>
+                        <v-subheader>Geen Thema's</v-subheader>
                     </v-list>
                 </v-card>
                 <div v-else class="text-xs-center justify-center">

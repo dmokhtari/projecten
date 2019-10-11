@@ -6,7 +6,7 @@
     >
         <v-card v-if="form">
             <v-card-title class="headline accent justify-center">
-                {{ form.id ? 'Element wijzigen' : 'Element aanmaken' }}
+                {{ form.id ? 'Opdracht wijzigen' : 'Opdracht aanmaken' }}
                 <v-btn text icon absolute right @click="onCancel">
                     <font-awesome-icon class="title" :icon="['far', 'times-circle']"></font-awesome-icon>
                 </v-btn>
