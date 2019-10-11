@@ -53,6 +53,13 @@
                         v-model="form.description"
                         rows="7"
                 ></v-textarea>
+                <v-text-field
+                    outlined
+                    label="URL"
+                    v-model="form.url"
+                    :rules="[form.errors.get('url')]"
+                    :errors="form.errors.has('url')"
+                ></v-text-field>
                 <v-card-actions>
                     <v-btn color="grey" @click="onCancel" text>Annuleer</v-btn>
                     <v-spacer></v-spacer>
@@ -109,6 +116,7 @@
                     element_id: null,
                     icon_id: [],
                     type: 'read/write',
+                    url: '',
                     description: '',
                 })
             },
