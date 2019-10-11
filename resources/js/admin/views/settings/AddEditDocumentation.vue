@@ -1,6 +1,5 @@
 <template>
     <v-dialog
-            v-if="form"
             v-model="dialog"
             persistent
             fullscreen hide-overlay transition="dialog-bottom-transition"
