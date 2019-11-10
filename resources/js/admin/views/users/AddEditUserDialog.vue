@@ -67,31 +67,26 @@
                         ></v-text-field>
                     </v-flex>
                     <v-flex sm8 xs12>
-                        <v-menu
+                        <v-text-field
+                            label="Kies een datum"
+                            v-model="form.end_date_study"
+                            @blur="date = parseDate(form.end_date_study)"
+                            append-icon="event"
+                            outlined
+                            @click:append="eventSearch"
+                        ></v-text-field>
+                        <v-dialog
                             ref="menu"
                             v-model="dateMenu"
-                            :close-on-content-click="false"
-                            :nudge-right="40"
                             :return-value.sync="form.end_date_study"
-                            transition="scale-transition"
-                            offset-y
-                            min-width="290px"
+                            width="290px"
                         >
-                            <template v-slot:activator="{ on }">
-                                <v-text-field
-                                    label="Kies een datum"
-                                    v-model="form.end_date_study"
-                                    readonly
-                                    prepend-inner-icon="event"
-                                    v-on="on"
-                                ></v-text-field>
-                            </template>
-                            <v-date-picker v-model="form.end_date_study" no-title scrollable>
+                            <v-date-picker v-model="date" scrollable>
                                 <v-spacer></v-spacer>
                                 <v-btn text color="primary" @click="dateMenu = false">Annuleer</v-btn>
                                 <v-btn text color="primary" @click="$refs.menu.save(form.end_date_study)">OK</v-btn>
                             </v-date-picker>
-                        </v-menu>
+                        </v-dialog>
                     </v-flex>
                 </v-layout>
                 <v-card-actions>
@@ -113,7 +108,14 @@
                 form: null,
                 dateMenu: false,
                 roles: [],
+                date: new Date().toISOString().substr(0, 10),
             }
+        },
+        watch: {
+            date (val) {
+                console.log('watch', val)
+                this.form.end_date_study = this.formatDate(this.date)
+            },
         },
         created() {
             eventHub.$on('add-edit-user-dialog', this.onShow)
@@ -143,7 +145,7 @@
                     surname: '',
                     class: '',
                     role: '',
-                    end_date_study: new Date().toISOString().substr(0, 10),
+                    end_date_study: this.formatDate(new Date().toISOString().substr(0, 10)),
                 })
             },
             onCancel() {
@@ -181,6 +183,22 @@
                         //eventHub.$emit('show-message', response.data.status,  response.data.data)
                     })
             },
+            formatDate(date) {
+                if (!date) return null
+
+                const [year, month, day] = date.split('-')
+                return `${day}-${month}-${year}`
+            },
+            parseDate(date) {
+                if (!date) return null
+
+                const [day, month, year] = date.split('-')
+                return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+            },
+            eventSearch() {
+                console.log('clicked')
+                this.dateMenu = true
+            }
         }
     }
 </script>

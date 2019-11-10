@@ -33,7 +33,7 @@
                         :loading="table.loading"
                         :search="table.search"
                     >
-                        <template v-if="table.users.length > 0" v-slot:body="{ items }">
+                        <template v-if="table.items.length > 0" v-slot:body="{ items }">
                             <tbody>
                                 <tr v-for="(item, index) in items">
                                     <td><a @click="goToUser(item.id)">{{ item.email }}</a></td>
