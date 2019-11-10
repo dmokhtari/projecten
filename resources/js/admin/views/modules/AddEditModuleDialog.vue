@@ -6,7 +6,7 @@
     >
         <v-card v-if="form">
             <v-card-title class="headline accent justify-center">
-                {{ form.id ? 'Module wijzigen' : 'Module toevoegen' }}
+                {{ form.id ? 'Thema wijzigen' : 'Thema toevoegen' }}
                 <v-btn text icon absolute right @click="onCancel">
                     <font-awesome-icon class="title" :icon="['far', 'times-circle']"></font-awesome-icon>
                 </v-btn>
@@ -18,7 +18,7 @@
             >
                 <v-text-field
                     outlined
-                    label="Title*"
+                    label="Titel*"
                     :rules="[form.errors.get('title')]"
                     :errors="form.errors.has('title')"
                     v-model="form.title"
@@ -26,7 +26,7 @@
                 ></v-text-field>
                 <v-text-field
                     outlined
-                    label="Subtitle"
+                    label="Subtitel"
                     :rules="[form.errors.get('subtitle')]"
                     :errors="form.errors.has('subtitle')"
                     v-model="form.subtitle"

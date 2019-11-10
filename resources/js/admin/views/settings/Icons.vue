@@ -89,7 +89,7 @@
                     loading: false,
                     search: '',
                     headers: [
-                        { text: 'Title', sortable: true, value: 'title' },
+                        { text: 'Titel', sortable: true, value: 'title' },
                         { text: 'Icon', sortable: false, value: 'subtitle' },
                         { text: 'Acties', sortable: false, value: 'action', width: '30' }
                     ],

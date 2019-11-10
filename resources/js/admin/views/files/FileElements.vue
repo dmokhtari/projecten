@@ -4,7 +4,7 @@
             <v-flex xs12>
                 <v-card v-if="fileModule" class="mt-5 text-xs-center">
                     <v-toolbar :class="fileModule.files[0].background_color">
-                        <font-awesome-icon :icon="['fas', 'cubes']" class="display-2"></font-awesome-icon>
+                        <font-awesome-icon :icon="['fas', 'cubes']" class="display-2 mr-md-2"></font-awesome-icon>
 
                         <v-toolbar-title>{{ fileModule.title }}</v-toolbar-title>
                         <v-spacer></v-spacer>
@@ -34,7 +34,7 @@
 
 
                     <v-list v-if="orderedElements.length > 0">
-                        <v-subheader>Elementen</v-subheader>
+                        <v-subheader>Opdrachten</v-subheader>
                         <template v-for="(element, index) in orderedElements">
 
                             <v-list-item

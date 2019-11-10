@@ -11,7 +11,7 @@
                     </v-card-title>
 
                     <v-card-text>
-                        <p>Gekoppelde elementen</p>
+                        <p>Gekoppelde opdrachten</p>
                         <font-awesome-icon :icon="['fas', 'arrow-down']"></font-awesome-icon>
                     </v-card-text>
 
@@ -56,7 +56,7 @@
 
         <add-edit-element-dialog @element-posted="get" @element-updated="get"></add-edit-element-dialog>
         <delete-permanent-dialog @confirmed="destroyElement">
-            <p>Weet u zeker dat u deze element wil verwijderen?</p>
+            <p>Weet u zeker dat u deze opdracht wil verwijderen?</p>
         </delete-permanent-dialog>
 
     </v-container>

@@ -20,15 +20,15 @@
                     v-model="form.title"
                     autofocus
                 ></v-text-field>
-                <v-text-field
+                <v-file-input
                     outlined
+                    prepend-icon=""
+                    prepend-inner-icon="$file"
                     label="Upload een image(icon)*"
                     :rules="[form.errors.get('icon')]"
                     :errors="form.errors.has('icon')"
-                    v-model="form.icon_name"
-                    @click="onClickImageInput"
-                ></v-text-field>
-                <input type="file" ref="imageInput" style="display:none" @change="onImageChange">
+                    v-model="form.icon"
+                ></v-file-input>
 
                 <v-card-actions>
                     <v-btn color="grey" @click="onCancel" text>Annuleer</v-btn>
@@ -71,9 +71,8 @@
             initForm() {
                 this.form = new Form({
                     id: null,
-                    icon: '',
+                    icon: [],
                     title: '',
-                    icon_name: '',
                 })
             },
             onCancel() {
